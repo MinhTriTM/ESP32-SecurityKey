@@ -25,6 +25,32 @@
           "sha256": "67d8afbb84a4ac2c3d8bed3f8b57e56368476c3eee9c2366095f05026e9764fe"
         }
       ]
+    },
+    {
+      "id": "pico-fido-v8.2-plain",
+      "name": "pico-fido v8.2 — bản thử (FIDO dùng được, chưa ký)",
+      "desc": "Firmware FIDO thật: CTAP2.3/U2F, passkey, PIN, resident key, TOTP/HOTP, sao lưu 24 từ. Nạp sau khi hwtest đạt hết.",
+      "files": [
+        {
+          "path": "pico-fido-v8.2/pico_fido_esp32-s3-plain.bin",
+          "address": "0x0",
+          "size": 799200,
+          "sha256": "0c75c9988f2d48a3339ca8b09d77aa311740460b2bcaf6ff37a487191f6294b2"
+        }
+      ]
+    },
+    {
+      "id": "pico-fido-v8.2-hardened",
+      "name": "pico-fido v8.2 — BẢN CHỐT (ký RSA + mã hóa flash)",
+      "desc": "Bản phát hành: Secure Boot V2, Flash Encryption release, NVS mã hóa. Tự khóa ở lần boot đầu. Chỉ nạp khi đã chắc chắn.",
+      "files": [
+        {
+          "path": "pico-fido-v8.2/pico_fido_esp32-s3-hardened.bin",
+          "address": "0x0",
+          "size": 856064,
+          "sha256": "5027575b6bc372c86080f561e45d35102dd079176a23e6c836886cb000e8ff94"
+        }
+      ]
     }
   ]
 }

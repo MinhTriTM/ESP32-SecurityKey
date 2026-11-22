@@ -19,19 +19,21 @@ if ($Variant -eq 'hardened') {
     $Frag = Join-Path $Root 'config/sdkconfig.hardened'
     if (-not (Test-Path $Key)) { Write-Output "Thiếu $Key. Chạy python tools/gen_sign_key.py trước."; exit 1 }
     if (-not (Test-Path $Frag)) { Write-Output "Thiếu $Frag."; exit 1 }
-    $env:SDKCONFIG_DEFAULTS = $Frag
+    $env:SDKCONFIG_DEFAULTS = "$Pico/pico-keys-sdk/config/esp32/sdkconfig.defaults;$Frag"
     Write-Output "Build bản ký (hardened) với $Frag."
 } else {
     Write-Output "Build bản thử (plain, không ký)."
 }
 
 & (Join-Path $Idf 'export.ps1')
+$env:IDF_PATH = ($Idf -replace '\\', '/')  # CMake vỡ với backslash Windows
 Set-Location $Pico
+if ($Variant -eq 'hardened') { idf.py fullclean }  # đổi sdkconfig phải sạch
 idf.py set-target esp32s3
 idf.py all
 New-Item -ItemType Directory -Force -Path (Join-Path $Pico 'release') | Out-Null
 Set-Location (Join-Path $Pico 'build')
-esptool.py --chip ESP32-S3 merge_bin -o ../release/pico_fido_esp32-s3.bin @flash_args
+esptool.py --chip ESP32-S3 merge_bin -o ../release/pico_fido_esp32-s3.bin '@flash_args'
 Set-Location $Root
 $Out = Join-Path $Root 'web/firmware/pico-fido-v8.2'
 New-Item -ItemType Directory -Force -Path $Out | Out-Null

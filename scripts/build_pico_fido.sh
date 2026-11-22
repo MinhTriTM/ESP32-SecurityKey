@@ -20,7 +20,7 @@ HEAD_SHA="$(git -C "$PICO" rev-parse HEAD)"
 if [ "$VARIANT" = "hardened" ]; then
   [ -f "$ROOT/keys/secure-boot-signing.key" ] || { echo "Thiếu keys/secure-boot-signing.key. Chạy python tools/gen_sign_key.py trước."; exit 1; }
   [ -f "$ROOT/config/sdkconfig.hardened" ] || { echo "Thiếu config/sdkconfig.hardened."; exit 1; }
-  export SDKCONFIG_DEFAULTS="$ROOT/config/sdkconfig.hardened"
+  export SDKCONFIG_DEFAULTS="$PICO/pico-keys-sdk/config/esp32/sdkconfig.defaults;$ROOT/config/sdkconfig.hardened"
   echo "Build bản ký (hardened)."
 else
   echo "Build bản thử (plain, không ký)."
@@ -29,6 +29,7 @@ fi
 # shellcheck disable=SC1091
 . "$IDF/export.sh"
 cd "$PICO"
+if [ "$VARIANT" = "hardened" ]; then idf.py fullclean; fi  # đổi sdkconfig phải sạch
 idf.py set-target esp32s3
 idf.py all
 mkdir -p release

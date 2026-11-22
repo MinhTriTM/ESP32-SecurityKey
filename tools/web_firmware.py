@@ -24,6 +24,16 @@ PACKAGES = {
         "desc": "Giống bản OTG nhưng không có HID echo. Dùng khi board/cáp không chịu OTG.",
         "files": [{"path": "hwtest-hwcdc/hwtest.ino.merged.bin", "address": "0x0"}],
     },
+    "pico-fido-v8.2-plain": {
+        "name": "pico-fido v8.2 — bản thử (FIDO dùng được, chưa ký)",
+        "desc": "Firmware FIDO thật: CTAP2.3/U2F, passkey, PIN, resident key, TOTP/HOTP, sao lưu 24 từ. Nạp sau khi hwtest đạt hết.",
+        "files": [{"path": "pico-fido-v8.2/pico_fido_esp32-s3-plain.bin", "address": "0x0"}],
+    },
+    "pico-fido-v8.2-hardened": {
+        "name": "pico-fido v8.2 — BẢN CHỐT (ký RSA + mã hóa flash)",
+        "desc": "Bản phát hành: Secure Boot V2, Flash Encryption release, NVS mã hóa. Tự khóa ở lần boot đầu. Chỉ nạp khi đã chắc chắn.",
+        "files": [{"path": "pico-fido-v8.2/pico_fido_esp32-s3-hardened.bin", "address": "0x0"}],
+    },
 }
 
 

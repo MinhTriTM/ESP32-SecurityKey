@@ -8,6 +8,7 @@ dist/
 
 # Giữ lại bin gộp cho siêu web nạp (clone về là mở web nạp được ngay)
 !web/firmware/*/*.merged.bin
+!web/firmware/pico-fido-v8.2/*.bin
 
 # Python
 __pycache__/

@@ -19,8 +19,8 @@ Thư mục này chứa khóa ký Secure Boot cho bản firmware phát hành (U05
 python tools/gen_sign_key.py
 ```
 
-Lệnh trên sinh `secure-boot-signing.key` (ECDSA NIST P-256, PEM) với quyền
-hạn chế. Kiểm tra vân tay rồi backup ngay theo mục 2.
+Lệnh trên sinh `secure-boot-signing.key` (RSA-3072, PEM) với quyền hạn
+chế. Kiểm tra vân tay rồi backup ngay theo mục 2.
 
 ## File trong thư mục
 

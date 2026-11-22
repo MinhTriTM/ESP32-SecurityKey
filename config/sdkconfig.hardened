@@ -1,0 +1,21 @@
+# Fragment cấu hình bản phát hành pico-fido (U002).
+# Secure Boot V2 (RSA, theo đúng Kconfig ESP32-S3) + Flash Encryption release
+# + mã hóa NVS. Bản này tự khóa ở lần boot đầu: flash xong là không đọc trộm
+# được firmware, chỉ chạy được app ký đúng khóa.
+#
+# Dùng: SDKCONFIG_DEFAULTS=config/sdkconfig.hardened (xem scripts/build_pico_fido.*).
+# Tên symbol đối chiếu từ .tooling/esp-idf/components/bootloader/Kconfig.projbuild.
+# Đường dẫn khóa tính từ thư mục project (.tooling/pico-fido).
+CONFIG_SECURE_BOOT=y
+CONFIG_SECURE_BOOT_V2_ENABLED=y
+CONFIG_SECURE_SIGNED_APPS_RSA_SCHEME=y
+CONFIG_SECURE_BOOT_SIGNING_KEY="../../keys/secure-boot-signing.key"
+CONFIG_SECURE_FLASH_ENC_ENABLED=y
+CONFIG_SECURE_FLASH_ENCRYPTION_MODE_RELEASE=y
+# Bootloader đã ký (~40 KB) vượt quá 32 KB mặc định nên phải dời bảng phân
+# vùng từ 0x8000 lên 0x10000. Phân vùng pico (nvs@0x11000...) dùng địa chỉ
+# tuyệt đối nên vẫn khớp, không lệch.
+CONFIG_PARTITION_TABLE_OFFSET=0x10000
+# Không có NVS_ENCRYPTION: pico-fido không dùng component NVS mà lưu
+# credential trong phân vùng part0 bằng object store mã hóa riêng (khóa
+# chính trong OTP, theo thiết kế của pico-fido).

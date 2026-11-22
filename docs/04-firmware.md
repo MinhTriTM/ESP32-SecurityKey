@@ -13,7 +13,35 @@ Tầng dùng thật: pico-fido bản ESP32-S3. Đây mới là firmware FIDO c�
 - ESP-IDF yêu cầu: `v5.5.1` (lấy từ script `workflows/autobuild.sh` của repo gốc ở đúng tag này).
 - Tính năng chính: CTAP 2.3/CTAP1, passkey, PIN, resident key, credProtect, hmac-secret, OATH/TOTP/HOTP, sao lưu 24 từ, Pico Vault xuất/nhập credential có xác thực, Secure Boot và Secure Lock trên ESP32-S3.
 
-Trạng thái: đã khảo sát từ nguồn chính thức, chưa build kiểm chứng trên máy này. Khi build, đối chiếu SHA commit sau checkout, không tin tag mù vì tag có thể bị dời.
+Trạng thái: đã build kiểm chứng trên máy này (2026-11-22, xem dưới). Khi build, đối chiếu SHA commit sau checkout, không tin tag mù vì tag có thể bị dời.
+
+## Bản build đã kiểm chứng trên máy này
+
+Build từ commit đã ghim bằng ESP-IDF v5.5.1 trong `.tooling` (xem
+[script build](../scripts/build_pico_fido.ps1)):
+
+- Bản thử `pico_fido_esp32-s3-plain.bin` (799200 byte, gộp ở `0x0`): app
+  668128 byte, phân vùng pico (nvs@0x11000, factory@0x20000, part0@0x200000).
+- Bản chốt `pico_fido_esp32-s3-hardened.bin` (856064 byte): Secure Boot V2
+  (RSA-3072, khóa ký ngoại tuyến trong `keys/`, vân tay SHA-256
+  `5060aeae…aa4d6`), Flash Encryption chế độ release, phân vùng pico giữ
+  nguyên. `espsecure.py verify_signature --version 2` báo chữ ký RSA hợp lệ
+  cho cả app và bootloader.
+- Cả hai có mặt trong siêu web nạp (mục pico-fido v8.2), đã kiểm SHA-256 qua
+  `tools/web_firmware.py --check`.
+
+Lưu ý đã xác minh khi build:
+
+- USB VID/PID mặc định của pico-fido là `0x2E8A:0x10FE` (của Raspberry Pi,
+  dùng nội bộ theo giấy phép của dự án gốc). Tool và udev rules của repo
+  khớp theo usage page nên không ảnh hưởng.
+- Cấu hình flash của pico-fido là 4 MB (QIO 80 MHz) dù board N16R8 có 16 MB:
+  nạp và boot bình thường, chỉ không dùng phần flash trên 4 MB.
+- Bootloader bản ký (~45 KB) vượt giới hạn 32 KB mặc định nên bảng phân vùng
+  dời lên `0x10000` (xem `config/sdkconfig.hardened`); phân vùng pico dùng
+  địa chỉ tuyệt đối nên vẫn khớp.
+- Trên Windows phải đặt `IDF_PATH` dạng gạch chéo (`D:/...`) trước khi chạy
+  `idf.py`, nếu không CMake vỡ với backslash (script build đã làm sẵn).
 
 Giấy phép pico-fido là AGPL-3.0 (bản cộng đồng): tự build dùng cá nhân thoải mái, nhưng phân phối binary đã sửa thì phải công bố source theo giấy phép. Code trong repo này vẫn là MIT, hai phần độc lập.
 

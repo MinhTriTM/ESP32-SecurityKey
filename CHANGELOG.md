@@ -3,6 +3,21 @@
 Mọi thay đổi đáng chú ý của dự án ESP32-S3 Security Key.
 Quy ước mã thoát: 0 xong · 1 lỗi chạy · 2 sai cách dùng (bảng NCKH-052).
 
+## 2026-11-22 — Build pico-fido v8.2 kiểm chứng (U001, U002, U053)
+
+- Build thành công từ commit đã ghim bằng ESP-IDF v5.5.1 trong `.tooling`:
+  bản thử (799200 byte) và bản chốt ký RSA-3072 + Flash Encryption release
+  (856064 byte). Chữ ký V2 hợp lệ cho cả app và bootloader
+  (`espsecure verify_signature`). Hai bản đều có trong web nạp + manifest.
+- `tools/gen_sign_key.py` sinh khóa ký ngoại tuyến (RSA-3072, `keys/`, không
+  commit); `config/sdkconfig.hardened` chốt cấu hình bản phát hành.
+- `scripts/build_pico_fido.*` build lặp lại được cả 2 bản (kèm workaround
+  CMake backslash Windows); `scripts/lockdown_key.*` là danh mục khóa chip
+  có hướng dẫn, chỉ đọc eFuse, không tự đốt fuse nào.
+- Ghi nhận khi build: USB VID/PID `0x2E8A:0x10FE`, flash config 4 MB trên
+  board 16 MB, bảng phân vùng bản ký dời lên `0x10000` (chi tiết ở
+  `docs/04-firmware.md`).
+
 ## 2026-11-22 — Đợt kiểm toán bảo mật và mở rộng
 
 ### Vá bảo mật (mỗi lỗi kèm test hồi quy trong self-test)
