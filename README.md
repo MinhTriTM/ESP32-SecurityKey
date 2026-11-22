@@ -1,5 +1,11 @@
 # ESP32-S3 Security Key
 
+[![CI](https://github.com/MinhTriTM/ESP32-SecurityKey/actions/workflows/ci.yml/badge.svg)](https://github.com/MinhTriTM/ESP32-SecurityKey/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-teal.svg)](LICENSE)
+
+**Tiếng Việt** · [English](README.en.md) · [简体中文](README.zh-CN.md)
+
+![ESP32-S3 Security Key](docs/assets/banner.jpg)
+
 Khóa bảo mật USB-C dùng thật, built trên ESP32-S3 DevKit. Cắm cáp C-to-C là chạy trên Android, Linux, Ubuntu và Windows 11. Không cần cài driver.
 
 ## Quyết định phạm vi
@@ -10,6 +16,8 @@ Khóa bảo mật USB-C dùng thật, built trên ESP32-S3 DevKit. Cắm cáp C-
 - Code tự viết trong repo: sketch kiểm tra phần cứng, tool kiểm tra FIDO HID, script flash, tài liệu.
 
 Lý do không tự viết CTAP2 từ đầu: giao thức chữ ký và quản lý credential sai một byte là mất an toàn. Mục tiêu dùng thật nên dùng firmware đã kiểm chứng.
+
+![Luồng xác thực](docs/assets/arch.svg)
 
 ## Cấu trúc repo
 
@@ -28,6 +36,8 @@ Lý do không tự viết CTAP2 từ đầu: giao thức chữ ký và quản l�
 
 1. Đọc [phân tích ý tưởng](docs/01-phan-tich-y-tuong.md) và [BOM](hardware/BOM.md).
 2. Mở siêu web nạp (`scripts/web_flasher.ps1`), nạp [hwtest](firmware/hwtest/hwtest.ino) để kiểm tra USB, nút BOOT và LED.
+
+   ![Luồng nạp firmware](docs/assets/flash-flow.svg)
 3. Làm theo [hướng dẫn firmware](docs/04-firmware.md) để build và flash pico-fido cho ESP32-S3.
 4. Cài [udev rules](config/70-u2f.rules) nếu dùng Linux, rồi chạy [tool kiểm tra](tools/fido_check.py).
 5. Đọc [hướng dẫn sử dụng](docs/05-huong-dan-su-dung.md) và [lưu ý bảo mật](docs/06-bao-mat.md).

@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="860" height="230" viewBox="0 0 860 230" font-family="Segoe UI, system-ui, sans-serif">
+  <defs>
+    <marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="none" stroke="#2dd4bf" stroke-width="1.6"/></marker>
+    <style>.box{fill:#141c28;stroke:#2b3850}.t{fill:#eaf0f8;font-size:14px;font-weight:700;text-anchor:middle}.s{fill:#9db0c7;font-size:11.5px;text-anchor:middle}.n{fill:#9db0c7;font-size:12px;text-anchor:middle}.st{fill:#2dd4bf;font-size:11px;font-weight:700;text-anchor:middle}</style>
+  </defs>
+  <rect width="860" height="230" fill="#0b0f14" rx="16"/>
+  <text x="430" y="30" class="t">Flash Flow — Browser to ESP32-S3</text>
+  <rect x="15" y="55" width="150" height="115" rx="12" class="box"/>
+  <text x="90" y="80" class="st">1 · FIRMWARE</text>
+  <text x="90" y="104" class="t">Binary .bin</text>
+  <text x="90" y="126" class="s">hwtest / pico-fido</text>
+  <text x="90" y="146" class="s">SHA-256 verified</text>
+  <rect x="185" y="55" width="150" height="115" rx="12" class="box"/>
+  <text x="260" y="80" class="st">2 · WEB</text>
+  <text x="260" y="104" class="t">Web flasher</text>
+  <text x="260" y="126" class="s">localhost:8000</text>
+  <text x="260" y="146" class="s">WebSerial + esptool-js</text>
+  <rect x="355" y="55" width="150" height="115" rx="12" class="box"/>
+  <text x="430" y="80" class="st">3 · CABLE</text>
+  <text x="430" y="104" class="t">USB-UART port</text>
+  <text x="430" y="126" class="s">data cable, COM port</text>
+  <text x="430" y="146" class="s">BOOT if needed</text>
+  <rect x="525" y="55" width="150" height="115" rx="12" class="box"/>
+  <text x="600" y="80" class="st">4 · WRITE</text>
+  <text x="600" y="104" class="t">ESP32-S3 flash</text>
+  <text x="600" y="126" class="s">download mode</text>
+  <text x="600" y="146" class="s">progress per file</text>
+  <rect x="695" y="55" width="150" height="115" rx="12" class="box"/>
+  <text x="770" y="80" class="st">5 · VERIFY</text>
+  <text x="770" y="104" class="t">Monitor + test</text>
+  <text x="770" y="126" class="s">serial log 115200</text>
+  <text x="770" y="146" class="s">fido_check / hid_echo</text>
+  <line x1="165" y1="112" x2="183" y2="112" stroke="#2dd4bf" stroke-width="1.6" marker-end="url(#ar)"/>
+  <line x1="335" y1="112" x2="353" y2="112" stroke="#2dd4bf" stroke-width="1.6" marker-end="url(#ar)"/>
+  <line x1="505" y1="112" x2="523" y2="112" stroke="#2dd4bf" stroke-width="1.6" marker-end="url(#ar)"/>
+  <line x1="675" y1="112" x2="693" y2="112" stroke="#2dd4bf" stroke-width="1.6" marker-end="url(#ar)"/>
+  <text x="430" y="205" class="n">Chrome / Edge on desktop · nothing to install · firmware hash-checked before writing</text>
+</svg>

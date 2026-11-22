@@ -389,6 +389,9 @@ def xay_du_lieu(thu_mang_kanzo=True):
 
 
 def main():
+    if not (VIEN / "phan-cong.json").exists():
+        print("Thiếu vien-nghien-cuu/phan-cong.json (dữ liệu nội bộ, không public).")
+        return 1
     du_lieu = xay_du_lieu()
     so_agent = len(du_lieu["agents"])
     so_so = sum(1 for h in du_lieu["agents"].values() if h["ledger"])

@@ -65,6 +65,9 @@ def main(argv=None):
 
 def tu_kiem():
     """Self-test offline trên dữ liệu thật (chỉ đọc)."""
+    if not (vd.VIEN / "phan-cong.json").exists():
+        print("self-test bỏ qua: thiếu dữ liệu Viện nội bộ (không public).")
+        return 0
     dat1, ds1, _ = cham_cong(1)
     assert dat1 and len(ds1) == 12, f"đợt 1 phải 12/12 done"
     dat2, ds2, vuong2 = cham_cong(2)

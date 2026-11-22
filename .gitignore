@@ -33,3 +33,8 @@ keys/*
 
 # Nhật ký vận hành phiên làm việc, không đưa lên public
 process_log.txt
+
+# Nội bộ Viện nghiên cứu và QGAC: không public
+vien-nghien-cuu/
+QGAC/
+.agents/skills/vien-nghien-cuu/

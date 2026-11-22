@@ -1,0 +1,41 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  python-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install libraries
+        run: pip install hidapi numpy qrcode pillow cryptography
+      - name: Run self-tests
+        run: |
+          fail=0
+          for tool in secureio cborx lintsec fido_check hid_echo split_secret mnemonic vault keymgr ml_distinguisher kanzo vien_nhip_tim vien_cong; do
+            echo "=== $tool ==="
+            python3 "tools/$tool.py" --self-test || fail=1
+          done
+          echo "=== pqc (needs native liboqs) ==="
+          python3 tools/pqc.py --self-test && echo pqc-ok || echo "pqc skipped (no native liboqs in CI)"
+          python3 tools/web_firmware.py --check || fail=1
+          exit $fail
+      - name: Check web page integrity
+        run: python3 -c "h=open('web/index.html',encoding='utf-8').read();assert h.rstrip().endswith('</html>');assert h.count('</html>')==1;print('web ok')"
+
+  hwtest-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install arduino-cli
+        run: curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | BINDIR=$HOME/bin sh
+      - name: Install ESP32 core
+        run: export PATH=$HOME/bin:$PATH && arduino-cli core update-index && arduino-cli core install esp32:esp32
+      - name: Compile hwtest (OTG + HWCDC)
+        run: |
+          export PATH=$HOME/bin:$PATH
+          arduino-cli compile --fqbn 'esp32:esp32:esp32s3:CDCOnBoot=cdc,USBMode=default' firmware/hwtest
+          arduino-cli compile --fqbn 'esp32:esp32:esp32s3:CDCOnBoot=cdc,USBMode=hwcdc' firmware/hwtest

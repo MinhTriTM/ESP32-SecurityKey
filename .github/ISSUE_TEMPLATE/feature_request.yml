@@ -1,0 +1,18 @@
+name: Feature request · Đề xuất tính năng · 功能建议
+description: Propose an idea / Đề xuất ý tưởng / 提出建议
+labels: [enhancement]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: Idea / Ý tưởng / 想法
+      description: What should it do and why?
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope / Phạm vi / 范围
+      description: Which part? tools / firmware / web / docs?
+    validations:
+      required: false

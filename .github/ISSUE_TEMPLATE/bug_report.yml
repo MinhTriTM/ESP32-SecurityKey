@@ -1,0 +1,25 @@
+name: Bug report · Báo lỗi · 错误报告
+description: Something broken? Tell us / Có gì hỏng? / 发现问题？
+labels: [bug]
+body:
+  - type: input
+    id: component
+    attributes:
+      label: Component / Thành phần / 组件
+      description: tools / firmware / web / scripts / docs?
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened? / Chuyện gì xảy ra? / 发生了什么？
+      description: Steps, expected vs actual, log lines.
+    validations:
+      required: true
+  - type: input
+    id: env
+    attributes:
+      label: Environment / Môi trường / 环境
+      description: OS, board, browser, commit hash.
+    validations:
+      required: true
