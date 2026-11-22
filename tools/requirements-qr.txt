@@ -1,0 +1,4 @@
+# Thư viện cho lệnh qr của split_secret.py và mnemonic.py.
+# Ghim đúng bản đã kiểm trên máy này (vé bump định kỳ U088).
+qrcode==8.2
+pillow==13.0.0

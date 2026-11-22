@@ -1,0 +1,30 @@
+{
+  "packages": [
+    {
+      "id": "hwtest-otg",
+      "name": "hwtest — bản USB-OTG (khuyên dùng)",
+      "desc": "Kiểm tra USB CDC, nút BOOT, LED RGB và HID echo 64 byte. Dùng cổng USB native sau khi nạp.",
+      "files": [
+        {
+          "path": "hwtest-otg/hwtest.ino.merged.bin",
+          "address": "0x0",
+          "size": 4194304,
+          "sha256": "74d648ba86ea0da20e491f385d162aad27034f3466b4b6830e4e306cb835dcb5"
+        }
+      ]
+    },
+    {
+      "id": "hwtest-hwcdc",
+      "name": "hwtest — bản HWCDC (dự phòng)",
+      "desc": "Giống bản OTG nhưng không có HID echo. Dùng khi board/cáp không chịu OTG.",
+      "files": [
+        {
+          "path": "hwtest-hwcdc/hwtest.ino.merged.bin",
+          "address": "0x0",
+          "size": 4194304,
+          "sha256": "67d8afbb84a4ac2c3d8bed3f8b57e56368476c3eee9c2366095f05026e9764fe"
+        }
+      ]
+    }
+  ]
+}

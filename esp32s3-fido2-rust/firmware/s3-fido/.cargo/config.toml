@@ -1,0 +1,8 @@
+# Cấu hình build riêng cho firmware S3 (không dùng cho crate host).
+[build]
+target = "xtensa-esp32s3-none-elf"
+
+[target.xtensa-esp32s3-none-elf]
+# espup sẽ đặt linker vào PATH; dòng dưới chỉ là chỗ giữ,
+# build thật dùng rustflags do esp-config/espup sinh ra.
+rustflags = ["-C", "link-arg=-Tlinkall.x"]

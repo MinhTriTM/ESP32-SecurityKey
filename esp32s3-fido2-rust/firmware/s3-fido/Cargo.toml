@@ -1,0 +1,28 @@
+# s3-fido — firmware FIDO2 mẫu cho ESP32-S3 (CHƯA BUILD ĐƯỢC, chỉ là khung)
+#
+# Crate này KHÔNG nằm trong workspace của repo (xem exclude ở Cargo.toml gốc),
+# vì nó cần toolchain Xtensa (espup) mà máy dev Windows hiện tại chưa cài.
+# Mọi số bản dưới đây đã đối chiếu trên crates.io ngày 2026-11-22.
+
+[package]
+name = "s3-fido"
+version = "0.1.0"
+edition = "2021"
+publish = false
+description = "Khung firmware key FIDO2 trên ESP32-S3: opensk + esp-hal (mẫu chưa build)"
+
+[dependencies]
+# Lõi CTAP2 authenticator dạng thư viện (Google OpenSK).
+opensk = "0.1"
+# HAL bare-metal cho chip Espressif (bản mới nhất khi viết: 1.2.2).
+esp-hal = { version = "1.2", features = ["esp32s3", "unstable"] }
+# Đọc/ghi flash trong (bản mới nhất khi viết: 0.10.0).
+esp-storage = { version = "0.10", features = ["esp32s3"] }
+# println! qua USB-Serial-JTAG để debug (bản mới nhất khi viết: 0.18.0).
+esp-println = { version = "0.18", features = ["esp32s3"] }
+# Panic handler + backtrace (bản mới nhất khi viết: 0.20.0).
+esp-backtrace = { version = "0.20", features = ["esp32s3", "panic-handler", "exception-handler"] }
+
+[profile.release]
+opt-level = "s"
+lto = true

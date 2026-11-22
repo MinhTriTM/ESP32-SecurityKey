@@ -1,0 +1,3 @@
+tạo security key với esp32 s3 dev kit 2022, n26r8, dùng cho android, linux, ubuntu, win11.
+
+chỉ cần cắm C to C là connect all,

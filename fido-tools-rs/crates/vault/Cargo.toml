@@ -1,0 +1,24 @@
+[package]
+name = "esk-vault"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Két mã hóa file AES-256-GCM, tương thích với tools/vault.py"
+
+[[bin]]
+name = "vault"
+path = "src/main.rs"
+
+[lib]
+name = "esk_vault"
+path = "src/lib.rs"
+
+[dependencies]
+aes-gcm.workspace = true
+clap.workspace = true
+pbkdf2.workspace = true
+rand.workspace = true
+rpassword.workspace = true
+sha2.workspace = true
+subtle.workspace = true
+zeroize.workspace = true

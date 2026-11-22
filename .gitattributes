@@ -1,0 +1,9 @@
+# Chuẩn hóa xuống dòng khi commit (tránh war CRLF/LF giữa Windows/Linux).
+* text=auto
+# File nhị phân giữ nguyên byte.
+*.bin binary
+*.pdf binary
+*.jpg binary
+*.png binary
+*.dll binary
+*.exe binary

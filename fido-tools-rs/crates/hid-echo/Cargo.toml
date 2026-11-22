@@ -1,0 +1,19 @@
+[package]
+name = "esk-hid-echo"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Kiểm tra echo HID của sketch hwtest, tương thích với tools/hid_echo.py"
+
+[[bin]]
+name = "hid-echo"
+path = "src/main.rs"
+
+[lib]
+name = "esk_hid_echo"
+path = "src/lib.rs"
+
+[dependencies]
+clap.workspace = true
+hidapi.workspace = true
+rand.workspace = true

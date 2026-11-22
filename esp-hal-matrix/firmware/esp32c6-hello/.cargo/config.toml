@@ -1,0 +1,8 @@
+[build]
+target = "riscv32imac-esp-espidf"
+
+[target.riscv32imac-esp-espidf]
+runner = "espflash flash --monitor"
+
+[env]
+ESP_LOG = "info"

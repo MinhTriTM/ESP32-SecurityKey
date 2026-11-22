@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Viện Nghiên cứu — Bảng điều hành</title>
+<style>
+:root{
+  --bg:#0e1319; --panel:#151c25; --panel2:#1c2531; --line:#2b3644;
+  --text:#e8ecf1; --mut:#a7b1bf; --mono:Consolas,"Cascadia Mono",monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);
+  font-family:"Segoe UI",system-ui,-apple-system,Roboto,"Helvetica Neue",Arial,sans-serif;
+  font-size:14px;line-height:1.45}
+header.top{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;
+  padding:10px 16px;border-bottom:1px solid var(--line);background:#111820}
+header.top h1{font-size:17px;margin:0;font-weight:700}
+header.top .sub{color:var(--mut);font-size:12px}
+.chip{display:inline-block;background:var(--panel2);border:1px solid var(--line);
+  border-radius:20px;padding:2px 10px;font-size:12px;margin:2px 4px 2px 0}
+.chip b{font-family:var(--mono)}
+#toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 16px;
+  border-bottom:1px solid var(--line);background:#10161d}
+#toolbar input,#toolbar select{background:var(--panel2);color:var(--text);
+  border:1px solid var(--line);border-radius:6px;padding:6px 10px;font-size:13px}
+#toolbar input{min-width:220px}
+#toolbar .note{color:var(--mut);font-size:12px}
+#council{display:flex;gap:8px;overflow-x:auto;padding:10px 16px;
+  border-bottom:1px solid var(--line);background:#10161d}
+.person{flex:none;width:170px;background:var(--panel);border:1px solid var(--line);
+  border-radius:8px;padding:8px;cursor:pointer}
+.person.lead{border-top:3px solid var(--gc,#666)}
+.person .who{font-weight:700;font-size:13px}
+.person .role{color:var(--mut);font-size:11px}
+.person .ma{font-family:var(--mono);font-size:11px;color:var(--mut)}
+main#stage{display:flex;gap:12px;padding:12px 16px;position:relative;align-items:flex-start}
+#map{flex:1;min-width:0;display:flex;flex-direction:column;gap:12px}
+.group{background:var(--panel);border:1px solid var(--line);
+  border-left:4px solid var(--gc);border-radius:8px}
+.group>h2{font-size:14px;margin:0;padding:8px 12px;display:flex;gap:8px;
+  align-items:center;flex-wrap:wrap}
+.group>h2 .cnt{color:var(--mut);font-weight:400;font-size:12px;font-family:var(--mono)}
+.waves{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:8px;padding:0 12px 12px}
+.wave{border:1px dashed #3a4a5e;border-radius:6px;padding:6px;min-width:0}
+.wave>h3{font-size:12px;color:var(--mut);margin:2px 4px 6px;font-weight:600}
+.cards{display:flex;flex-wrap:wrap;gap:6px}
+.agent{width:152px;background:var(--panel2);border:1px solid var(--line);
+  border-radius:6px;padding:6px;cursor:pointer}
+.agent:hover{border-color:var(--gc)}
+.agent.sel{outline:2px solid var(--gc);outline-offset:1px}
+.agent.dim{opacity:.25}
+.agent .row1{display:flex;gap:6px;align-items:center}
+.av{width:26px;height:26px;flex:none;border-radius:50%;background:var(--gc);
+  color:#10161d;font-weight:700;font-size:11px;display:inline-flex;
+  align-items:center;justify-content:center}
+.agent .nm{font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis}
+.agent .ma{font-family:var(--mono);font-size:11px;color:var(--mut)}
+.agent .task{font-size:11px;color:var(--mut);white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;margin-top:2px}
+.sdot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:4px;
+  flex:none}
+.st{font-size:11px;color:var(--mut)}
+#files{width:330px;flex:none;background:var(--panel);border:1px solid var(--line);
+  border-radius:8px;max-height:82vh;overflow:auto;position:sticky;top:12px}
+#files>h2{font-size:13px;margin:0;padding:10px 12px;border-bottom:1px solid var(--line);
+  position:sticky;top:0;background:var(--panel)}
+#files details{border-bottom:1px solid var(--line)}
+#files summary{cursor:pointer;padding:6px 12px;font-size:12px;color:var(--mut);
+  font-family:var(--mono)}
+.frow{display:flex;gap:6px;align-items:center;padding:4px 12px;font-size:12px;
+  border-left:3px solid transparent;cursor:pointer}
+.frow:hover{background:var(--panel2)}
+.frow.hot{border-left-color:var(--gc,#fff);background:var(--panel2)}
+.frow .fn{font-family:var(--mono);font-size:11px;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis}
+.frow .cc{margin-left:auto;color:var(--mut);font-size:11px;font-family:var(--mono);
+  flex:none}
+.ext{flex:none;font-size:10px;font-family:var(--mono);border:1px solid var(--line);
+  border-radius:4px;padding:0 4px;color:var(--mut)}
+#threads{position:absolute;inset:0;pointer-events:none;z-index:5}
+#drawer{position:fixed;top:0;right:0;bottom:0;width:400px;max-width:94vw;z-index:20;
+  background:#10161d;border-left:1px solid var(--line);overflow:auto;padding:16px;
+  transform:translateX(105%);transition:transform .18s ease}
+#drawer.open{transform:none}
+#drawer h2{font-size:16px;margin:0 0 2px}
+#drawer .ma{font-family:var(--mono);color:var(--mut);font-size:12px}
+#drawer h3{font-size:13px;margin:14px 0 6px;color:var(--mut);
+  border-bottom:1px solid var(--line);padding-bottom:4px}
+#drawer .close{float:right;background:var(--panel2);color:var(--text);
+  border:1px solid var(--line);border-radius:6px;padding:4px 10px;cursor:pointer}
+#drawer table{border-collapse:collapse;width:100%;font-size:12px}
+#drawer td{padding:3px 4px;border-bottom:1px solid #1e2833;vertical-align:top}
+#drawer td.k{color:var(--mut);width:110px}
+#drawer .mono{font-family:var(--mono);font-size:11px}
+#drawer .pill{display:inline-block;border-radius:4px;padding:1px 6px;font-size:11px;
+  margin:1px 2px;background:var(--panel2);border:1px solid var(--line);cursor:pointer}
+#drawer .tl{margin:0;padding-left:18px;font-size:12px}
+#drawer .tl li{margin:3px 0}
+#drawer .tl .t{font-family:var(--mono);color:var(--mut);font-size:11px}
+footer{border-top:1px solid var(--line);padding:10px 16px;color:var(--mut);
+  font-size:12px;background:#10161d}
+footer details{margin-top:6px}
+footer summary{cursor:pointer}
+footer pre{background:var(--panel);border:1px solid var(--line);border-radius:6px;
+  padding:8px;font-size:11px;overflow:auto;max-height:220px;font-family:var(--mono)}
+footer .qd{margin:4px 0}
+footer .qd b{font-family:var(--mono);color:var(--text)}
+@media (max-width:1100px){
+  main#stage{flex-direction:column}
+  #files{width:100%;max-height:50vh;position:static}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div>
+    <h1>Viện Nghiên cứu — Bảng điều hành</h1>
+    <div class="sub" id="metaLine">Đang tải dữ liệu…</div>
+  </div>
+  <div id="statChips" style="margin-left:auto"></div>
+</header>
+<div id="toolbar">
+  <input id="q" type="search" placeholder="Tìm mã, tên, việc… (vd: NCKH-034, shamir)">
+  <select id="fWave" title="Đợt"><option value="">Mọi đợt</option>
+    <option value="1">Đợt 1</option><option value="2">Đợt 2</option>
+    <option value="3">Đợt 3</option><option value="4">Đợt 4</option></select>
+  <select id="fGroup" title="Nhóm"><option value="">Mọi nhóm</option></select>
+  <select id="fStatus" title="Trạng thái"><option value="">Mọi trạng thái</option>
+    <option value="doing">Đang làm</option><option value="review">Chờ xét</option>
+    <option value="done">Xong</option><option value="sua">Cần sửa</option>
+    <option value="chuamo">Chưa mở</option></select>
+  <span class="note" id="matchNote"></span>
+  <span class="note">Sợi chỉ: <svg width="34" height="8"><line x1="0" y1="4" x2="32" y2="4" stroke="#8b95a5" stroke-dasharray="4 3"/></svg> đọc
+  <svg width="34" height="8"><line x1="0" y1="4" x2="32" y2="4" stroke="#3ddc84" stroke-width="2"/></svg> viết</span>
+</div>
+<div id="council" title="Hội đồng Viện"></div>
+<main id="stage">
+  <section id="map" aria-label="Bản đồ Viện"></section>
+  <aside id="files" aria-label="File công việc"><h2>File công việc</h2><div id="fileTree"></div></aside>
+  <svg id="threads" aria-hidden="true"></svg>
+</main>
+<aside id="drawer" aria-label="Chi tiết agent"></aside>
+<footer>
+  <div id="gateLine"></div>
+  <details><summary>Nhịp tim gần nhất (nhật ký Viện)</summary><pre id="beatLog"></pre></details>
+  <div style="margin-top:6px">Dữ liệu nhúng từ sổ sách lúc sinh trang — chạy <span class="mono" style="font-family:var(--mono)">python tools/vien_dashboard.py</span> để làm mới.</div>
+</footer>
+<script>
+"use strict";
+const DATA = /*__VIEN_DATA__*/null;
+
+/* Nhãn + màu trạng thái agent. */
+const TRANG_THAI = {
+  chuamo: ["Chưa mở", "#6b7684"], doing: ["Đang làm", "#4aa8ff"],
+  review: ["Chờ xét", "#f5b301"], done: ["Xong", "#3ddc84"],
+  sua: ["Cần sửa", "#ff6b6b"],
+};
+const TEN_NHOM = {firmware: "Firmware", tooling: "Tooling", tailieu: "Tài liệu",
+  kiemdinh: "Kiểm định", PQC: "PQC", ML: "ML"};
+const LOAI_MUC = {nhanviec: "Nhận việc", baocao: "Báo cáo", kiemcheo: "Kiểm chéo",
+  kanzo: "Kanzo", unresolved: "Tồn đọng", khac: "Ghi chú"};
+
+function esc(s) {
+  return String(s == null ? "" : s).replace(/[&<>"']/g,
+    (c) => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"}[c]));
+}
+/* Chữ tắt avatar từ tên (lấy chữ đầu họ + tên). */
+function tat(ten) {
+  const p = String(ten || "?").trim().split(/\s+/);
+  return (p[0][0] + (p.length > 1 ? p[p.length - 1][0] : "")).toUpperCase();
+}
+
+/* ---- Lõi thuần (không chạm DOM) để smoke-test được bằng Node ---- */
+function demTrangThai(data) {
+  const d = {chuamo: 0, doing: 0, review: 0, done: 0, sua: 0};
+  for (const ma in data.agents) d[data.agents[ma].status]++;
+  return d;
+}
+function locAgent(data, f) {
+  const q = (f.q || "").toLowerCase().trim();
+  const ra = [];
+  for (const ma in data.agents) {
+    const a = data.agents[ma];
+    if (f.wave && String(a.dot) !== String(f.wave)) continue;
+    if (f.group && a.nhom !== f.group) continue;
+    if (f.status && a.status !== f.status) continue;
+    if (q) {
+      const gop = (ma + " " + a.ten + " " + (a.nhiem_vu.tieu_de || "") + " " +
+        (a.nhiem_vu.mo_ta || "")).toLowerCase();
+      if (!gop.includes(q)) continue;
+    }
+    ra.push(ma);
+  }
+  return ra.sort();
+}
+function fileCuaAgent(data, ma) {
+  const a = data.agents[ma];
+  return a ? a.files : [];
+}
+function agentCuaFile(data, path) {
+  const f = data.files.find((x) => x.path === path);
+  return f ? {readers: f.readers, writers: f.writers} : {readers: [], writers: []};
+}
+if (typeof window !== "undefined") {
+  window.VIEN = {demTrangThai, locAgent, fileCuaAgent, agentCuaFile,
+    TRANG_THAI, TEN_NHOM, LOAI_MUC};
+}
+
+/* ---- Dựng giao diện ---- */
+let dangChon = null;   /* mã agent đang chọn */
+let fileDangChon = null;
+
+function theAgent(a) {
+  const gc = DATA.mau_nhom[a.nhom] || "#888";
+  const [nhan, mau] = TRANG_THAI[a.status] || TRANG_THAI.chuamo;
+  const nv = a.nhiem_vu || {};
+  const daXet = a.reviewed.length ? ` · đã xét ${a.reviewed.length}` : "";
+  return `<div class="agent" data-ma="${a.ma}" style="--gc:${gc}" ` +
+    `title="${esc(a.ma)} — ${esc(a.ten)}\n${esc(nv.tieu_de || "")}">` +
+    `<div class="row1"><span class="av">${esc(tat(a.ten))}</span><div>` +
+    `<div class="nm">${esc(a.ten)}</div><div class="ma">${a.ma}</div></div></div>` +
+    `<div class="task">${esc(nv.tieu_de || "")}</div>` +
+    `<div class="st"><span class="sdot" style="background:${mau}"></span>` +
+    `${nhan}${daXet}</div></div>`;
+}
+
+function dungBanDo() {
+  const nhoms = {};
+  for (const ma in DATA.agents) {
+    const a = DATA.agents[ma];
+    (nhoms[a.nhom] = nhoms[a.nhom] || {}); 
+    (nhoms[a.nhom][a.dot] = nhoms[a.nhom][a.dot] || []).push(a);
+  }
+  let h = "";
+  for (const g of Object.keys(TEN_NHOM)) {
+    const gc = DATA.mau_nhom[g];
+    const waves = nhoms[g] || {};
+    const tong = Object.values(waves).flat().length;
+    const xong = Object.values(waves).flat()
+      .filter((a) => a.status === "done").length;
+    h += `<section class="group" data-group="${g}" style="--gc:${gc}">` +
+      `<h2><span class="sdot" style="background:${gc};width:10px;height:10px"></span>` +
+      `${TEN_NHOM[g]}<span class="cnt">${xong}/${tong} xong</span></h2><div class="waves">`;
+    for (const w of ["1", "2", "3", "4"]) {
+      const ds = (waves[w] || []).sort((x, y) => (x.ma < y.ma ? -1 : 1));
+      if (!ds.length) continue;
+      h += `<div class="wave"><h3>Đợt ${w} · ${ds.length}</h3><div class="cards">` +
+        ds.map(theAgent).join("") + `</div></div>`;
+    }
+    h += `</div></section>`;
+  }
+  document.getElementById("map").innerHTML = h;
+}
+
+function dungCayFile() {
+  const theoThuMuc = {};
+  for (const f of DATA.files) {
+    (theoThuMuc[f.folder] = theoThuMuc[f.folder] || []).push(f);
+  }
+  let h = "";
+  for (const folder of Object.keys(theoThuMuc).sort()) {
+    const ds = theoThuMuc[folder].sort((a, b) =>
+      (b.readers.length + b.writers.length) - (a.readers.length + a.writers.length));
+    const ten = folder === "(gốc)" ? "(file lẻ)" : esc(folder) + "/";
+    h += `<details open><summary>${ten} · ${ds.length} file</summary>`;
+    for (const f of ds) {
+      const ten_f = f.path.slice(f.path.lastIndexOf("/") + 1);
+      const duoi = (ten_f.includes(".")
+        ? ten_f.slice(ten_f.lastIndexOf(".") + 1) : "?").slice(0, 4);
+      h += `<div class="frow" data-path="${esc(f.path)}" ` +
+        `title="Đọc: ${f.readers.length} · Viết: ${f.writers.length}">` +
+        `<span class="ext">${esc(duoi)}</span>` +
+        `<span class="fn">${esc(ten_f)}</span>` +
+        `<span class="cc">R${f.readers.length} W${f.writers.length}</span></div>`;
+    }
+    h += `</details>`;
+  }
+  document.getElementById("fileTree").innerHTML = h;
+}
+
+function dungHoiDong() {
+  let h = `<div class="person"><div class="who">Viện trưởng</div>` +
+    `<div class="role">Điều hành · trực nhịp tim</div>` +
+    `<div class="ma">${esc(DATA.meta.tao_luc)}</div></div>`;
+  for (const g of Object.keys(TEN_NHOM)) {
+    const t = DATA.truong_nhom[g];
+    if (!t) continue;
+    h += `<div class="person lead" data-group="${g}" style="--gc:${DATA.mau_nhom[g]}" ` +
+      `title="Bấm để lọc nhóm ${TEN_NHOM[g]}"><div class="who">${esc(t.ten)}</div>` +
+      `<div class="role">Nhóm trưởng ${TEN_NHOM[g]}</div>` +
+      `<div class="ma">${t.ma}</div></div>`;
+  }
+  document.getElementById("council").innerHTML = h;
+}
+
+function dungDauTrang() {
+  const d = demTrangThai(DATA);
+  const coSo = Object.values(DATA.agents).filter((a) => a.ledger).length;
+  document.getElementById("metaLine").textContent =
+    `200 agent · ${coSo} sổ cái · ${DATA.reviews.length} lượt kiểm chéo · ` +
+    `${DATA.files.length} file · dữ liệu lúc ${DATA.meta.tao_luc}` +
+    (DATA.meta.bang_tuoi ? "" : " · bảng Kanzo từ cache");
+  let h = "";
+  for (const k of ["done", "review", "doing", "sua", "chuamo"]) {
+    h += `<span class="chip"><span class="sdot" style="background:${TRANG_THAI[k][1]}">` +
+      `</span>${TRANG_THAI[k][0]} <b>${d[k]}</b></span>`;
+  }
+  document.getElementById("statChips").innerHTML = h;
+  const sel = document.getElementById("fGroup");
+  for (const g of Object.keys(TEN_NHOM)) {
+    const o = document.createElement("option");
+    o.value = g; o.textContent = TEN_NHOM[g];
+    sel.appendChild(o);
+  }
+  document.getElementById("gateLine").innerHTML =
+    `<b style="color:var(--text)">Quyết định Viện:</b> ` +
+    DATA.gates.map((g) => `<span class="chip"><b>${esc(g.id)}</b> ${esc(g.text)}</span>`)
+      .join("");
+  document.getElementById("beatLog").textContent = DATA.nhip_tim.join("\n");
+}
+
+/* ---- Ngăn chi tiết agent ---- */
+function pill(ma, extra) {
+  const a = DATA.agents[ma];
+  const gc = a ? DATA.mau_nhom[a.nhom] : "#888";
+  return `<span class="pill" data-ma="${ma}" style="border-color:${gc}"` +
+    ` title="${a ? esc(a.ten) : ""}">${ma}${extra || ""}</span>`;
+}
+function moDrawer(ma) {
+  const a = DATA.agents[ma];
+  if (!a) return;
+  const gc = DATA.mau_nhom[a.nhom];
+  const [nhan, mau] = TRANG_THAI[a.status];
+  const nv = a.nhiem_vu || {};
+  const doc = a.files.filter((f) => f.rel === "read");
+  const viet = a.files.filter((f) => f.rel === "wrote");
+  const liFile = (f) => `<div class="mono" data-path="${esc(f.path)}" ` +
+    `style="cursor:pointer" title="Bấm để xem ai cùng đụng file này">` +
+    `${esc(f.path)}</div>`;
+  const vd = (v) => (v === "DAT" ? "ĐẠT" : v === "KHONG" ? "KHÔNG ĐẠT" : "chưa rõ");
+  let h = `<button class="close" id="dClose">Đóng</button>` +
+    `<h2>${esc(a.ten)}</h2><div class="ma">${a.ma} · ${TEN_NHOM[a.nhom]} · ` +
+    `đợt ${a.dot} · ${esc(a.vai_tro || "thành viên")}</div>` +
+    `<div style="margin-top:6px"><span class="sdot" style="background:${mau}">` +
+    `</span><b>${nhan}</b>` +
+    (a.card ? ` · thẻ Kanzo #${a.card.id} (${a.card.status}, ${a.card.comments} bình luận)` : "") +
+    `</div><h3>Nhiệm vụ</h3><div><b>${esc(nv.tieu_de || "")}</b></div>` +
+    `<div style="color:var(--mut);font-size:12px">${esc(nv.mo_ta || "")}</div>` +
+    `<div class="ma">loại: ${esc(nv.loai || "")}</div>` +
+    `<h3>Kiểm chéo</h3><table>` +
+    `<tr><td class="k">Bị xét bởi</td><td>` +
+    (a.reviewed_by.map((x) => pill(x.ma, ` ${vd(x.verdict)}`)).join("") || "—") +
+    `</td></tr><tr><td class="k">Đã xét</td><td>` +
+    (a.reviewed.map((x) => pill(x.to, ` ${vd(x.verdict)}`)).join("") || "—") +
+    `</td></tr></table>` +
+    `<h3>File đã viết (${viet.length})</h3>` +
+    (viet.map(liFile).join("") || `<div class="ma">—</div>`) +
+    `<h3>File đã đọc (${doc.length})</h3>` +
+    (doc.map(liFile).join("") || `<div class="ma">—</div>`) +
+    `<h3>Dòng thời gian (${a.timeline.length})</h3><ul class="tl">` +
+    a.timeline.map((e) =>
+      `<li><span class="t">${esc(e.t)}</span> <b>${LOAI_MUC[e.kind] || ""}</b> — ` +
+      `${esc(e.title)}</li>`).join("") + `</ul>` +
+    (a.unresolved.length ? `<h3>Tồn đọng</h3><ul class="tl">` +
+      a.unresolved.map((u) => `<li>${esc(u)}</li>`).join("") + `</ul>` : "");
+  const dr = document.getElementById("drawer");
+  dr.innerHTML = h;
+  dr.classList.add("open");
+  dr.style.setProperty("--gc", gc);
+  document.getElementById("dClose").onclick = dongDrawer;
+  dr.querySelectorAll("[data-ma]").forEach((el) => {
+    el.onclick = () => chonAgent(el.getAttribute("data-ma"));
+  });
+  dr.querySelectorAll("[data-path]").forEach((el) => {
+    el.onclick = () => chonFile(el.getAttribute("data-path"));
+  });
+}
+function dongDrawer() {
+  document.getElementById("drawer").classList.remove("open");
+  chonAgent(null);
+}
+
+/* ---- Chọn agent / file + sợi chỉ ---- */
+function khungTuongDoi(el, goc) {
+  try {
+    const r = el.getBoundingClientRect();
+    const g = goc.getBoundingClientRect();
+    const o = {x: r.left - g.left, y: r.top - g.top, w: r.width, h: r.height};
+    if ([o.x, o.y, o.w, o.h].every(Number.isFinite)) return o;
+  } catch (e) { /* đầu đo hỏng: bỏ sợi chỉ này */ }
+  return null;
+}
+function veSoiChi() {
+  const svg = document.getElementById("threads");
+  const stage = document.getElementById("stage");
+  svg.setAttribute("width", stage.scrollWidth);
+  svg.setAttribute("height", stage.scrollHeight);
+  let h = "";
+  if (dangChon && DATA.agents[dangChon]) {
+    const card = document.querySelector(`.agent[data-ma="${dangChon}"]`);
+    const o1 = card && khungTuongDoi(card, stage);
+    if (o1) {
+      const gc = DATA.mau_nhom[DATA.agents[dangChon].nhom];
+      const x1 = o1.x + o1.w, y1 = o1.y + o1.h / 2;
+      const ds = DATA.agents[dangChon].files.slice(0, 40);
+      document.querySelectorAll(".frow.hot").forEach((el) =>
+        el.classList.remove("hot"));
+      for (const f of ds) {
+        const row = document.querySelector(`.frow[data-path="${CSS.escape(f.path)}"]`);
+        if (!row) continue;
+        row.classList.add("hot");
+        row.style.setProperty("--gc", gc);
+        const o2 = khungTuongDoi(row, stage);
+        if (!o2) continue;
+        const x2 = o2.x, y2 = o2.y + o2.h / 2, mx = (x1 + x2) / 2;
+        const mau = f.rel === "wrote" ? gc : "#8b95a5";
+        const net = f.rel === "wrote" ? "" : ` stroke-dasharray="4 3"`;
+        h += `<path d="M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}" ` +
+          `fill="none" stroke="${mau}" stroke-width="${f.rel === "wrote" ? 2 : 1.2}"` +
+          `${net} opacity="0.85"/>`;
+      }
+    }
+  }
+  svg.innerHTML = h;
+}
+function chonAgent(ma) {
+  dangChon = ma;
+  fileDangChon = null;
+  document.querySelectorAll(".agent.sel").forEach((el) => el.classList.remove("sel"));
+  document.querySelectorAll(".frow.hot").forEach((el) => el.classList.remove("hot"));
+  if (!ma) { veSoiChi(); return; }
+  const card = document.querySelector(`.agent[data-ma="${ma}"]`);
+  if (card) card.classList.add("sel");
+  moDrawer(ma);
+  veSoiChi();
+}
+function chonFile(path) {
+  fileDangChon = path;
+  const g = agentCuaFile(DATA, path);
+  const lien = new Set([...g.readers, ...g.writers]);
+  document.querySelectorAll(".agent").forEach((el) => {
+    el.classList.toggle("dim", !lien.has(el.getAttribute("data-ma")));
+  });
+  document.getElementById("matchNote").textContent =
+    `${path}: ${lien.size} agent liên quan (bấm agent để xem chi tiết, bấm lại file để bỏ)`;
+}
+
+/* ---- Bộ lọc ---- */
+function apBoLoc() {
+  const f = {q: document.getElementById("q").value,
+    wave: document.getElementById("fWave").value,
+    group: document.getElementById("fGroup").value,
+    status: document.getElementById("fStatus").value};
+  const giu = new Set(locAgent(DATA, f));
+  document.querySelectorAll(".agent").forEach((el) => {
+    el.classList.toggle("dim", !giu.has(el.getAttribute("data-ma")));
+  });
+  document.getElementById("matchNote").textContent =
+    fileDangChon ? document.getElementById("matchNote").textContent
+      : `${giu.size}/200 agent khớp`;
+}
+
+/* ---- Khởi động ---- */
+function init() {
+  if (!DATA || !DATA.agents) {
+    document.getElementById("map").innerHTML =
+      "<p>Dữ liệu chưa được nhúng. Hãy chạy generator.</p>";
+    return;
+  }
+  dungDauTrang();
+  dungHoiDong();
+  dungBanDo();
+  dungCayFile();
+  apBoLoc();
+  document.getElementById("map").addEventListener("click", (ev) => {
+    const c = ev.target.closest(".agent");
+    if (c) chonAgent(c.getAttribute("data-ma"));
+  });
+  document.getElementById("fileTree").addEventListener("click", (ev) => {
+    const r = ev.target.closest(".frow");
+    if (r) {
+      const p = r.getAttribute("data-path");
+      if (fileDangChon === p) {
+        fileDangChon = null;
+        document.querySelectorAll(".agent.dim").forEach((el) =>
+          el.classList.remove("dim"));
+        apBoLoc();
+      } else chonFile(p);
+    }
+  });
+  document.getElementById("council").addEventListener("click", (ev) => {
+    const p = ev.target.closest(".person.lead");
+    if (p) {
+      const sel = document.getElementById("fGroup");
+      sel.value = sel.value === p.getAttribute("data-group") ? ""
+        : p.getAttribute("data-group");
+      apBoLoc();
+    }
+  });
+  for (const id of ["q", "fWave", "fGroup", "fStatus"]) {
+    document.getElementById(id).addEventListener("input", apBoLoc);
+  }
+  document.addEventListener("keydown", (ev) => {
+    if (ev.key === "Escape") dongDrawer();
+  });
+  let hen = null;
+  const veLai = () => {
+    if (hen) cancelAnimationFrame(hen);
+    hen = requestAnimationFrame(veSoiChi);
+  };
+  document.getElementById("files").addEventListener("scroll", veLai);
+  window.addEventListener("scroll", veLai, {passive: true});
+  window.addEventListener("resize", veLai);
+  veSoiChi();
+  if (typeof window !== "undefined") window.VIEN.init = init;
+}
+if (typeof document !== "undefined" && document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", init);
+} else if (typeof document !== "undefined") {
+  init();
+}
+</script>
+</body>
+</html>

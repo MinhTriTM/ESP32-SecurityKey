@@ -1,0 +1,8 @@
+# Thư viện cho tools/pqc.py (ML-KEM-768 qua liboqs-python).
+# Cài vào .tooling/pylibs, không cài system-wide:
+#   pip install --target .tooling/pylibs -r tools/requirements-pqc.txt
+# Ghi chú: liboqs-python cần DLL liboqs native; lần đầu import oqs sẽ tự
+# build vào %USERPROFILE%\_oqs (cần CMake + Visual Studio C++). Nếu build
+# tay vào chỗ khác, trỏ OQS_INSTALL_PATH tới thư mục cài trước khi chạy.
+# Ghim đúng bản đã kiểm trên máy này (vé bump định kỳ U088).
+liboqs-python==0.16.0.2

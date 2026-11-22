@@ -1,0 +1,17 @@
+[package]
+name = "esp-gen-template"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Sinh crate firmware esp-hal từ mẫu theo mã chip (chạy trên host)"
+
+[lib]
+name = "esp_gen_template"
+path = "src/lib.rs"
+
+[[bin]]
+name = "new-esp-firmware"
+path = "src/main.rs"
+
+[dependencies]
+esp-inventory = { path = "../inventory" }

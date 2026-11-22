@@ -1,0 +1,4 @@
+# Cần Python >= 3.10 (fido_check.py dùng cú pháp dict | None).
+# Ghim đúng bản đã kiểm trên máy này (vé bump định kỳ U088).
+hidapi==0.15.0
+numpy==2.5.4

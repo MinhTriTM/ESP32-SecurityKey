@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Web Nạp ESP32-S3 — Security Key</title>
+<style>
+  :root {
+    --bg: #0b0f14; --card: #141c28; --card2: #1b2434; --line: #2b3850;
+    --text: #eaf0f8; --dim: #9db0c7; --faint: #6b7d94;
+    --accent: #2dd4bf; --accent2: #60a5fa; --warn: #fbbf24;
+    --danger: #f87171; --ok: #34d399;
+    --mono: "Cascadia Mono", "JetBrains Mono", Consolas, monospace;
+    --sans: "Segoe UI", system-ui, -apple-system, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: radial-gradient(1200px 400px at 50% -100px, #14324a 0%, var(--bg) 60%);
+    background-color: var(--bg); color: var(--text); font-family: var(--sans); line-height: 1.6; }
+  header.top { position: sticky; top: 0; z-index: 10; backdrop-filter: blur(10px);
+    background: rgba(11, 15, 20, 0.88); border-bottom: 1px solid var(--line); }
+  .topinner { max-width: 1024px; margin: 0 auto; padding: 14px 18px;
+    display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+  .brand { display: flex; gap: 12px; align-items: center; margin-right: auto; }
+  .logo { width: 40px; height: 40px; border-radius: 12px; flex: none;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 18px; color: #06231f; }
+  .brand h1 { margin: 0; font-size: 17px; letter-spacing: 0.2px; }
+  .brand p { margin: 0; font-size: 12.5px; color: var(--dim); }
+  .pill { display: inline-flex; gap: 7px; align-items: center; padding: 6px 14px;
+    border-radius: 999px; font-size: 13px; font-weight: 600;
+    background: #2a230f; color: var(--warn); border: 1px solid #6b5418; }
+  .pill .dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+  .pill.on { background: #0c3527; color: var(--ok); border-color: #1c6b4c; }
+  .pill.busy { background: #16294a; color: var(--accent2); border-color: #2c4f86; }
+  #chipline { font-size: 12px; color: var(--faint); font-family: var(--mono); width: 100%; }
+  main { max-width: 1024px; margin: 0 auto; padding: 20px 18px 70px; }
+  .stepper { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 18px; }
+  .stepbox { background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+    padding: 10px 12px; font-size: 13px; color: var(--faint); }
+  .stepbox b { display: flex; gap: 8px; align-items: center; font-size: 13.5px; }
+  .stepbox .n { width: 22px; height: 22px; line-height: 22px; text-align: center; flex: none;
+    border-radius: 50%; background: var(--card2); border: 1px solid var(--line); font-size: 12px; }
+  .stepbox small { display: block; margin-top: 2px; font-size: 12px; }
+  .stepbox.active { border-color: var(--accent); color: var(--text); }
+  .stepbox.active .n { background: var(--accent); color: #06231f; border-color: var(--accent); font-weight: 700; }
+  .stepbox.done { border-color: #1c6b4c; color: var(--dim); }
+  .stepbox.done .n { background: #0c3527; color: var(--ok); border-color: #1c6b4c; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px;
+    padding: 20px 22px; margin-bottom: 16px; box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35); }
+  .card > h2 { margin: 0 0 4px; font-size: 16.5px; }
+  .card > h2 .tag { display: inline-block; font-size: 11.5px; font-weight: 700; letter-spacing: 0.6px;
+    color: var(--accent); border: 1px solid #1f5c55; background: #0e2b28;
+    border-radius: 6px; padding: 1px 8px; margin-right: 8px; vertical-align: 2px; }
+  .sub { margin: 0 0 12px; font-size: 13px; color: var(--dim); }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin: 10px 0; }
+  button, select, input[type="text"] { font-size: 14px; padding: 9px 16px; border-radius: 10px;
+    border: 1px solid var(--line); background: var(--card2); color: var(--text);
+    cursor: pointer; font-family: var(--sans); }
+  button { transition: transform 0.06s, border-color 0.12s, background 0.12s; }
+  button:hover:not(:disabled) { border-color: var(--accent); }
+  button:active:not(:disabled) { transform: translateY(1px); }
+  button:disabled { opacity: 0.4; cursor: not-allowed; }
+  button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--accent2); outline-offset: 1px; }
+  button.primary { background: linear-gradient(135deg, #0d5c53, #1c4d8a); border-color: #2b7f75; font-weight: 700; }
+  button.primary:hover:not(:disabled) { border-color: var(--accent); }
+  button.big { font-size: 15px; padding: 12px 26px; }
+  button.danger { background: #3d1518; border-color: #7a2e33; }
+  button.danger:hover:not(:disabled) { border-color: var(--danger); }
+  button.ghost { background: transparent; }
+  button.small { font-size: 12.5px; padding: 5px 12px; border-radius: 7px; }
+  input[type="file"] { font-size: 13px; color: var(--dim); max-width: 230px; }
+  input[type="checkbox"], input[type="radio"] { width: 16px; height: 16px; accent-color: var(--accent); }
+  label.lbl { font-size: 14px; color: var(--dim); display: inline-flex; gap: 6px; align-items: center; }
+  .pkg { border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; margin: 8px 0;
+    display: flex; gap: 12px; align-items: flex-start; cursor: pointer; background: var(--card2); }
+  .pkg:hover { border-color: var(--accent2); }
+  .pkg.selected { border-color: var(--accent); background: #10242b; box-shadow: 0 0 0 1px var(--accent); }
+  .pkg input { margin-top: 4px; flex: none; }
+  .pkg b { display: block; font-size: 14.5px; }
+  .pkg .badge { display: inline-block; font-size: 11px; font-weight: 700; color: #06231f;
+    background: var(--accent); border-radius: 5px; padding: 0 7px; margin-left: 8px; vertical-align: 2px; }
+  .pkg small { color: var(--dim); font-size: 12.5px; }
+  .pkg code { font-family: var(--mono); font-size: 11.5px; color: var(--faint); }
+  .filerow { display: flex; gap: 8px; align-items: center; margin: 6px 0; flex-wrap: wrap;
+    background: var(--card2); border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; }
+  .filerow input[type="text"] { width: 100px; font-family: var(--mono); padding: 7px 10px; }
+  .filerow .fname { font-size: 12.5px; font-family: var(--mono); color: var(--accent2);
+    overflow: hidden; text-overflow: ellipsis; max-width: 340px; }
+  .termwrap { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; margin-top: 10px; }
+  .termbar { display: flex; gap: 8px; align-items: center; background: #0d1320;
+    border-bottom: 1px solid var(--line); padding: 6px 10px; font-size: 12px; color: var(--faint); }
+  .termbar .spacer { flex: 1; }
+  #console, #monitor { background: #070b11; font-family: var(--mono); font-size: 12.5px;
+    height: 240px; overflow-y: auto; padding: 10px 12px; white-space: pre-wrap; word-break: break-all; }
+  #monitor { height: 280px; }
+  .log-info { color: var(--text); } .log-ok { color: var(--ok); }
+  .log-warn { color: var(--warn); } .log-err { color: var(--danger); }
+  .log-dim { color: var(--faint); }
+  .bar { height: 16px; background: #070b11; border: 1px solid var(--line); border-radius: 9px;
+    overflow: hidden; margin-top: 8px; }
+  .bar > div { height: 100%; width: 0%; border-radius: 8px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width 0.12s; }
+  .bar.thin { height: 8px; }
+  #progtxt, #progtxt2 { font-size: 12.5px; color: var(--dim); font-family: var(--mono); margin-top: 4px; }
+  .hint { font-size: 13px; color: var(--dim); background: #101828; border-left: 3px solid var(--accent2);
+    padding: 9px 13px; border-radius: 0 10px 10px 0; margin: 10px 0; }
+  .hint.warn { border-color: var(--warn); background: #1d1809; }
+  .hint.ok { border-color: var(--ok); background: #0a211a; }
+  code.inline { font-family: var(--mono); background: #070b11; padding: 1px 7px;
+    border-radius: 5px; font-size: 12.5px; border: 1px solid var(--line); }
+  #nserial { display: none; background: #3d1518; border: 1px solid var(--danger);
+    border-radius: 12px; padding: 13px 18px; margin-bottom: 16px; font-size: 14px; }
+  details.guide { background: var(--card); border: 1px solid var(--line); border-radius: 16px;
+    padding: 14px 22px; margin-bottom: 16px; }
+  details.guide summary { cursor: pointer; font-weight: 700; font-size: 15px; }
+  details.guide ol { font-size: 14px; color: var(--dim); }
+  details.guide ol b, details.guide ol code { color: var(--text); }
+  footer { text-align: center; color: var(--faint); font-size: 12.5px; padding: 10px 16px 26px; }
+  a { color: var(--accent2); }
+  @media (max-width: 640px) {
+    .stepper { grid-template-columns: repeat(2, 1fr); }
+    .brand p { display: none; }
+    .card { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="topinner">
+    <div class="brand">
+      <div class="logo">S3</div>
+      <div>
+        <h1>Web Nạp ESP32-S3 — Security Key</h1>
+        <p>Nạp firmware từ trình duyệt, không cần cài esptool. Cần Chrome hoặc Edge.</p>
+      </div>
+    </div>
+    <span id="statuspill" class="pill"><span class="dot"></span><span id="statustxt">Chưa kết nối</span></span>
+    <span id="chipline">chưa có thông tin chip</span>
+  </div>
+</header>
+<main>
+  <div id="nserial">Trình duyệt này không hỗ trợ WebSerial. Hãy mở trang bằng Chrome hoặc Edge bản mới trên máy tính.</div>
+
+  <div class="stepper">
+    <div class="stepbox active" id="st1"><b><span class="n">1</span>Kết nối</b><small>Cắm board, chọn cổng</small></div>
+    <div class="stepbox" id="st2"><b><span class="n">2</span>Firmware</b><small>Chọn gói hoặc file .bin</small></div>
+    <div class="stepbox" id="st3"><b><span class="n">3</span>Nạp</b><small>Ghi vào flash</small></div>
+    <div class="stepbox" id="st4"><b><span class="n">4</span>Monitor</b><small>Xem log kiểm tra</small></div>
+  </div>
+
+  <div class="card">
+    <h2><span class="tag">BƯỚC 1</span>Kết nối board</h2>
+    <p class="sub">Cắm board bằng cổng USB-UART, rồi bấm kết nối và chọn đúng cổng trong hộp thoại.</p>
+    <div class="row">
+      <button id="btnConnect" class="primary">Kết nối cổng serial</button>
+      <button id="btnDisconnect" class="ghost" disabled>Ngắt kết nối</button>
+      <button id="btnInfo" disabled>Đọc chip + MAC</button>
+      <label class="lbl">Tốc độ nạp:
+        <select id="baud">
+          <option value="921600" selected>921600</option>
+          <option value="460800">460800</option>
+          <option value="230400">230400</option>
+          <option value="115200">115200</option>
+        </select>
+      </label>
+    </div>
+    <div class="hint">Không kết nối được thì: giữ nút BOOT, nhấn nhả nút RESET, thả BOOT ra, rồi bấm Kết nối lại. Nếu vẫn lỗi, đổi cáp USB hoặc hạ tốc độ nạp xuống 115200.</div>
+  </div>
+
+  <div class="card">
+    <h2><span class="tag">BƯỚC 2</span>Chọn firmware</h2>
+    <p class="sub">Gói có sẵn được kiểm tra SHA-256 trước khi nạp. Pico-fido tự build thì thêm file gộp ở mục bên dưới.</p>
+    <div id="pkglist"><div class="hint">Đang tải danh sách firmware có sẵn...</div></div>
+    <div class="hint warn" id="fileproto" style="display:none">Bạn đang mở file trực tiếp nên trình duyệt chặn tải firmware có sẵn. Hãy chạy <code class="inline">scripts/web_flasher.ps1</code> để mở qua localhost, hoặc dùng file tự chọn.</div>
+    <h3 style="font-size:13.5px;color:var(--dim);margin:16px 0 4px">FILE TỰ CHỌN (địa chỉ dạng hex, ví dụ 0x0 hoặc 0x10000)</h3>
+    <div id="customfiles"></div>
+    <div class="row">
+      <button id="btnAddFile" class="ghost small">+ Thêm file .bin</button>
+      <label class="lbl" style="margin-left:auto"><input type="checkbox" id="chkErase"> Xóa toàn bộ flash trước khi nạp</label>
+      <label class="lbl">Flash size:
+        <select id="flashSize">
+          <option value="4MB" selected>4MB</option>
+          <option value="8MB">8MB</option>
+          <option value="16MB">16MB</option>
+        </select>
+      </label>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="tag">BƯỚC 3</span>Nạp vào ESP</h2>
+    <p class="sub">Nạp xong, web tự chuyển sang Monitor để xem log ngay, không phải bấm gì thêm.</p>
+    <div class="row">
+      <button id="btnFlash" class="primary big" disabled>Nạp firmware</button>
+      <button id="btnErase" class="danger" disabled>Xóa flash</button>
+      <button id="btnReset" disabled>Reset board</button>
+    </div>
+    <div class="bar"><div id="progbar"></div></div>
+    <div id="progtxt">sẵn sàng</div>
+    <div class="bar thin"><div id="progbar2"></div></div>
+    <div id="progtxt2">file hiện tại: —</div>
+    <div class="termwrap">
+      <div class="termbar"><span>Nhật ký nạp</span><span class="spacer"></span>
+        <button id="btnLogCopy" class="ghost small">Chép log</button>
+        <button id="btnLogClear" class="ghost small">Xóa</button>
+      </div>
+      <div id="console"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="tag">BƯỚC 4</span>Serial Monitor</h2>
+    <p class="sub">Xem log hwtest: chờ dòng <code class="inline">ESP32-S3 Security Key: hwtest</code>, nhấn nút BOOT để thử.</p>
+    <div class="row">
+      <button id="btnMonOpen">Mở Monitor</button>
+      <button id="btnMonStop" disabled>Dừng</button>
+      <button id="btnMonClear" class="ghost">Xóa log</button>
+      <label class="lbl">Tốc độ:
+        <select id="monBaud">
+          <option value="115200" selected>115200</option>
+          <option value="74880">74880</option>
+          <option value="9600">9600</option>
+        </select>
+      </label>
+      <label class="lbl"><input type="checkbox" id="monScroll" checked> Tự cuộn</label>
+    </div>
+    <div class="termwrap">
+      <div class="termbar"><span>Log serial</span></div>
+      <div id="monitor"></div>
+    </div>
+  </div>
+
+  <details class="guide">
+    <summary>Luồng chuẩn từ đầu tới cuối</summary>
+    <ol>
+      <li>Kết nối board, đọc chip để chắc đúng <b>ESP32-S3</b>.</li>
+      <li>Nạp <b>hwtest bản OTG</b>, web tự mở Monitor sau khi xong.</li>
+      <li>Kiểm tra log chip, nhấn BOOT, xem LED xanh lá chuyển xanh dương.</li>
+      <li>Đạt hết mới nạp <b>pico-fido</b> (file gộp <code class="inline">.bin</code> ở <code class="inline">0x0</code>) theo <a href="../docs/04-firmware.md">hướng dẫn firmware</a>.</li>
+    </ol>
+  </details>
+</main>
+<footer>Chạy hoàn toàn trên máy bạn bằng esptool-js và WebSerial. Không gửi dữ liệu đi đâu.</footer>
+<script type="module">
+// Web nạp ESP32-S3: kết nối WebSerial, nạp bin, xóa flash, đọc chip, monitor log.
+const ESPTOOL_URLS = [
+  "https://unpkg.com/esptool-js@0.5.7/bundle.js",
+  "https://cdn.jsdelivr.net/npm/esptool-js@0.5.7/bundle.js",
+];
+// SHA-384 của esptool-js@0.5.7/bundle.js (179662 byte, hai CDN cùng một bản).
+// Tải về kiểm tra hash rồi mới import: CDN bị tráo thì từ chối, không chạy.
+const ESPTOOL_SHA384 = "f1474e04de7e5849e77d6c1650e487b1c604b356919fbd25a8b7720dccab333aee1c30dfdbb26789394ddb06ec3c8bde";
+let esp = null;
+let port = null, transport = null, loader = null;
+let savedPort = null; // cổng đã cấp quyền, tái dùng cho Monitor khỏi chọn lại
+let connected = false, busy = false, chipName = "", flashedOnce = false;
+let manifestPkgs = [];
+let monReader = null, monOpen = false, monAbort = null;
+
+const $ = (id) => document.getElementById(id);
+const consoleBox = $("console"), monitorBox = $("monitor");
+
+function stamp() { return new Date().toTimeString().slice(0, 8); }
+function log(msg, cls = "log-info") {
+  const line = document.createElement("div");
+  line.className = cls;
+  line.textContent = `[${stamp()}] ${msg}`;
+  consoleBox.appendChild(line);
+  while (consoleBox.children.length > 500) consoleBox.firstChild.remove();
+  consoleBox.scrollTop = consoleBox.scrollHeight;
+}
+function monLog(msg) {
+  monitorBox.textContent += msg;
+  if (monitorBox.textContent.length > 200000) monitorBox.textContent = monitorBox.textContent.slice(-150000);
+  if ($("monScroll").checked) monitorBox.scrollTop = monitorBox.scrollHeight;
+}
+// Thanh bước: st1..st4, mỗi ô có trạng thái "" | "active" | "done".
+function setStep(id, state) {
+  const el = $(id);
+  el.classList.remove("active", "done");
+  if (state) el.classList.add(state);
+  el.querySelector(".n").textContent = state === "done" ? "✓" : id.slice(2);
+}
+function refreshSteps() {
+  setStep("st1", connected ? "done" : "active");
+  setStep("st2", manifestPkgs.length || hasCustomFile() ? "done" : (connected ? "active" : ""));
+  setStep("st3", flashedOnce ? "done" : (connected ? "active" : ""));
+  setStep("st4", monOpen ? "active" : "");
+}
+function hasCustomFile() {
+  return [...document.querySelectorAll("#customfiles input[type='file']")].some((i) => i.files.length);
+}
+function setBusy(v) {
+  busy = v;
+  for (const id of ["btnConnect", "btnDisconnect", "btnInfo", "btnFlash", "btnErase", "btnReset", "btnMonOpen", "btnAddFile"]) {
+    $(id).disabled = true;
+  }
+  const pill = $("statuspill");
+  pill.classList.toggle("busy", v);
+  if (v) $("statustxt").textContent = "Đang xử lý...";
+  else if (!connected) $("statustxt").textContent = "Chưa kết nối";
+  if (!v) refreshButtons();
+}
+function refreshButtons() {
+  $("btnConnect").disabled = connected || busy;
+  $("btnDisconnect").disabled = !connected || busy;
+  $("btnInfo").disabled = !connected || busy;
+  $("btnFlash").disabled = !connected || busy;
+  $("btnErase").disabled = !connected || busy;
+  $("btnReset").disabled = !connected || busy;
+  $("btnMonOpen").disabled = monOpen || busy;
+  $("btnMonStop").disabled = !monOpen || busy;
+  $("btnAddFile").disabled = busy;
+  refreshSteps();
+}
+function setStatus(on, text) {
+  $("statustxt").textContent = text;
+  $("statuspill").classList.toggle("on", on);
+}
+function setProgress(pct, txt, pct2, txt2) {
+  $("progbar").style.width = `${Math.max(0, Math.min(100, pct))}%`;
+  $("progtxt").textContent = txt;
+  if (pct2 !== undefined) {
+    $("progbar2").style.width = `${Math.max(0, Math.min(100, pct2))}%`;
+    $("progtxt2").textContent = txt2;
+  }
+}
+function parseAddr(s) {
+  const t = s.trim().toLowerCase().replace(/^0x/, "");
+  if (!/^[0-9a-f]+$/.test(t)) throw new Error(`Địa chỉ "${s}" không phải hex. Ví dụ đúng: 0x0, 0x10000.`);
+  return Number.parseInt(t, 16);
+}
+async function ensureEsp() {
+  if (esp) return esp;
+  let lastErr = null;
+  for (const url of ESPTOOL_URLS) {
+    try {
+      log(`Đang tải esptool-js từ ${new URL(url).host}...`, "log-dim");
+      const res = await fetch(url, { cache: "force-cache" });
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      const buf = await res.arrayBuffer();
+      const digest = await crypto.subtle.digest("SHA-384", buf);
+      const hex = [...new Uint8Array(digest)].map((b) => b.toString(16).padStart(2, "0")).join("");
+      if (hex !== ESPTOOL_SHA384) throw new Error("sai SHA-384, CDN có thể đã bị tráo!");
+      const blobUrl = URL.createObjectURL(new Blob([buf], { type: "text/javascript" }));
+      try {
+        esp = await import(blobUrl);
+      } finally {
+        URL.revokeObjectURL(blobUrl);
+      }
+      log("Đã tải và kiểm tra esptool-js (SHA-384 khớp).", "log-ok");
+      return esp;
+    } catch (e) {
+      lastErr = e;
+      log(`Tải từ ${new URL(url).host} hỏng: ${e.message}`, "log-warn");
+    }
+  }
+  throw new Error("Không tải được esptool-js an toàn (" + lastErr + "). Kiểm tra mạng rồi thử lại.");
+}
+
+// ---------- Danh sách firmware có sẵn ----------
+async function loadManifest() {
+  const box = $("pkglist");
+  try {
+    const res = await fetch("firmware/firmware.json", { cache: "no-store" });
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    manifestPkgs = (await res.json()).packages || [];
+  } catch (e) {
+    if (location.protocol === "file:") $("fileproto").style.display = "block";
+    box.innerHTML = "";
+    const p = document.createElement("div");
+    p.className = "hint warn";
+    p.textContent = `Không tải được firmware có sẵn (${e.message}). Hãy mở web qua localhost hoặc dùng file tự chọn.`;
+    box.appendChild(p);
+    refreshSteps();
+    return;
+  }
+  box.innerHTML = "";
+  manifestPkgs.forEach((pkg, i) => {
+    const div = document.createElement("label");
+    div.className = "pkg" + (i === 0 ? " selected" : "");
+    const radio = document.createElement("input");
+    radio.type = "radio"; radio.name = "pkg"; radio.value = pkg.id;
+    radio.checked = i === 0;
+    radio.addEventListener("change", () => {
+      document.querySelectorAll(".pkg").forEach((el) => el.classList.remove("selected"));
+      div.classList.add("selected");
+      refreshSteps();
+    });
+    const body = document.createElement("span");
+    const total = pkg.files.reduce((a, f) => a + f.size, 0);
+    const b = document.createElement("b");
+    b.textContent = pkg.name;
+    if (i === 0) {
+      const badge = document.createElement("span");
+      badge.className = "badge";
+      badge.textContent = "KHUYÊN DÙNG";
+      b.appendChild(badge);
+    }
+    const small = document.createElement("small");
+    small.textContent = pkg.desc;
+    const code = document.createElement("code");
+    code.textContent = pkg.files.map((f) => `${f.path.split("/").pop()} @ ${f.address}`).join(" + ") +
+      ` — ${(total / 1048576).toFixed(2)} MB`;
+    body.append(b, document.createElement("br"), small, document.createElement("br"), code);
+    div.append(radio, body);
+    box.appendChild(div);
+  });
+  const div = document.createElement("label");
+  div.className = "pkg";
+  const radio = document.createElement("input");
+  radio.type = "radio"; radio.name = "pkg"; radio.value = "__custom__";
+  radio.addEventListener("change", () => {
+    document.querySelectorAll(".pkg").forEach((el) => el.classList.remove("selected"));
+    div.classList.add("selected");
+    refreshSteps();
+  });
+  const body = document.createElement("span");
+  const b = document.createElement("b");
+  b.textContent = "Chỉ dùng file tự chọn";
+  const small = document.createElement("small");
+  small.textContent = "Bỏ qua gói có sẵn, nạp đúng các file đã thêm ở dưới.";
+  body.append(b, document.createElement("br"), small);
+  div.append(radio, body);
+  box.appendChild(div);
+  refreshSteps();
+}
+function selectedPkg() {
+  const v = document.querySelector('input[name="pkg"]:checked');
+  if (!v || v.value === "__custom__") return null;
+  return manifestPkgs.find((p) => p.id === v.value) || null;
+}
+
+// ---------- File tự chọn ----------
+function addFileRow(addr = "0x0") {
+  const row = document.createElement("div");
+  row.className = "filerow";
+  const addrInput = document.createElement("input");
+  addrInput.type = "text"; addrInput.value = addr;
+  addrInput.title = "Địa chỉ flash dạng hex";
+  addrInput.placeholder = "0x0";
+  const fileInput = document.createElement("input");
+  fileInput.type = "file"; fileInput.accept = ".bin";
+  const name = document.createElement("span");
+  name.className = "fname"; name.textContent = "chưa chọn file";
+  fileInput.addEventListener("change", () => {
+    name.textContent = fileInput.files.length
+      ? `${fileInput.files[0].name} (${(fileInput.files[0].size / 1024).toFixed(1)} KB)` : "chưa chọn file";
+    refreshSteps();
+  });
+  const del = document.createElement("button");
+  del.className = "ghost small"; del.textContent = "Xóa";
+  del.addEventListener("click", () => { row.remove(); refreshSteps(); });
+  row.append(addrInput, fileInput, name, del);
+  $("customfiles").appendChild(row);
+}
+
+// ---------- Kết nối ----------
+const terminal = {
+  clean() { /* giữ log trên web, không xóa */ },
+  writeLine(data) { log(String(data), "log-dim"); },
+  write(data) { log(String(data), "log-dim"); },
+};
+async function connect() {
+  setBusy(true);
+  try {
+    await ensureEsp();
+    if (monOpen) await stopMonitor(true);
+    log("Chờ bạn chọn cổng serial...");
+    port = await navigator.serial.requestPort();
+    savedPort = port;
+    const baud = Number($("baud").value);
+    transport = new esp.Transport(port); // không bật tracing để log khỏi ngập gói tin
+    loader = new esp.ESPLoader({ transport, baudrate: baud, terminal });
+    log(`Đang kết nối ở ${baud} baud, đưa chip vào download mode...`);
+    chipName = await loader.main();
+    connected = true;
+    setStatus(true, `Đã kết nối: ${chipName}`);
+    $("chipline").textContent = `chip ${chipName} @ ${baud} baud`;
+    log(`Đã kết nối: ${chipName}.`, "log-ok");
+    if (!/ESP32-S3/i.test(chipName)) {
+      log(`CẢNH BÁO: chip là ${chipName}, không phải ESP32-S3. Kiểm tra lại board trước khi nạp.`, "log-warn");
+    }
+  } catch (e) {
+    if (e && e.name === "NotFoundError") {
+      log("Bạn chưa chọn cổng nào.", "log-warn");
+    } else {
+      log("Kết nối thất bại: " + (e && e.message ? e.message : e), "log-err");
+      log("Mẹo: giữ BOOT, nhấn nhả RESET, thả BOOT rồi bấm Kết nối lại. Thử cáp khác hoặc hạ tốc độ nạp.", "log-warn");
+    }
+    await silentDisconnect();
+  } finally { setBusy(false); }
+}
+async function silentDisconnect() {
+  connected = false;
+  try { if (transport) await transport.disconnect(); } catch (_) { /* bỏ qua */ }
+  try { if (port) await port.close(); } catch (_) { /* transport đã đóng */ }
+  port = transport = loader = null;
+  setStatus(false, "Chưa kết nối");
+  $("chipline").textContent = "chưa có thông tin chip";
+}
+async function disconnect() {
+  setBusy(true);
+  await silentDisconnect();
+  log("Đã ngắt kết nối.");
+  setBusy(false);
+}
+async function chipInfo() {
+  setBusy(true);
+  try {
+    log(`Chip: ${chipName || loader.chipName || "?"}`);
+    try {
+      const mac = await loader.readMac();
+      if (mac) {
+        log(`MAC: ${mac}`, "log-ok");
+        $("chipline").textContent += ` — MAC ${mac}`;
+      }
+    } catch (_) { log("Không đọc được MAC trên bản esptool-js này."); }
+    try {
+      const size = await loader.getFlashSize();
+      if (size) log(`Flash size chip báo: ${size}`);
+    } catch (_) { /* nhiều bản không hỗ trợ, bỏ qua */ }
+  } catch (e) {
+    log("Đọc thông tin thất bại: " + e.message, "log-err");
+  } finally { setBusy(false); }
+}
+
+// ---------- Thu thập dữ liệu nạp ----------
+async function sha256hex(buf) {
+  const digest = await crypto.subtle.digest("SHA-256", buf);
+  return [...new Uint8Array(digest)].map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+async function collectFiles() {
+  const fileArray = [];
+  const pkg = selectedPkg();
+  if (pkg) {
+    for (const f of pkg.files) {
+      log(`Đang tải ${f.path} (${(f.size / 1048576).toFixed(2)} MB)...`);
+      const res = await fetch("firmware/" + f.path, { cache: "no-store" });
+      if (!res.ok) throw new Error(`Không tải được firmware/${f.path} (HTTP ${res.status}).`);
+      const buf = new Uint8Array(await res.arrayBuffer());
+      if (buf.length !== f.size) throw new Error(`File ${f.path} sai kích thước: ${buf.length} != ${f.size}.`);
+      try {
+        const hash = await sha256hex(buf);
+        if (hash !== f.sha256) throw new Error("sai SHA-256, file có thể hỏng: " + f.path);
+        log(`SHA-256 khớp: ${f.path.split("/").pop()}.`, "log-ok");
+      } catch (e) {
+        if (String(e.message).includes("sai SHA-256")) throw e;
+        log("Bỏ qua kiểm tra SHA-256 (trình duyệt chặn crypto).", "log-warn");
+      }
+      fileArray.push({ data: buf, address: parseAddr(f.address) });
+    }
+  }
+  for (const row of document.querySelectorAll("#customfiles .filerow")) {
+    const addr = parseAddr(row.querySelector('input[type="text"]').value);
+    const input = row.querySelector('input[type="file"]');
+    if (!input.files.length) continue;
+    const file = input.files[0];
+    const buf = new Uint8Array(await file.arrayBuffer());
+    log(`Đã đọc ${file.name} (${(buf.length / 1024).toFixed(1)} KB) @ 0x${addr.toString(16)}.`);
+    fileArray.push({ data: buf, address: addr });
+  }
+  if (!fileArray.length) throw new Error("Chưa có file nào để nạp. Hãy chọn gói có sẵn hoặc thêm file .bin.");
+  const seen = new Set();
+  for (const f of fileArray) {
+    if (seen.has(f.address)) throw new Error(`Trùng địa chỉ 0x${f.address.toString(16)} ở 2 file. Mỗi file phải có địa chỉ riêng.`);
+    seen.add(f.address);
+  }
+  return fileArray;
+}
+
+// ---------- Nạp / Xóa / Reset ----------
+async function flash() {
+  setBusy(true);
+  setProgress(0, "chuẩn bị...", 0, "file hiện tại: —");
+  try {
+    const fileArray = await collectFiles();
+    const totalBytes = fileArray.reduce((a, f) => a + f.data.length, 0);
+    log(`Bắt đầu nạp ${fileArray.length} file, tổng ${(totalBytes / 1048576).toFixed(2)} MB...`);
+    const started = Date.now();
+    await loader.writeFlash({
+      fileArray,
+      flashSize: $("flashSize").value,
+      flashMode: "qio",
+      flashFreq: "80m",
+      eraseAll: $("chkErase").checked,
+      compress: true,
+      reportProgress: (idx, written, total) => {
+        const doneBefore = fileArray.slice(0, idx).reduce((a, f) => a + f.data.length, 0);
+        const pct = ((doneBefore + written) / totalBytes) * 100;
+        const pctFile = (written / total) * 100;
+        setProgress(pct, `tổng: ${pct.toFixed(1)}%`, pctFile, `file ${idx + 1}/${fileArray.length}: ${pctFile.toFixed(1)}%`);
+      },
+    });
+    const secs = ((Date.now() - started) / 1000).toFixed(1);
+    setProgress(100, `xong trong ${secs}s`, 100, "xong");
+    flashedOnce = true;
+    log(`Nạp xong trong ${secs}s. Đang reset board...`, "log-ok");
+    await doReset(true);
+    log("Tự mở Monitor để xem log...", "log-ok");
+    await silentDisconnect();
+    refreshButtons();
+    await openMonitor();
+  } catch (e) {
+    setProgress(0, "lỗi", 0, "file hiện tại: —");
+    log("Nạp thất bại: " + (e && e.message ? e.message : e), "log-err");
+  } finally { setBusy(false); }
+}
+async function eraseAll() {
+  if (!confirm("Xóa TOÀN BỘ flash? Mọi firmware và dữ liệu trên chip sẽ mất.")) return;
+  setBusy(true);
+  setProgress(0, "đang xóa...", 0, "file hiện tại: —");
+  try {
+    log("Đang xóa toàn bộ flash, chờ 10–60 giây, không rút cáp...");
+    await loader.eraseFlash();
+    setProgress(100, "đã xóa sạch");
+    log("Đã xóa toàn bộ flash. Giờ hãy nạp firmware ở nút Nạp firmware.", "log-ok");
+  } catch (e) {
+    log("Xóa thất bại: " + (e && e.message ? e.message : e), "log-err");
+  } finally { setBusy(false); }
+}
+async function doReset(quiet = false) {
+  try {
+    if (typeof loader.after === "function") await loader.after("hard_reset");
+    else if (typeof loader.hardReset === "function") await loader.hardReset();
+    if (!quiet) log("Đã reset board.", "log-ok");
+  } catch (e) {
+    log("Reset mềm thất bại (" + e.message + "), hãy nhấn nút RESET trên board.", "log-warn");
+  }
+}
+
+// ---------- Serial Monitor (tái dùng cổng đã chọn, khỏi chọn lại) ----------
+async function openMonitor() {
+  if (monOpen) return;
+  if (connected) {
+    log("Monitor cần cổng serial nên tự ngắt kết nối nạp.", "log-warn");
+    await silentDisconnect();
+    refreshButtons();
+  }
+  const baud = Number($("monBaud").value);
+  try {
+    port = savedPort || await navigator.serial.requestPort();
+    savedPort = port;
+    await port.open({ baudRate: baud });
+  } catch (e) {
+    savedPort = null; // mở lỗi thì lần sau chọn lại cổng
+    if (e && e.name === "NotFoundError") {
+      monLog("Bạn chưa chọn cổng nào.\n");
+    } else {
+      log("Mở Monitor thất bại: " + e.message, "log-err");
+      monLog(`[Không mở được Monitor: ${e.message}]\n`);
+    }
+    port = null;
+    return;
+  }
+  monOpen = true;
+  monAbort = new AbortController();
+  refreshButtons();
+  monLog(`--- Monitor mở @${baud}, ${stamp()} ---\nNhấn nút RESET trên board nếu chưa thấy log.\n`);
+  document.querySelector("#monitor").scrollIntoView({ behavior: "smooth", block: "nearest" });
+  monitorLoop(); // chạy nền, không await để hàm gọi khỏi kẹt
+}
+async function monitorLoop() {
+  const decoder = new TextDecoderStream();
+  const closed = port.readable.pipeTo(decoder.writable).catch(() => {});
+  monReader = decoder.readable.getReader();
+  try {
+    while (!monAbort.signal.aborted) {
+      const { value, done } = await monReader.read();
+      if (done) break;
+      if (value) monLog(value);
+    }
+  } catch (e) {
+    if (!monAbort.signal.aborted) monLog(`\n[Lỗi đọc serial: ${e.message}]\n`);
+  } finally {
+    try { monReader.releaseLock(); } catch (_) { /* bỏ qua */ }
+    await closed.catch(() => {});
+  }
+}
+async function stopMonitor(silent = false) {
+  if (!monOpen) return;
+  monAbort.abort();
+  try { if (monReader) await monReader.cancel(); } catch (_) { /* bỏ qua */ }
+  try { if (port) await port.close(); } catch (_) { /* bỏ qua */ }
+  port = null; monReader = null; monOpen = false;
+  refreshButtons();
+  if (!silent) monLog(`\n--- Monitor đóng, ${stamp()} ---\n`);
+}
+
+// ---------- Khởi động ----------
+if (!("serial" in navigator)) {
+  $("nserial").style.display = "block";
+  for (const id of ["btnConnect", "btnMonOpen", "btnAddFile", "btnFlash"]) $(id).disabled = true;
+}
+$("btnConnect").addEventListener("click", connect);
+$("btnDisconnect").addEventListener("click", disconnect);
+$("btnInfo").addEventListener("click", chipInfo);
+$("btnFlash").addEventListener("click", flash);
+$("btnErase").addEventListener("click", eraseAll);
+$("btnReset").addEventListener("click", async () => { setBusy(true); await doReset(); setBusy(false); });
+$("btnAddFile").addEventListener("click", () => addFileRow("0x0"));
+$("btnMonOpen").addEventListener("click", openMonitor);
+$("btnMonStop").addEventListener("click", () => stopMonitor(false));
+$("btnMonClear").addEventListener("click", () => { monitorBox.textContent = ""; });
+$("btnLogClear").addEventListener("click", () => { consoleBox.innerHTML = ""; });
+$("btnLogCopy").addEventListener("click", async () => {
+  try {
+    await navigator.clipboard.writeText(consoleBox.textContent);
+    log("Đã chép nhật ký.", "log-ok");
+  } catch (_) {
+    log("Không chép được, hãy bôi đen rồi Ctrl+C.", "log-warn");
+  }
+});
+window.addEventListener("beforeunload", () => { try { monAbort && monAbort.abort(); } catch (_) { /* bỏ qua */ } });
+addFileRow("0x0");
+loadManifest();
+refreshButtons();
+log("Sẵn sàng. Bấm Kết nối cổng serial để bắt đầu.");
+</script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+# CI: cài toolchain esp qua espup rồi build 2 firmware mẫu.
+# Chạy trên Ubuntu vì espup hỗ trợ tốt nhất; firmware Xtensa+RISC-V
+# đều cần toolchain fork nên không dùng rustup thẳng.
+
+name: matrix
+
+on:
+  push:
+    paths:
+      - "esp-hal-matrix/**"
+  pull_request:
+    paths:
+      - "esp-hal-matrix/**"
+  workflow_dispatch:
+
+jobs:
+  # Test host chạy nhanh, không cần toolchain nhúng.
+  test-host:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: esp-hal-matrix
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Chạy test 3 crate host
+        run: cargo test --locked
+
+  # Build thật 2 firmware mẫu bằng toolchain esp.
+  build-firmware:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - ten: esp32s3-hello
+            thu-muc: firmware/esp32s3-hello
+          - ten: esp32c6-hello
+            thu-muc: firmware/esp32c6-hello
+    defaults:
+      run:
+        working-directory: esp-hal-matrix/${{ matrix.thu-muc }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Cài espup
+        run: cargo install espup --locked
+      - name: Cài toolchain esp (Xtensa + RISC-V)
+        run: espup install -f export-esp.sh
+      - name: Build ${{ matrix.ten }}
+        # Không dùng --locked: firmware mẫu chưa kèm Cargo.lock,
+        # lần build CI đầu tiên sẽ tự chốt phiên bản.
+        run: |
+          . ./export-esp.sh
+          cargo build --release

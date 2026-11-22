@@ -1,0 +1,28 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/shamir",
+    "crates/vault",
+    "crates/mnemonic",
+    "crates/hid-echo",
+    "crates/fido-check",
+]
+
+[workspace.package]
+edition = "2021"
+license = "MIT"
+version = "0.1.0"
+
+[workspace.dependencies]
+aes-gcm = "0.10"
+clap = { version = "4", features = ["derive"] }
+hidapi = "2.6"
+image = "0.25"
+pbkdf2 = "0.12"
+qrcode = "0.14"
+rand = "0.9"
+rpassword = "7"
+sha2 = "0.10"
+subtle = "1"
+unicode-normalization = "0.1"
+zeroize = "1"

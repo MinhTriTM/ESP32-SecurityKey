@@ -1,0 +1,10 @@
+[package]
+name = "esp-inventory"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Danh mục chip ESP và trạng thái hỗ trợ Rust (chạy trên host)"
+
+[lib]
+name = "esp_inventory"
+path = "src/lib.rs"

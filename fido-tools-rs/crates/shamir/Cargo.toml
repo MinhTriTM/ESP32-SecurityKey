@@ -1,0 +1,22 @@
+[package]
+name = "esk-shamir"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Chia/ghép bí mật Shamir K-trên-N, tương thích file với tools/split_secret.py"
+
+[[bin]]
+name = "split-secret"
+path = "src/main.rs"
+
+[lib]
+name = "esk_shamir"
+path = "src/lib.rs"
+
+[dependencies]
+clap.workspace = true
+image.workspace = true
+qrcode.workspace = true
+rand.workspace = true
+rpassword.workspace = true
+zeroize.workspace = true

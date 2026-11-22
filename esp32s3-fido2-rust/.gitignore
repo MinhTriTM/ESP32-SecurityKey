@@ -1,0 +1,6 @@
+# Bỏ qua thư mục build của Rust (không commit binary).
+target/
+# File khóa firmware mẫu vẫn commit, nhưng bỏ qua binary flash.
+firmware/s3-fido/target/
+**/*.elf
+**/*.bin

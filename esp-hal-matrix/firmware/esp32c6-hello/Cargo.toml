@@ -1,0 +1,23 @@
+[package]
+name = "esp32c6-hello"
+version = "0.1.0"
+edition = "2021"
+resolver = "2"
+rust-version = "1.95"
+
+[dependencies]
+esp-hal = { version = "1.2", features = ["esp32c6"] }
+esp-println = { version = "0.18", features = ["esp32c6"] }
+esp-backtrace = { version = "0.20", features = ["esp32c6", "panic-handler", "println"] }
+esp-bootloader-esp-idf = { version = "0.6", features = ["esp32c6"] }
+log = "0.4"
+
+[profile.dev]
+debug = true
+opt-level = "s"
+
+[profile.release]
+debug = false
+opt-level = "s"
+lto = true
+codegen-units = 1

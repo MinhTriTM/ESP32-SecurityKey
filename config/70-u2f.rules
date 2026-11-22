@@ -1,0 +1,14 @@
+# Udev rules cho security key FIDO, bao gồm board ESP32-S3 tự build.
+# Cài đặt: sudo cp 70-u2f.rules /etc/udev/rules.d/ rồi rút cắm lại key.
+# Nguồn gốc quy tắc chuẩn: Yubico libu2f-host.
+
+# Yubico và các key thương mại phổ biến
+KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1050", MODE="0664", GROUP="plugdev"
+KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="096e", MODE="0664", GROUP="plugdev"
+KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1a86", MODE="0664", GROUP="plugdev"
+
+# Espressif (ESP32-S3 DevKit tự build thành FIDO key)
+KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="303a", MODE="0664", GROUP="plugdev"
+
+# Công thức chung cho mọi HID FIDO (usage page 0xF1D0)
+KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{bInterfaceClass}=="03", MODE="0664", GROUP="plugdev"

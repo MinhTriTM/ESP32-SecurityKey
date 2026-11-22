@@ -1,0 +1,2 @@
+SHAMIR-SHARE-V1 shares=5 threshold=3 index=4 len=32
+592bba34f504069fe231d95a868d8dfdf221b9c90e75e78683cac682da9eaae5

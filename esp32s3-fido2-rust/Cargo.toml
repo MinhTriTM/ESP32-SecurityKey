@@ -1,0 +1,4 @@
+[workspace]
+members = ["crates/sk-env"]
+exclude = ["firmware/s3-fido"]
+resolver = "2"

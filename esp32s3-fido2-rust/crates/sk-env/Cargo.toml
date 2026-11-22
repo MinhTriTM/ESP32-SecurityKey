@@ -1,0 +1,10 @@
+[package]
+name = "sk-env"
+version = "0.1.0"
+edition = "2021"
+description = "Môi trường trừu tượng (storage/rng/clock/presence/hid) và FakeEnv chạy RAM cho key FIDO2 ESP32-S3"
+license = "Apache-2.0"
+
+[lib]
+name = "sk_env"
+path = "src/lib.rs"

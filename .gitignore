@@ -1,0 +1,35 @@
+# Build
+.pio/
+build/
+dist/
+*.bin
+*.elf
+*.map
+
+# Giữ lại bin gộp cho siêu web nạp (clone về là mở web nạp được ngay)
+!web/firmware/*/*.merged.bin
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.tmp
+.tooling/
+
+# Rust
+target/
+**/*.rs.bk
+
+# Khóa ký firmware: KHÔNG BAO GIỜ commit (chỉ giữ README hướng dẫn)
+keys/*
+!keys/README.md
+
+# Nhật ký vận hành phiên làm việc, không đưa lên public
+process_log.txt

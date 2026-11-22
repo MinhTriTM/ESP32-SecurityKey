@@ -1,0 +1,14 @@
+[package]
+name = "nd-data"
+version = "0.1.0"
+edition = "2021"
+description = "Sinh dataset distinguisher no-ron kieu Gohr tren Speck32/64 (port Rust cua tools/ml_distinguisher.py)"
+
+[[bin]]
+name = "nd-gen"
+path = "src/main.rs"
+
+[dependencies]
+rand = "0.9"
+rand_chacha = "0.9"
+clap = { version = "4", features = ["derive"] }

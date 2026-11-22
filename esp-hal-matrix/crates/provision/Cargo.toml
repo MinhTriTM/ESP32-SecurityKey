@@ -1,0 +1,17 @@
+[package]
+name = "esp-provision"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Dựng lệnh espflash/espefuse bật Secure Boot v2 + Flash Encryption (chạy trên host)"
+
+[lib]
+name = "esp_provision"
+path = "src/lib.rs"
+
+[[bin]]
+name = "esp-provision"
+path = "src/main.rs"
+
+[dependencies]
+esp-inventory = { path = "../inventory" }

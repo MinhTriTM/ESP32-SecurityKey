@@ -1,0 +1,4 @@
+# Bỏ qua thư mục build của Rust (host lẫn firmware nhúng).
+target/
+# File khóa toolchain local (nếu có).
+*.tmp

@@ -1,0 +1,2402 @@
+[
+ {
+  "ma": "NCKH-001",
+  "ten": "Nguyễn An",
+  "nhom": "PQC",
+  "vai_tro": "nhóm trưởng",
+  "dot": 1,
+  "nhiem_vu": {
+   "tieu_de": "Rà soát tools/pqc.py",
+   "mo_ta": "Đọc toàn bộ, kiểm API oqs đúng bản, nhánh lỗi, self-test đủ chưa. Báo cáo [KIEM-DINH].",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-002",
+  "ten": "Trần An",
+  "nhom": "ML",
+  "vai_tro": "nhóm trưởng",
+  "dot": 1,
+  "nhiem_vu": {
+   "tieu_de": "Tái hiện ml_distinguisher",
+   "mo_ta": "Chạy full, ghi accuracy theo từng R, đối chiếu với số trong tài liệu.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-003",
+  "ten": "Lê An",
+  "nhom": "firmware",
+  "vai_tro": "nhóm trưởng",
+  "dot": 1,
+  "nhiem_vu": {
+   "tieu_de": "Rà soát hwtest.ino",
+   "mo_ta": "Đọc toàn bộ: logic nút/LED/HID, race condition echoPending, tràn bộ đệm.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-004",
+  "ten": "Phạm An",
+  "nhom": "tooling",
+  "vai_tro": "nhóm trưởng",
+  "dot": 1,
+  "nhiem_vu": {
+   "tieu_de": "Rà soát fido_check đường lỗi",
+   "mo_ta": "Timeout, CID sai, rút thiết bị giữa chừng, GetInfo lỗi từng mã.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-005",
+  "ten": "Hoàng An",
+  "nhom": "tailieu",
+  "vai_tro": "nhóm trưởng",
+  "dot": 1,
+  "nhiem_vu": {
+   "tieu_de": "Rà soát liên kết gãy docs",
+   "mo_ta": "Quét mọi liên kết nội bộ trong docs, liệt kê và sửa chỗ gãy.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-006",
+  "ten": "Phan An",
+  "nhom": "kiemdinh",
+  "vai_tro": "nhóm trưởng",
+  "dot": 1,
+  "nhiem_vu": {
+   "tieu_de": "Chạy run_tests tiến trình sạch",
+   "mo_ta": "Ghi toàn bộ output, xác nhận 5 self-test xanh.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-007",
+  "ten": "Vũ An",
+  "nhom": "PQC",
+  "vai_tro": "thành viên",
+  "dot": 1,
+  "nhiem_vu": {
+   "tieu_de": "So sánh ML-KEM-512/768/1024",
+   "mo_ta": "Đo kích thước khóa/bản mã và tốc độ keygen/encap/decap trên máy này. Khuyến nghị một bản cho vault.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-008",
+  "ten": "Võ An",
+  "nhom": "ML",
+  "vai_tro": "thành viên",
+  "dot": 1,
+  "nhiem_vu": {
+   "tieu_de": "Tăng mẫu lên 50k ở R=7",
+   "mo_ta": "Xem accuracy có vượt 0.5 không. Báo cáo trung thực kể cả thất bại.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-009",
+  "ten": "Đặng An",
+  "nhom": "firmware",
+  "vai_tro": "thành viên",
+  "dot": 1,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm descriptor HID độc lập",
+   "mo_ta": "Tự viết script parse từng byte descriptor, đối chiếu report ID/độ dài với code.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-010",
+  "ten": "Bùi An",
+  "nhom": "tooling",
+  "vai_tro": "thành viên",
+  "dot": 1,
+  "nhiem_vu": {
+   "tieu_de": "Fuzz cbor_decode",
+   "mo_ta": "Input ngẫu nhiên + corpus, mọi crash đều phải thành ValueError có thông điệp.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-011",
+  "ten": "Đỗ An",
+  "nhom": "tailieu",
+  "vai_tro": "thành viên",
+  "dot": 1,
+  "nhiem_vu": {
+   "tieu_de": "Sơ đồ kiến trúc ASCII",
+   "mo_ta": "Vẽ luồng Browser→OS→ESP32 cho 02-kien-truc.md.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-012",
+  "ten": "Hồ An",
+  "nhom": "kiemdinh",
+  "vai_tro": "kiểm định viên",
+  "dot": 1,
+  "nhiem_vu": {
+   "tieu_de": "Build sạch hai chế độ",
+   "mo_ta": "Xóa cache arduino rồi build OTG+HWCDC để chắc tái hiện được.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-013",
+  "ten": "Ngô An",
+  "nhom": "PQC",
+  "vai_tro": "thành viên",
+  "dot": 2,
+  "nhiem_vu": {
+   "tieu_de": "Đặc tả két lai X25519+ML-KEM",
+   "mo_ta": "Viết đặc tả định dạng két lai (chưa code): layout byte, thứ tự bọc khóa, cách mở khi một vế gãy.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-014",
+  "ten": "Dương An",
+  "nhom": "ML",
+  "vai_tro": "thành viên",
+  "dot": 2,
+  "nhiem_vu": {
+   "tieu_de": "Thử CNN 1D thay MLP",
+   "mo_ta": "Cùng dữ liệu và ngân sách, so accuracy với baseline MLP.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-015",
+  "ten": "Lý An",
+  "nhom": "firmware",
+  "vai_tro": "thành viên",
+  "dot": 2,
+  "nhiem_vu": {
+   "tieu_de": "Runbook nạp hwtest Windows",
+   "mo_ta": "Từng bước có mô tả ảnh chụp, từ cắm cáp đến thấy log.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-016",
+  "ten": "Đinh An",
+  "nhom": "tooling",
+  "vai_tro": "thành viên",
+  "dot": 2,
+  "nhiem_vu": {
+   "tieu_de": "Rà soát hid_echo hai nền tảng",
+   "mo_ta": "Report ID có/không, thiết bị câm, payload biên 0/64 byte.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-017",
+  "ten": "Trịnh An",
+  "nhom": "tailieu",
+  "vai_tro": "thành viên",
+  "dot": 2,
+  "nhiem_vu": {
+   "tieu_de": "Sơ đồ luồng khôi phục",
+   "mo_ta": "Vẽ 3 đường khôi phục cho 07.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-018",
+  "ten": "Trương An",
+  "nhom": "kiemdinh",
+  "vai_tro": "kiểm định viên",
+  "dot": 2,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm chéo Shamir độc lập",
+   "mo_ta": "Tự viết GF(256) riêng, so kết quả chia/ghép với tool.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-019",
+  "ten": "Mai An",
+  "nhom": "PQC",
+  "vai_tro": "thành viên",
+  "dot": 2,
+  "nhiem_vu": {
+   "tieu_de": "Khảo sát PQC trên ESP32-S3",
+   "mo_ta": "Thư viện PQC nào chạy được trên S3, tốn bao nhiêu RAM/flash. Kết luận có nên đưa vào firmware không.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-020",
+  "ten": "Đoàn An",
+  "nhom": "ML",
+  "vai_tro": "thành viên",
+  "dot": 2,
+  "nhiem_vu": {
+   "tieu_de": "Tóm tắt Gohr 2019",
+   "mo_ta": "Đọc bài Gohr về Speck, chỉ ra khác biệt với thí nghiệm của ta.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-021",
+  "ten": "Hứa An",
+  "nhom": "firmware",
+  "vai_tro": "thành viên",
+  "dot": 2,
+  "nhiem_vu": {
+   "tieu_de": "Runbook nạp hwtest Ubuntu",
+   "mo_ta": "Tương tự bản Windows, gồm phân quyền serial và udev.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-022",
+  "ten": "Lâm An",
+  "nhom": "tooling",
+  "vai_tro": "thành viên",
+  "dot": 2,
+  "nhiem_vu": {
+   "tieu_de": "Rà soát split_secret biên",
+   "mo_ta": "N=255, K=1, K=N, secret 1 byte và 1KB, file share hỏng.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-023",
+  "ten": "Chu An",
+  "nhom": "tailieu",
+  "vai_tro": "thành viên",
+  "dot": 2,
+  "nhiem_vu": {
+   "tieu_de": "Rà soát chính tả toàn repo",
+   "mo_ta": "Quét .md, sửa lỗi chính tả và thuật ngữ không nhất quán.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-024",
+  "ten": "Tạ An",
+  "nhom": "kiemdinh",
+  "vai_tro": "kiểm định viên",
+  "dot": 2,
+  "nhiem_vu": {
+   "tieu_de": "Vector BIP-39 bổ sung",
+   "mo_ta": "Tra thêm vector 24 từ chuẩn, chạy qua tool mnemonic.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-025",
+  "ten": "Hà An",
+  "nhom": "PQC",
+  "vai_tro": "thành viên",
+  "dot": 2,
+  "nhiem_vu": {
+   "tieu_de": "Bọc bản sao S bằng ML-KEM",
+   "mo_ta": "Thiết kế quy trình: mã hóa S dưới khóa công khai ML-KEM để lưu cloud, khóa bí mật chia Shamir.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-026",
+  "ten": "Nguyễn Bình",
+  "nhom": "ML",
+  "vai_tro": "thành viên",
+  "dot": 2,
+  "nhiem_vu": {
+   "tieu_de": "Tài liệu distinguisher cho người mới",
+   "mo_ta": "Giải thích từ đầu: distinguisher là gì, vì sao chống được nó không phải bằng chứng an toàn.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-027",
+  "ten": "Trần Bình",
+  "nhom": "firmware",
+  "vai_tro": "thành viên",
+  "dot": 2,
+  "nhiem_vu": {
+   "tieu_de": "Chốt mã module N16R8",
+   "mo_ta": "Đối chiếu chữ in shield với tài liệu Espressif, cập nhật BOM.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-028",
+  "ten": "Lê Bình",
+  "nhom": "tooling",
+  "vai_tro": "thành viên",
+  "dot": 2,
+  "nhiem_vu": {
+   "tieu_de": "Fuzz parse_share",
+   "mo_ta": "Input rác chỉ được ném ValueError, không crash loại khác.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-029",
+  "ten": "Phạm Bình",
+  "nhom": "tailieu",
+  "vai_tro": "thành viên",
+  "dot": 2,
+  "nhiem_vu": {
+   "tieu_de": "Viết FAQ dự án",
+   "mo_ta": "Gom câu hỏi đã gặp trong quá trình làm thành FAQ có trả lời.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-030",
+  "ten": "Hoàng Bình",
+  "nhom": "kiemdinh",
+  "vai_tro": "kiểm định viên",
+  "dot": 2,
+  "nhiem_vu": {
+   "tieu_de": "Đối chiếu vault với openssl",
+   "mo_ta": "PBKDF2+AES-GCM bằng openssl CLI, so khớp với tool.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-031",
+  "ten": "Phan Bình",
+  "nhom": "PQC",
+  "vai_tro": "thành viên",
+  "dot": 2,
+  "nhiem_vu": {
+   "tieu_de": "Benchmark liboqs trên máy",
+   "mo_ta": "Đo mọi KEM có trong liboqs, lập bảng so sánh, lưu số liệu quan sát được.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-032",
+  "ten": "Vũ Bình",
+  "nhom": "ML",
+  "vai_tro": "thành viên",
+  "dot": 2,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm thử chéo Speck",
+   "mo_ta": "Vector chuẩn + round-trip + đối chiếu implement độc lập tự viết.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-033",
+  "ten": "Võ Bình",
+  "nhom": "firmware",
+  "vai_tro": "thành viên",
+  "dot": 2,
+  "nhiem_vu": {
+   "tieu_de": "Secure boot từ Arduino?",
+   "mo_ta": "Nghiên cứu xem Arduino-ESP32 có bật được secure boot/flash encryption không.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-034",
+  "ten": "Đặng Bình",
+  "nhom": "tooling",
+  "vai_tro": "thành viên",
+  "dot": 2,
+  "nhiem_vu": {
+   "tieu_de": "Rà soát mnemonic input lạ",
+   "mo_ta": "Chữ hoa, khoảng trắng thừa, từ gần đúng, thiếu/thừa từ.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-035",
+  "ten": "Bùi Bình",
+  "nhom": "tailieu",
+  "vai_tro": "thành viên",
+  "dot": 2,
+  "nhiem_vu": {
+   "tieu_de": "Hướng dẫn môi trường dev Windows",
+   "mo_ta": "Từ máy trắng đến chạy được run_tests và build.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-036",
+  "ten": "Đỗ Bình",
+  "nhom": "kiemdinh",
+  "vai_tro": "kiểm định viên",
+  "dot": 2,
+  "nhiem_vu": {
+   "tieu_de": "Quét secret lọt repo",
+   "mo_ta": "Tìm mật khẩu/khóa/bí mật thật trong file, báo cáo hoặc xác nhận sạch.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-037",
+  "ten": "Hồ Bình",
+  "nhom": "PQC",
+  "vai_tro": "thành viên",
+  "dot": 2,
+  "nhiem_vu": {
+   "tieu_de": "Tài liệu đe dọa lượng tử",
+   "mo_ta": "Viết: khi có máy lượng tử mạnh thì phần nào của dự án vỡ, phần nào còn, thứ tự ưu tiên sửa.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-038",
+  "ten": "Ngô Bình",
+  "nhom": "ML",
+  "vai_tro": "thành viên",
+  "dot": 2,
+  "nhiem_vu": {
+   "tieu_de": "Thử R=8 ngân sách gấp 10",
+   "mo_ta": "Ghi nhận kết quả trung thực, ước tính chi phí nếu muốn lên R=9.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-039",
+  "ten": "Dương Bình",
+  "nhom": "firmware",
+  "vai_tro": "thành viên",
+  "dot": 2,
+  "nhiem_vu": {
+   "tieu_de": "So sánh USBMode OTG/HWCDC",
+   "mo_ta": "Bảng ảnh hưởng tới upload/log/HID, khuyến nghị khi nào dùng bản nào.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-040",
+  "ten": "Lý Bình",
+  "nhom": "tooling",
+  "vai_tro": "thành viên",
+  "dot": 2,
+  "nhiem_vu": {
+   "tieu_de": "Rà soát vault file hỏng",
+   "mo_ta": "Két cụt, salt/nonce sai dài, magic sai, mật khẩu rỗng.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-041",
+  "ten": "Đinh Bình",
+  "nhom": "tailieu",
+  "vai_tro": "thành viên",
+  "dot": 2,
+  "nhiem_vu": {
+   "tieu_de": "Hướng dẫn môi trường dev Ubuntu",
+   "mo_ta": "Tương tự bản Windows.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-042",
+  "ten": "Trịnh Bình",
+  "nhom": "kiemdinh",
+  "vai_tro": "kiểm định viên",
+  "dot": 2,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm .gitignore",
+   "mo_ta": "Xác nhận .tooling/build/__pycache__/ảnh QR đều bị loại.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-043",
+  "ten": "Trương Bình",
+  "nhom": "PQC",
+  "vai_tro": "thành viên",
+  "dot": 2,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm thử chéo pqc self-test",
+   "mo_ta": "Gọi oqs trực tiếp bằng script riêng, so kết quả với self-test của tool.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-044",
+  "ten": "Mai Bình",
+  "nhom": "ML",
+  "vai_tro": "thành viên",
+  "dot": 2,
+  "nhiem_vu": {
+   "tieu_de": "Rà soát pipeline dữ liệu",
+   "mo_ta": "Kiểm cân bằng lớp, rò rỉ tập test, seed ngẫu nhiên có cố định không.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-045",
+  "ten": "Đoàn Bình",
+  "nhom": "firmware",
+  "vai_tro": "thành viên",
+  "dot": 2,
+  "nhiem_vu": {
+   "tieu_de": "Rà soát RAM/flash hai bản build",
+   "mo_ta": "Đề xuất cắt giảm nếu vượt ngưỡng, đo lại sau khi cắt.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-046",
+  "ten": "Hứa Bình",
+  "nhom": "tooling",
+  "vai_tro": "thành viên",
+  "dot": 2,
+  "nhiem_vu": {
+   "tieu_de": "Rà soát lệnh qr hai tool",
+   "mo_ta": "File không tồn tại, thiếu lib (thử bằng cách đổi tên lib tạm thời).",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-047",
+  "ten": "Lâm Bình",
+  "nhom": "tailieu",
+  "vai_tro": "thành viên",
+  "dot": 2,
+  "nhiem_vu": {
+   "tieu_de": "Ghi chú tuân thủ giấy phép",
+   "mo_ta": "MIT repo mình vs AGPL pico-fido: được/không được làm gì.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-048",
+  "ten": "Chu Bình",
+  "nhom": "kiemdinh",
+  "vai_tro": "kiểm định viên",
+  "dot": 2,
+  "nhiem_vu": {
+   "tieu_de": "Báo cáo bao phủ kiểm thử",
+   "mo_ta": "Cái gì đã test, cái gì chưa, theo từng tool và firmware.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-049",
+  "ten": "Tạ Bình",
+  "nhom": "PQC",
+  "vai_tro": "thành viên",
+  "dot": 2,
+  "nhiem_vu": {
+   "tieu_de": "Nghiên cứu ký số PQC",
+   "mo_ta": "ML-DSA/SLH-DSA cái nào hợp để ký bản tin firmware sau này. So sánh kích thước chữ ký.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-050",
+  "ten": "Hà Bình",
+  "nhom": "ML",
+  "vai_tro": "thành viên",
+  "dot": 2,
+  "nhiem_vu": {
+   "tieu_de": "Benchmark CPU vs GPU",
+   "mo_ta": "Cùng cấu hình train, so thời gian CPU và CUDA (nếu có).",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-051",
+  "ten": "Nguyễn Cường",
+  "nhom": "firmware",
+  "vai_tro": "thành viên",
+  "dot": 2,
+  "nhiem_vu": {
+   "tieu_de": "Checklist bring-up board mới",
+   "mo_ta": "Từ mở hộp đến echo ok, dạng checklist đánh dấu.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-052",
+  "ten": "Trần Cường",
+  "nhom": "tooling",
+  "vai_tro": "thành viên",
+  "dot": 2,
+  "nhiem_vu": {
+   "tieu_de": "Chuẩn hóa mã thoát tool",
+   "mo_ta": "Lập một bảng mã thoát và thông điệp chung cho mọi tool, sửa chỗ lệch.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-053",
+  "ten": "Lê Cường",
+  "nhom": "tailieu",
+  "vai_tro": "thành viên",
+  "dot": 2,
+  "nhiem_vu": {
+   "tieu_de": "Tóm tắt dự án 1 trang",
+   "mo_ta": "Người mới đọc 5 phút hiểu toàn bộ dự án.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-054",
+  "ten": "Phạm Cường",
+  "nhom": "kiemdinh",
+  "vai_tro": "kiểm định viên",
+  "dot": 2,
+  "nhiem_vu": {
+   "tieu_de": "Cài lib trên venv sạch",
+   "mo_ta": "Thử mọi requirements trên venv mới, ghi lỗi.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-055",
+  "ten": "Hoàng Cường",
+  "nhom": "PQC",
+  "vai_tro": "thành viên",
+  "dot": 2,
+  "nhiem_vu": {
+   "tieu_de": "Cài liboqs trên môi trường sạch",
+   "mo_ta": "Thử cài theo requirements-pqc trên venv mới, ghi mọi lỗi gặp và cách sửa.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-056",
+  "ten": "Phan Cường",
+  "nhom": "ML",
+  "vai_tro": "thành viên",
+  "dot": 2,
+  "nhiem_vu": {
+   "tieu_de": "Đề xuất thí nghiệm tiếp theo",
+   "mo_ta": "Simon hay Skinny? Viết đề xuất kèm chi phí ước tính.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-057",
+  "ten": "Vũ Cường",
+  "nhom": "firmware",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Đọc trạng thái bảo mật bằng espefuse",
+   "mo_ta": "Viết hướng dẫn đọc secure boot/flash encryption từ chip.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-058",
+  "ten": "Võ Cường",
+  "nhom": "tooling",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Test hiệu năng Shamir",
+   "mo_ta": "N=255/K=128 với secret 1KB mất bao lâu, có cần tối ưu không.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-059",
+  "ten": "Đặng Cường",
+  "nhom": "tailieu",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Bảng thuật ngữ Việt-Anh",
+   "mo_ta": "Mọi thuật ngữ dùng trong repo, một nghĩa duy nhất.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-060",
+  "ten": "Bùi Cường",
+  "nhom": "kiemdinh",
+  "vai_tro": "kiểm định viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Danh sách rủi ro còn lại",
+   "mo_ta": "Xếp theo mức độ, mỗi rủi ro có cách giảm thiểu.",
+   "loai": "t1-tay-chon"
+  }
+ },
+ {
+  "ma": "NCKH-061",
+  "ten": "Đỗ Cường",
+  "nhom": "PQC",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Rà soát chéo file docs/01-phan-tich-y-tuong.md",
+   "mo_ta": "Đọc toàn bộ docs/01-phan-tich-y-tuong.md, tìm lỗi logic và trường hợp biên, báo cáo [KIEM-DINH].",
+   "loai": "t2-theo-file"
+  }
+ },
+ {
+  "ma": "NCKH-062",
+  "ten": "Hồ Cường",
+  "nhom": "ML",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Rà soát chéo file docs/02-kien-truc.md",
+   "mo_ta": "Đọc toàn bộ docs/02-kien-truc.md, tìm lỗi logic và trường hợp biên, báo cáo [KIEM-DINH].",
+   "loai": "t2-theo-file"
+  }
+ },
+ {
+  "ma": "NCKH-063",
+  "ten": "Ngô Cường",
+  "nhom": "firmware",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Rà soát chéo file docs/03-phan-cung.md",
+   "mo_ta": "Đọc toàn bộ docs/03-phan-cung.md, tìm lỗi logic và trường hợp biên, báo cáo [KIEM-DINH].",
+   "loai": "t2-theo-file"
+  }
+ },
+ {
+  "ma": "NCKH-064",
+  "ten": "Dương Cường",
+  "nhom": "tooling",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Rà soát chéo file docs/04-firmware.md",
+   "mo_ta": "Đọc toàn bộ docs/04-firmware.md, tìm lỗi logic và trường hợp biên, báo cáo [KIEM-DINH].",
+   "loai": "t2-theo-file"
+  }
+ },
+ {
+  "ma": "NCKH-065",
+  "ten": "Lý Cường",
+  "nhom": "tailieu",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Rà soát chéo file docs/05-huong-dan-su-dung.md",
+   "mo_ta": "Đọc toàn bộ docs/05-huong-dan-su-dung.md, tìm lỗi logic và trường hợp biên, báo cáo [KIEM-DINH].",
+   "loai": "t2-theo-file"
+  }
+ },
+ {
+  "ma": "NCKH-066",
+  "ten": "Đinh Cường",
+  "nhom": "kiemdinh",
+  "vai_tro": "kiểm định viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Rà soát chéo file docs/06-bao-mat.md",
+   "mo_ta": "Đọc toàn bộ docs/06-bao-mat.md, tìm lỗi logic và trường hợp biên, báo cáo [KIEM-DINH].",
+   "loai": "t2-theo-file"
+  }
+ },
+ {
+  "ma": "NCKH-067",
+  "ten": "Trịnh Cường",
+  "nhom": "PQC",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Rà soát chéo file docs/07-sao-luu-va-khoi-phuc.md",
+   "mo_ta": "Đọc toàn bộ docs/07-sao-luu-va-khoi-phuc.md, tìm lỗi logic và trường hợp biên, báo cáo [KIEM-DINH].",
+   "loai": "t2-theo-file"
+  }
+ },
+ {
+  "ma": "NCKH-068",
+  "ten": "Trương Cường",
+  "nhom": "ML",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Rà soát chéo file docs/research/01-giao-thuc-fido.md",
+   "mo_ta": "Đọc toàn bộ docs/research/01-giao-thuc-fido.md, tìm lỗi logic và trường hợp biên, báo cáo [KIEM-DINH].",
+   "loai": "t2-theo-file"
+  }
+ },
+ {
+  "ma": "NCKH-069",
+  "ten": "Mai Cường",
+  "nhom": "firmware",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Rà soát chéo file docs/research/02-esp32s3-usb.md",
+   "mo_ta": "Đọc toàn bộ docs/research/02-esp32s3-usb.md, tìm lỗi logic và trường hợp biên, báo cáo [KIEM-DINH].",
+   "loai": "t2-theo-file"
+  }
+ },
+ {
+  "ma": "NCKH-070",
+  "ten": "Đoàn Cường",
+  "nhom": "tooling",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Rà soát chéo file docs/research/03-du-an-lien-quan.md",
+   "mo_ta": "Đọc toàn bộ docs/research/03-du-an-lien-quan.md, tìm lỗi logic và trường hợp biên, báo cáo [KIEM-DINH].",
+   "loai": "t2-theo-file"
+  }
+ },
+ {
+  "ma": "NCKH-071",
+  "ten": "Hứa Cường",
+  "nhom": "tailieu",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Rà soát chéo file docs/research/04-tai-lieu-tham-khao.md",
+   "mo_ta": "Đọc toàn bộ docs/research/04-tai-lieu-tham-khao.md, tìm lỗi logic và trường hợp biên, báo cáo [KIEM-DINH].",
+   "loai": "t2-theo-file"
+  }
+ },
+ {
+  "ma": "NCKH-072",
+  "ten": "Lâm Cường",
+  "nhom": "kiemdinh",
+  "vai_tro": "kiểm định viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Rà soát chéo file docs/research/05-qgac-danh-gia.md",
+   "mo_ta": "Đọc toàn bộ docs/research/05-qgac-danh-gia.md, tìm lỗi logic và trường hợp biên, báo cáo [KIEM-DINH].",
+   "loai": "t2-theo-file"
+  }
+ },
+ {
+  "ma": "NCKH-073",
+  "ten": "Chu Cường",
+  "nhom": "PQC",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Rà soát chéo file docs/research/06-ml-distinguisher.md",
+   "mo_ta": "Đọc toàn bộ docs/research/06-ml-distinguisher.md, tìm lỗi logic và trường hợp biên, báo cáo [KIEM-DINH].",
+   "loai": "t2-theo-file"
+  }
+ },
+ {
+  "ma": "NCKH-074",
+  "ten": "Tạ Cường",
+  "nhom": "ML",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Rà soát chéo file firmware/hwtest/hwtest.ino",
+   "mo_ta": "Đọc toàn bộ firmware/hwtest/hwtest.ino, tìm lỗi logic và trường hợp biên, báo cáo [KIEM-DINH].",
+   "loai": "t2-theo-file"
+  }
+ },
+ {
+  "ma": "NCKH-075",
+  "ten": "Hà Cường",
+  "nhom": "firmware",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Rà soát chéo file firmware/hwtest/README.md",
+   "mo_ta": "Đọc toàn bộ firmware/hwtest/README.md, tìm lỗi logic và trường hợp biên, báo cáo [KIEM-DINH].",
+   "loai": "t2-theo-file"
+  }
+ },
+ {
+  "ma": "NCKH-076",
+  "ten": "Nguyễn Dung",
+  "nhom": "tooling",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Rà soát chéo file hardware/BOM.md",
+   "mo_ta": "Đọc toàn bộ hardware/BOM.md, tìm lỗi logic và trường hợp biên, báo cáo [KIEM-DINH].",
+   "loai": "t2-theo-file"
+  }
+ },
+ {
+  "ma": "NCKH-077",
+  "ten": "Trần Dung",
+  "nhom": "tailieu",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Rà soát chéo file hardware/keys.md",
+   "mo_ta": "Đọc toàn bộ hardware/keys.md, tìm lỗi logic và trường hợp biên, báo cáo [KIEM-DINH].",
+   "loai": "t2-theo-file"
+  }
+ },
+ {
+  "ma": "NCKH-078",
+  "ten": "Lê Dung",
+  "nhom": "kiemdinh",
+  "vai_tro": "kiểm định viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Rà soát chéo file hardware/wiring.md",
+   "mo_ta": "Đọc toàn bộ hardware/wiring.md, tìm lỗi logic và trường hợp biên, báo cáo [KIEM-DINH].",
+   "loai": "t2-theo-file"
+  }
+ },
+ {
+  "ma": "NCKH-079",
+  "ten": "Phạm Dung",
+  "nhom": "PQC",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Rà soát chéo file README.md",
+   "mo_ta": "Đọc toàn bộ README.md, tìm lỗi logic và trường hợp biên, báo cáo [KIEM-DINH].",
+   "loai": "t2-theo-file"
+  }
+ },
+ {
+  "ma": "NCKH-080",
+  "ten": "Hoàng Dung",
+  "nhom": "ML",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Rà soát chéo file scripts/build_hwtest.ps1",
+   "mo_ta": "Đọc toàn bộ scripts/build_hwtest.ps1, tìm lỗi logic và trường hợp biên, báo cáo [KIEM-DINH].",
+   "loai": "t2-theo-file"
+  }
+ },
+ {
+  "ma": "NCKH-081",
+  "ten": "Phan Dung",
+  "nhom": "firmware",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Rà soát chéo file scripts/build_hwtest.sh",
+   "mo_ta": "Đọc toàn bộ scripts/build_hwtest.sh, tìm lỗi logic và trường hợp biên, báo cáo [KIEM-DINH].",
+   "loai": "t2-theo-file"
+  }
+ },
+ {
+  "ma": "NCKH-082",
+  "ten": "Vũ Dung",
+  "nhom": "tooling",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Rà soát chéo file scripts/flash_linux.sh",
+   "mo_ta": "Đọc toàn bộ scripts/flash_linux.sh, tìm lỗi logic và trường hợp biên, báo cáo [KIEM-DINH].",
+   "loai": "t2-theo-file"
+  }
+ },
+ {
+  "ma": "NCKH-083",
+  "ten": "Võ Dung",
+  "nhom": "tailieu",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Rà soát chéo file scripts/flash_win.ps1",
+   "mo_ta": "Đọc toàn bộ scripts/flash_win.ps1, tìm lỗi logic và trường hợp biên, báo cáo [KIEM-DINH].",
+   "loai": "t2-theo-file"
+  }
+ },
+ {
+  "ma": "NCKH-084",
+  "ten": "Đặng Dung",
+  "nhom": "kiemdinh",
+  "vai_tro": "kiểm định viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Rà soát chéo file scripts/run_tests.ps1",
+   "mo_ta": "Đọc toàn bộ scripts/run_tests.ps1, tìm lỗi logic và trường hợp biên, báo cáo [KIEM-DINH].",
+   "loai": "t2-theo-file"
+  }
+ },
+ {
+  "ma": "NCKH-085",
+  "ten": "Bùi Dung",
+  "nhom": "PQC",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Rà soát chéo file scripts/run_tests.sh",
+   "mo_ta": "Đọc toàn bộ scripts/run_tests.sh, tìm lỗi logic và trường hợp biên, báo cáo [KIEM-DINH].",
+   "loai": "t2-theo-file"
+  }
+ },
+ {
+  "ma": "NCKH-086",
+  "ten": "Đỗ Dung",
+  "nhom": "ML",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Rà soát chéo file tools/fido_check.py",
+   "mo_ta": "Đọc toàn bộ tools/fido_check.py, tìm lỗi logic và trường hợp biên, báo cáo [KIEM-DINH].",
+   "loai": "t2-theo-file"
+  }
+ },
+ {
+  "ma": "NCKH-087",
+  "ten": "Hồ Dung",
+  "nhom": "firmware",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Rà soát chéo file tools/hid_echo.py",
+   "mo_ta": "Đọc toàn bộ tools/hid_echo.py, tìm lỗi logic và trường hợp biên, báo cáo [KIEM-DINH].",
+   "loai": "t2-theo-file"
+  }
+ },
+ {
+  "ma": "NCKH-088",
+  "ten": "Ngô Dung",
+  "nhom": "tooling",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Rà soát chéo file tools/ml_distinguisher.py",
+   "mo_ta": "Đọc toàn bộ tools/ml_distinguisher.py, tìm lỗi logic và trường hợp biên, báo cáo [KIEM-DINH].",
+   "loai": "t2-theo-file"
+  }
+ },
+ {
+  "ma": "NCKH-089",
+  "ten": "Dương Dung",
+  "nhom": "tailieu",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Rà soát chéo file tools/mnemonic.py",
+   "mo_ta": "Đọc toàn bộ tools/mnemonic.py, tìm lỗi logic và trường hợp biên, báo cáo [KIEM-DINH].",
+   "loai": "t2-theo-file"
+  }
+ },
+ {
+  "ma": "NCKH-090",
+  "ten": "Lý Dung",
+  "nhom": "kiemdinh",
+  "vai_tro": "kiểm định viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Rà soát chéo file tools/pqc.py",
+   "mo_ta": "Đọc toàn bộ tools/pqc.py, tìm lỗi logic và trường hợp biên, báo cáo [KIEM-DINH].",
+   "loai": "t2-theo-file"
+  }
+ },
+ {
+  "ma": "NCKH-091",
+  "ten": "Đinh Dung",
+  "nhom": "PQC",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Rà soát chéo file tools/split_secret.py",
+   "mo_ta": "Đọc toàn bộ tools/split_secret.py, tìm lỗi logic và trường hợp biên, báo cáo [KIEM-DINH].",
+   "loai": "t2-theo-file"
+  }
+ },
+ {
+  "ma": "NCKH-092",
+  "ten": "Trịnh Dung",
+  "nhom": "ML",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Rà soát chéo file tools/vault.py",
+   "mo_ta": "Đọc toàn bộ tools/vault.py, tìm lỗi logic và trường hợp biên, báo cáo [KIEM-DINH].",
+   "loai": "t2-theo-file"
+  }
+ },
+ {
+  "ma": "NCKH-093",
+  "ten": "Trương Dung",
+  "nhom": "firmware",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Nghiên cứu: So sánh YubiKey với key tự build: khác biệt bảo mật cụ thể t…",
+   "mo_ta": "So sánh YubiKey với key tự build: khác biệt bảo mật cụ thể từng điểm.",
+   "loai": "t3-nghien-cuu"
+  }
+ },
+ {
+  "ma": "NCKH-094",
+  "ten": "Mai Dung",
+  "nhom": "tooling",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Nghiên cứu: Khảo sát SoloKeys/OpenSK: ba bài học áp dụng được cho dự án.…",
+   "mo_ta": "Khảo sát SoloKeys/OpenSK: ba bài học áp dụng được cho dự án.",
+   "loai": "t3-nghien-cuu"
+  }
+ },
+ {
+  "ma": "NCKH-095",
+  "ten": "Đoàn Dung",
+  "nhom": "tailieu",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Nghiên cứu: Nghiên cứu tấn công vật lý lên ESP32-S3 đã công bố (glitchin…",
+   "mo_ta": "Nghiên cứu tấn công vật lý lên ESP32-S3 đã công bố (glitching, side-channel).",
+   "loai": "t3-nghien-cuu"
+  }
+ },
+ {
+  "ma": "NCKH-096",
+  "ten": "Hứa Dung",
+  "nhom": "kiemdinh",
+  "vai_tro": "kiểm định viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Nghiên cứu: Khảo sát chính sách FIDO của Google/GitHub/Microsoft năm 202…",
+   "mo_ta": "Khảo sát chính sách FIDO của Google/GitHub/Microsoft năm 2026.",
+   "loai": "t3-nghien-cuu"
+  }
+ },
+ {
+  "ma": "NCKH-097",
+  "ten": "Lâm Dung",
+  "nhom": "PQC",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Nghiên cứu: CTAP 2.3 có gì mới so với 2.1 liên quan đến dự án.…",
+   "mo_ta": "CTAP 2.3 có gì mới so với 2.1 liên quan đến dự án.",
+   "loai": "t3-nghien-cuu"
+  }
+ },
+ {
+  "ma": "NCKH-098",
+  "ten": "Chu Dung",
+  "nhom": "ML",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Nghiên cứu: Phần mềm passkey nguồn mở tương thích với key của ta.…",
+   "mo_ta": "Phần mềm passkey nguồn mở tương thích với key của ta.",
+   "loai": "t3-nghien-cuu"
+  }
+ },
+ {
+  "ma": "NCKH-099",
+  "ten": "Tạ Dung",
+  "nhom": "firmware",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Nghiên cứu: Sao lưu thép: sản phẩm hiện có và phương pháp khắc 24 từ.…",
+   "mo_ta": "Sao lưu thép: sản phẩm hiện có và phương pháp khắc 24 từ.",
+   "loai": "t3-nghien-cuu"
+  }
+ },
+ {
+  "ma": "NCKH-100",
+  "ten": "Hà Dung",
+  "nhom": "tooling",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Nghiên cứu: Rủi ro khi truyền share qua ảnh QR và cách giảm.…",
+   "mo_ta": "Rủi ro khi truyền share qua ảnh QR và cách giảm.",
+   "loai": "t3-nghien-cuu"
+  }
+ },
+ {
+  "ma": "NCKH-101",
+  "ten": "Nguyễn Em",
+  "nhom": "tailieu",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Nghiên cứu: Mô hình đe dọa của Bluetooth/Quick Share khi chuyển share.…",
+   "mo_ta": "Mô hình đe dọa của Bluetooth/Quick Share khi chuyển share.",
+   "loai": "t3-nghien-cuu"
+  }
+ },
+ {
+  "ma": "NCKH-102",
+  "ten": "Trần Em",
+  "nhom": "kiemdinh",
+  "vai_tro": "kiểm định viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Nghiên cứu: esptool nâng cao: đọc flash, verify, giới hạn chống tấn công…",
+   "mo_ta": "esptool nâng cao: đọc flash, verify, giới hạn chống tấn công.",
+   "loai": "t3-nghien-cuu"
+  }
+ },
+ {
+  "ma": "NCKH-103",
+  "ten": "Lê Em",
+  "nhom": "PQC",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Nghiên cứu: Rust port cho vault/shamir: phân tích chi phí-lợi ích.…",
+   "mo_ta": "Rust port cho vault/shamir: phân tích chi phí-lợi ích.",
+   "loai": "t3-nghien-cuu"
+  }
+ },
+ {
+  "ma": "NCKH-104",
+  "ten": "Phạm Em",
+  "nhom": "ML",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Nghiên cứu: Changelog pico-fido sau v8.2: có bản mới thì đánh giá có nên…",
+   "mo_ta": "Changelog pico-fido sau v8.2: có bản mới thì đánh giá có nên lên không.",
+   "loai": "t3-nghien-cuu"
+  }
+ },
+ {
+  "ma": "NCKH-105",
+  "ten": "Hoàng Em",
+  "nhom": "firmware",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp docs/01-phan-tich-y-tuong.md ↔ docs/04-firmware.md",
+   "mo_ta": "Đối chiếu docs/01-phan-tich-y-tuong.md với docs/04-firmware.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-106",
+  "ten": "Phan Em",
+  "nhom": "tooling",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp docs/02-kien-truc.md ↔ docs/research/04-tai-lieu-tham-khao.md",
+   "mo_ta": "Đối chiếu docs/02-kien-truc.md với docs/research/04-tai-lieu-tham-khao.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-107",
+  "ten": "Vũ Em",
+  "nhom": "tailieu",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp docs/03-phan-cung.md ↔ hardware/wiring.md",
+   "mo_ta": "Đối chiếu docs/03-phan-cung.md với hardware/wiring.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-108",
+  "ten": "Võ Em",
+  "nhom": "kiemdinh",
+  "vai_tro": "kiểm định viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp docs/04-firmware.md ↔ scripts/run_tests.sh",
+   "mo_ta": "Đối chiếu docs/04-firmware.md với scripts/run_tests.sh: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-109",
+  "ten": "Đặng Em",
+  "nhom": "PQC",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp docs/05-huong-dan-su-dung.md ↔ tools/vault.py",
+   "mo_ta": "Đối chiếu docs/05-huong-dan-su-dung.md với tools/vault.py: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-110",
+  "ten": "Bùi Em",
+  "nhom": "ML",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp docs/06-bao-mat.md ↔ docs/07-sao-luu-va-khoi-phuc.md",
+   "mo_ta": "Đối chiếu docs/06-bao-mat.md với docs/07-sao-luu-va-khoi-phuc.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-111",
+  "ten": "Đỗ Em",
+  "nhom": "firmware",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp docs/07-sao-luu-va-khoi-phuc.md ↔ firmware/hwtest/hwtest.ino",
+   "mo_ta": "Đối chiếu docs/07-sao-luu-va-khoi-phuc.md với firmware/hwtest/hwtest.ino: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-112",
+  "ten": "Hồ Em",
+  "nhom": "tooling",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp docs/research/01-giao-thuc-fido.md ↔ scripts/build_hwtest.sh",
+   "mo_ta": "Đối chiếu docs/research/01-giao-thuc-fido.md với scripts/build_hwtest.sh: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-113",
+  "ten": "Ngô Em",
+  "nhom": "tailieu",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp docs/research/02-esp32s3-usb.md ↔ tools/ml_distinguisher.py",
+   "mo_ta": "Đối chiếu docs/research/02-esp32s3-usb.md với tools/ml_distinguisher.py: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-114",
+  "ten": "Dương Em",
+  "nhom": "kiemdinh",
+  "vai_tro": "kiểm định viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp docs/research/03-du-an-lien-quan.md ↔ docs/03-phan-cung.md",
+   "mo_ta": "Đối chiếu docs/research/03-du-an-lien-quan.md với docs/03-phan-cung.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-115",
+  "ten": "Lý Em",
+  "nhom": "PQC",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp docs/research/04-tai-lieu-tham-khao.md ↔ docs/research/03-du-an-lien-quan.md",
+   "mo_ta": "Đối chiếu docs/research/04-tai-lieu-tham-khao.md với docs/research/03-du-an-lien-quan.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-116",
+  "ten": "Đinh Em",
+  "nhom": "ML",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp docs/research/05-qgac-danh-gia.md ↔ hardware/keys.md",
+   "mo_ta": "Đối chiếu docs/research/05-qgac-danh-gia.md với hardware/keys.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-117",
+  "ten": "Trịnh Em",
+  "nhom": "firmware",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp docs/research/06-ml-distinguisher.md ↔ scripts/run_tests.ps1",
+   "mo_ta": "Đối chiếu docs/research/06-ml-distinguisher.md với scripts/run_tests.ps1: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-118",
+  "ten": "Trương Em",
+  "nhom": "tooling",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp firmware/hwtest/hwtest.ino ↔ tools/split_secret.py",
+   "mo_ta": "Đối chiếu firmware/hwtest/hwtest.ino với tools/split_secret.py: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-119",
+  "ten": "Mai Em",
+  "nhom": "tailieu",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp firmware/hwtest/README.md ↔ docs/06-bao-mat.md",
+   "mo_ta": "Đối chiếu firmware/hwtest/README.md với docs/06-bao-mat.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-120",
+  "ten": "Đoàn Em",
+  "nhom": "kiemdinh",
+  "vai_tro": "kiểm định viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp hardware/BOM.md ↔ docs/research/06-ml-distinguisher.md",
+   "mo_ta": "Đối chiếu hardware/BOM.md với docs/research/06-ml-distinguisher.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-121",
+  "ten": "Hứa Em",
+  "nhom": "PQC",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp hardware/keys.md ↔ scripts/build_hwtest.ps1",
+   "mo_ta": "Đối chiếu hardware/keys.md với scripts/build_hwtest.ps1: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-122",
+  "ten": "Lâm Em",
+  "nhom": "ML",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp hardware/wiring.md ↔ tools/hid_echo.py",
+   "mo_ta": "Đối chiếu hardware/wiring.md với tools/hid_echo.py: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-123",
+  "ten": "Chu Em",
+  "nhom": "firmware",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp README.md ↔ docs/02-kien-truc.md",
+   "mo_ta": "Đối chiếu README.md với docs/02-kien-truc.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-124",
+  "ten": "Tạ Em",
+  "nhom": "tooling",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp scripts/build_hwtest.ps1 ↔ docs/research/02-esp32s3-usb.md",
+   "mo_ta": "Đối chiếu scripts/build_hwtest.ps1 với docs/research/02-esp32s3-usb.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-125",
+  "ten": "Hà Em",
+  "nhom": "tailieu",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp scripts/build_hwtest.sh ↔ hardware/BOM.md",
+   "mo_ta": "Đối chiếu scripts/build_hwtest.sh với hardware/BOM.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-126",
+  "ten": "Nguyễn Phúc",
+  "nhom": "kiemdinh",
+  "vai_tro": "kiểm định viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp scripts/flash_linux.sh ↔ scripts/flash_win.ps1",
+   "mo_ta": "Đối chiếu scripts/flash_linux.sh với scripts/flash_win.ps1: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-127",
+  "ten": "Trần Phúc",
+  "nhom": "PQC",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp scripts/flash_win.ps1 ↔ tools/pqc.py",
+   "mo_ta": "Đối chiếu scripts/flash_win.ps1 với tools/pqc.py: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-128",
+  "ten": "Lê Phúc",
+  "nhom": "ML",
+  "vai_tro": "thành viên",
+  "dot": 3,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp scripts/run_tests.ps1 ↔ docs/05-huong-dan-su-dung.md",
+   "mo_ta": "Đối chiếu scripts/run_tests.ps1 với docs/05-huong-dan-su-dung.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-129",
+  "ten": "Phạm Phúc",
+  "nhom": "firmware",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp scripts/run_tests.sh ↔ docs/research/05-qgac-danh-gia.md",
+   "mo_ta": "Đối chiếu scripts/run_tests.sh với docs/research/05-qgac-danh-gia.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-130",
+  "ten": "Hoàng Phúc",
+  "nhom": "tooling",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp tools/fido_check.py ↔ README.md",
+   "mo_ta": "Đối chiếu tools/fido_check.py với README.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-131",
+  "ten": "Phan Phúc",
+  "nhom": "tailieu",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp tools/hid_echo.py ↔ tools/fido_check.py",
+   "mo_ta": "Đối chiếu tools/hid_echo.py với tools/fido_check.py: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-132",
+  "ten": "Vũ Phúc",
+  "nhom": "kiemdinh",
+  "vai_tro": "kiểm định viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp tools/ml_distinguisher.py ↔ docs/01-phan-tich-y-tuong.md",
+   "mo_ta": "Đối chiếu tools/ml_distinguisher.py với docs/01-phan-tich-y-tuong.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-133",
+  "ten": "Võ Phúc",
+  "nhom": "PQC",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp tools/mnemonic.py ↔ docs/research/01-giao-thuc-fido.md",
+   "mo_ta": "Đối chiếu tools/mnemonic.py với docs/research/01-giao-thuc-fido.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-134",
+  "ten": "Đặng Phúc",
+  "nhom": "ML",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp tools/pqc.py ↔ firmware/hwtest/README.md",
+   "mo_ta": "Đối chiếu tools/pqc.py với firmware/hwtest/README.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-135",
+  "ten": "Bùi Phúc",
+  "nhom": "firmware",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp tools/split_secret.py ↔ scripts/flash_linux.sh",
+   "mo_ta": "Đối chiếu tools/split_secret.py với scripts/flash_linux.sh: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-136",
+  "ten": "Đỗ Phúc",
+  "nhom": "tooling",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp tools/vault.py ↔ tools/mnemonic.py",
+   "mo_ta": "Đối chiếu tools/vault.py với tools/mnemonic.py: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-137",
+  "ten": "Hồ Phúc",
+  "nhom": "tailieu",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp docs/01-phan-tich-y-tuong.md ↔ docs/04-firmware.md",
+   "mo_ta": "Đối chiếu docs/01-phan-tich-y-tuong.md với docs/04-firmware.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-138",
+  "ten": "Ngô Phúc",
+  "nhom": "kiemdinh",
+  "vai_tro": "kiểm định viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp docs/02-kien-truc.md ↔ docs/research/04-tai-lieu-tham-khao.md",
+   "mo_ta": "Đối chiếu docs/02-kien-truc.md với docs/research/04-tai-lieu-tham-khao.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-139",
+  "ten": "Dương Phúc",
+  "nhom": "PQC",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp docs/03-phan-cung.md ↔ hardware/wiring.md",
+   "mo_ta": "Đối chiếu docs/03-phan-cung.md với hardware/wiring.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-140",
+  "ten": "Lý Phúc",
+  "nhom": "ML",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp docs/04-firmware.md ↔ scripts/run_tests.sh",
+   "mo_ta": "Đối chiếu docs/04-firmware.md với scripts/run_tests.sh: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-141",
+  "ten": "Đinh Phúc",
+  "nhom": "firmware",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp docs/05-huong-dan-su-dung.md ↔ tools/vault.py",
+   "mo_ta": "Đối chiếu docs/05-huong-dan-su-dung.md với tools/vault.py: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-142",
+  "ten": "Trịnh Phúc",
+  "nhom": "tooling",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp docs/06-bao-mat.md ↔ docs/07-sao-luu-va-khoi-phuc.md",
+   "mo_ta": "Đối chiếu docs/06-bao-mat.md với docs/07-sao-luu-va-khoi-phuc.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-143",
+  "ten": "Trương Phúc",
+  "nhom": "tailieu",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp docs/07-sao-luu-va-khoi-phuc.md ↔ firmware/hwtest/hwtest.ino",
+   "mo_ta": "Đối chiếu docs/07-sao-luu-va-khoi-phuc.md với firmware/hwtest/hwtest.ino: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-144",
+  "ten": "Mai Phúc",
+  "nhom": "kiemdinh",
+  "vai_tro": "kiểm định viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp docs/research/01-giao-thuc-fido.md ↔ scripts/build_hwtest.sh",
+   "mo_ta": "Đối chiếu docs/research/01-giao-thuc-fido.md với scripts/build_hwtest.sh: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-145",
+  "ten": "Đoàn Phúc",
+  "nhom": "PQC",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp docs/research/02-esp32s3-usb.md ↔ tools/ml_distinguisher.py",
+   "mo_ta": "Đối chiếu docs/research/02-esp32s3-usb.md với tools/ml_distinguisher.py: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-146",
+  "ten": "Hứa Phúc",
+  "nhom": "ML",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp docs/research/03-du-an-lien-quan.md ↔ docs/03-phan-cung.md",
+   "mo_ta": "Đối chiếu docs/research/03-du-an-lien-quan.md với docs/03-phan-cung.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-147",
+  "ten": "Lâm Phúc",
+  "nhom": "firmware",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp docs/research/04-tai-lieu-tham-khao.md ↔ docs/research/03-du-an-lien-quan.md",
+   "mo_ta": "Đối chiếu docs/research/04-tai-lieu-tham-khao.md với docs/research/03-du-an-lien-quan.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-148",
+  "ten": "Chu Phúc",
+  "nhom": "tooling",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp docs/research/05-qgac-danh-gia.md ↔ hardware/keys.md",
+   "mo_ta": "Đối chiếu docs/research/05-qgac-danh-gia.md với hardware/keys.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-149",
+  "ten": "Tạ Phúc",
+  "nhom": "tailieu",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp docs/research/06-ml-distinguisher.md ↔ scripts/run_tests.ps1",
+   "mo_ta": "Đối chiếu docs/research/06-ml-distinguisher.md với scripts/run_tests.ps1: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-150",
+  "ten": "Hà Phúc",
+  "nhom": "kiemdinh",
+  "vai_tro": "kiểm định viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp firmware/hwtest/hwtest.ino ↔ tools/split_secret.py",
+   "mo_ta": "Đối chiếu firmware/hwtest/hwtest.ino với tools/split_secret.py: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-151",
+  "ten": "Nguyễn Giang",
+  "nhom": "PQC",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp firmware/hwtest/README.md ↔ docs/06-bao-mat.md",
+   "mo_ta": "Đối chiếu firmware/hwtest/README.md với docs/06-bao-mat.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-152",
+  "ten": "Trần Giang",
+  "nhom": "ML",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp hardware/BOM.md ↔ docs/research/06-ml-distinguisher.md",
+   "mo_ta": "Đối chiếu hardware/BOM.md với docs/research/06-ml-distinguisher.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-153",
+  "ten": "Lê Giang",
+  "nhom": "firmware",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp hardware/keys.md ↔ scripts/build_hwtest.ps1",
+   "mo_ta": "Đối chiếu hardware/keys.md với scripts/build_hwtest.ps1: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-154",
+  "ten": "Phạm Giang",
+  "nhom": "tooling",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp hardware/wiring.md ↔ tools/hid_echo.py",
+   "mo_ta": "Đối chiếu hardware/wiring.md với tools/hid_echo.py: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-155",
+  "ten": "Hoàng Giang",
+  "nhom": "tailieu",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp README.md ↔ docs/02-kien-truc.md",
+   "mo_ta": "Đối chiếu README.md với docs/02-kien-truc.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-156",
+  "ten": "Phan Giang",
+  "nhom": "kiemdinh",
+  "vai_tro": "kiểm định viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp scripts/build_hwtest.ps1 ↔ docs/research/02-esp32s3-usb.md",
+   "mo_ta": "Đối chiếu scripts/build_hwtest.ps1 với docs/research/02-esp32s3-usb.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-157",
+  "ten": "Vũ Giang",
+  "nhom": "PQC",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp scripts/build_hwtest.sh ↔ hardware/BOM.md",
+   "mo_ta": "Đối chiếu scripts/build_hwtest.sh với hardware/BOM.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-158",
+  "ten": "Võ Giang",
+  "nhom": "ML",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp scripts/flash_linux.sh ↔ scripts/flash_win.ps1",
+   "mo_ta": "Đối chiếu scripts/flash_linux.sh với scripts/flash_win.ps1: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-159",
+  "ten": "Đặng Giang",
+  "nhom": "firmware",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp scripts/flash_win.ps1 ↔ tools/pqc.py",
+   "mo_ta": "Đối chiếu scripts/flash_win.ps1 với tools/pqc.py: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-160",
+  "ten": "Bùi Giang",
+  "nhom": "tooling",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp scripts/run_tests.ps1 ↔ docs/05-huong-dan-su-dung.md",
+   "mo_ta": "Đối chiếu scripts/run_tests.ps1 với docs/05-huong-dan-su-dung.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-161",
+  "ten": "Đỗ Giang",
+  "nhom": "tailieu",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp scripts/run_tests.sh ↔ docs/research/05-qgac-danh-gia.md",
+   "mo_ta": "Đối chiếu scripts/run_tests.sh với docs/research/05-qgac-danh-gia.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-162",
+  "ten": "Hồ Giang",
+  "nhom": "kiemdinh",
+  "vai_tro": "kiểm định viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp tools/fido_check.py ↔ README.md",
+   "mo_ta": "Đối chiếu tools/fido_check.py với README.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-163",
+  "ten": "Ngô Giang",
+  "nhom": "PQC",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp tools/hid_echo.py ↔ tools/fido_check.py",
+   "mo_ta": "Đối chiếu tools/hid_echo.py với tools/fido_check.py: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-164",
+  "ten": "Dương Giang",
+  "nhom": "ML",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp tools/ml_distinguisher.py ↔ docs/01-phan-tich-y-tuong.md",
+   "mo_ta": "Đối chiếu tools/ml_distinguisher.py với docs/01-phan-tich-y-tuong.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-165",
+  "ten": "Lý Giang",
+  "nhom": "firmware",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp tools/mnemonic.py ↔ docs/research/01-giao-thuc-fido.md",
+   "mo_ta": "Đối chiếu tools/mnemonic.py với docs/research/01-giao-thuc-fido.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-166",
+  "ten": "Đinh Giang",
+  "nhom": "tooling",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp tools/pqc.py ↔ firmware/hwtest/README.md",
+   "mo_ta": "Đối chiếu tools/pqc.py với firmware/hwtest/README.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-167",
+  "ten": "Trịnh Giang",
+  "nhom": "tailieu",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp tools/split_secret.py ↔ scripts/flash_linux.sh",
+   "mo_ta": "Đối chiếu tools/split_secret.py với scripts/flash_linux.sh: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-168",
+  "ten": "Trương Giang",
+  "nhom": "kiemdinh",
+  "vai_tro": "kiểm định viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp tools/vault.py ↔ tools/mnemonic.py",
+   "mo_ta": "Đối chiếu tools/vault.py với tools/mnemonic.py: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-169",
+  "ten": "Mai Giang",
+  "nhom": "PQC",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp docs/01-phan-tich-y-tuong.md ↔ docs/04-firmware.md",
+   "mo_ta": "Đối chiếu docs/01-phan-tich-y-tuong.md với docs/04-firmware.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-170",
+  "ten": "Đoàn Giang",
+  "nhom": "ML",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp docs/02-kien-truc.md ↔ docs/research/04-tai-lieu-tham-khao.md",
+   "mo_ta": "Đối chiếu docs/02-kien-truc.md với docs/research/04-tai-lieu-tham-khao.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-171",
+  "ten": "Hứa Giang",
+  "nhom": "firmware",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp docs/03-phan-cung.md ↔ hardware/wiring.md",
+   "mo_ta": "Đối chiếu docs/03-phan-cung.md với hardware/wiring.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-172",
+  "ten": "Lâm Giang",
+  "nhom": "tooling",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp docs/04-firmware.md ↔ scripts/run_tests.sh",
+   "mo_ta": "Đối chiếu docs/04-firmware.md với scripts/run_tests.sh: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-173",
+  "ten": "Chu Giang",
+  "nhom": "tailieu",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp docs/05-huong-dan-su-dung.md ↔ tools/vault.py",
+   "mo_ta": "Đối chiếu docs/05-huong-dan-su-dung.md với tools/vault.py: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-174",
+  "ten": "Tạ Giang",
+  "nhom": "kiemdinh",
+  "vai_tro": "kiểm định viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp docs/06-bao-mat.md ↔ docs/07-sao-luu-va-khoi-phuc.md",
+   "mo_ta": "Đối chiếu docs/06-bao-mat.md với docs/07-sao-luu-va-khoi-phuc.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-175",
+  "ten": "Hà Giang",
+  "nhom": "PQC",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp docs/07-sao-luu-va-khoi-phuc.md ↔ firmware/hwtest/hwtest.ino",
+   "mo_ta": "Đối chiếu docs/07-sao-luu-va-khoi-phuc.md với firmware/hwtest/hwtest.ino: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-176",
+  "ten": "Nguyễn Hạnh",
+  "nhom": "ML",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp docs/research/01-giao-thuc-fido.md ↔ scripts/build_hwtest.sh",
+   "mo_ta": "Đối chiếu docs/research/01-giao-thuc-fido.md với scripts/build_hwtest.sh: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-177",
+  "ten": "Trần Hạnh",
+  "nhom": "firmware",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp docs/research/02-esp32s3-usb.md ↔ tools/ml_distinguisher.py",
+   "mo_ta": "Đối chiếu docs/research/02-esp32s3-usb.md với tools/ml_distinguisher.py: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-178",
+  "ten": "Lê Hạnh",
+  "nhom": "tooling",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp docs/research/03-du-an-lien-quan.md ↔ docs/03-phan-cung.md",
+   "mo_ta": "Đối chiếu docs/research/03-du-an-lien-quan.md với docs/03-phan-cung.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-179",
+  "ten": "Phạm Hạnh",
+  "nhom": "tailieu",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp docs/research/04-tai-lieu-tham-khao.md ↔ docs/research/03-du-an-lien-quan.md",
+   "mo_ta": "Đối chiếu docs/research/04-tai-lieu-tham-khao.md với docs/research/03-du-an-lien-quan.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-180",
+  "ten": "Hoàng Hạnh",
+  "nhom": "kiemdinh",
+  "vai_tro": "kiểm định viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp docs/research/05-qgac-danh-gia.md ↔ hardware/keys.md",
+   "mo_ta": "Đối chiếu docs/research/05-qgac-danh-gia.md với hardware/keys.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-181",
+  "ten": "Phan Hạnh",
+  "nhom": "PQC",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp docs/research/06-ml-distinguisher.md ↔ scripts/run_tests.ps1",
+   "mo_ta": "Đối chiếu docs/research/06-ml-distinguisher.md với scripts/run_tests.ps1: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-182",
+  "ten": "Vũ Hạnh",
+  "nhom": "ML",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp firmware/hwtest/hwtest.ino ↔ tools/split_secret.py",
+   "mo_ta": "Đối chiếu firmware/hwtest/hwtest.ino với tools/split_secret.py: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-183",
+  "ten": "Võ Hạnh",
+  "nhom": "firmware",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp firmware/hwtest/README.md ↔ docs/06-bao-mat.md",
+   "mo_ta": "Đối chiếu firmware/hwtest/README.md với docs/06-bao-mat.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-184",
+  "ten": "Đặng Hạnh",
+  "nhom": "tooling",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp hardware/BOM.md ↔ docs/research/06-ml-distinguisher.md",
+   "mo_ta": "Đối chiếu hardware/BOM.md với docs/research/06-ml-distinguisher.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-185",
+  "ten": "Bùi Hạnh",
+  "nhom": "tailieu",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp hardware/keys.md ↔ scripts/build_hwtest.ps1",
+   "mo_ta": "Đối chiếu hardware/keys.md với scripts/build_hwtest.ps1: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-186",
+  "ten": "Đỗ Hạnh",
+  "nhom": "kiemdinh",
+  "vai_tro": "kiểm định viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp hardware/wiring.md ↔ tools/hid_echo.py",
+   "mo_ta": "Đối chiếu hardware/wiring.md với tools/hid_echo.py: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-187",
+  "ten": "Hồ Hạnh",
+  "nhom": "PQC",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp README.md ↔ docs/02-kien-truc.md",
+   "mo_ta": "Đối chiếu README.md với docs/02-kien-truc.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-188",
+  "ten": "Ngô Hạnh",
+  "nhom": "ML",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp scripts/build_hwtest.ps1 ↔ docs/research/02-esp32s3-usb.md",
+   "mo_ta": "Đối chiếu scripts/build_hwtest.ps1 với docs/research/02-esp32s3-usb.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-189",
+  "ten": "Dương Hạnh",
+  "nhom": "firmware",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp scripts/build_hwtest.sh ↔ hardware/BOM.md",
+   "mo_ta": "Đối chiếu scripts/build_hwtest.sh với hardware/BOM.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-190",
+  "ten": "Lý Hạnh",
+  "nhom": "tooling",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp scripts/flash_linux.sh ↔ scripts/flash_win.ps1",
+   "mo_ta": "Đối chiếu scripts/flash_linux.sh với scripts/flash_win.ps1: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-191",
+  "ten": "Đinh Hạnh",
+  "nhom": "tailieu",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp scripts/flash_win.ps1 ↔ tools/pqc.py",
+   "mo_ta": "Đối chiếu scripts/flash_win.ps1 với tools/pqc.py: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-192",
+  "ten": "Trịnh Hạnh",
+  "nhom": "kiemdinh",
+  "vai_tro": "kiểm định viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp scripts/run_tests.ps1 ↔ docs/05-huong-dan-su-dung.md",
+   "mo_ta": "Đối chiếu scripts/run_tests.ps1 với docs/05-huong-dan-su-dung.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-193",
+  "ten": "Trương Hạnh",
+  "nhom": "PQC",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp scripts/run_tests.sh ↔ docs/research/05-qgac-danh-gia.md",
+   "mo_ta": "Đối chiếu scripts/run_tests.sh với docs/research/05-qgac-danh-gia.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-194",
+  "ten": "Mai Hạnh",
+  "nhom": "ML",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp tools/fido_check.py ↔ README.md",
+   "mo_ta": "Đối chiếu tools/fido_check.py với README.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-195",
+  "ten": "Đoàn Hạnh",
+  "nhom": "firmware",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp tools/hid_echo.py ↔ tools/fido_check.py",
+   "mo_ta": "Đối chiếu tools/hid_echo.py với tools/fido_check.py: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-196",
+  "ten": "Hứa Hạnh",
+  "nhom": "tooling",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp tools/ml_distinguisher.py ↔ docs/01-phan-tich-y-tuong.md",
+   "mo_ta": "Đối chiếu tools/ml_distinguisher.py với docs/01-phan-tich-y-tuong.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-197",
+  "ten": "Lâm Hạnh",
+  "nhom": "tailieu",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp tools/mnemonic.py ↔ docs/research/01-giao-thuc-fido.md",
+   "mo_ta": "Đối chiếu tools/mnemonic.py với docs/research/01-giao-thuc-fido.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-198",
+  "ten": "Chu Hạnh",
+  "nhom": "kiemdinh",
+  "vai_tro": "kiểm định viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp tools/pqc.py ↔ firmware/hwtest/README.md",
+   "mo_ta": "Đối chiếu tools/pqc.py với firmware/hwtest/README.md: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-199",
+  "ten": "Tạ Hạnh",
+  "nhom": "PQC",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp tools/split_secret.py ↔ scripts/flash_linux.sh",
+   "mo_ta": "Đối chiếu tools/split_secret.py với scripts/flash_linux.sh: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ },
+ {
+  "ma": "NCKH-200",
+  "ten": "Hà Hạnh",
+  "nhom": "ML",
+  "vai_tro": "thành viên",
+  "dot": 4,
+  "nhiem_vu": {
+   "tieu_de": "Kiểm cặp tools/vault.py ↔ tools/mnemonic.py",
+   "mo_ta": "Đối chiếu tools/vault.py với tools/mnemonic.py: tài liệu-code-test có khớp nhau không, lệch đâu báo đó.",
+   "loai": "t4-theo-cap"
+  }
+ }
+]

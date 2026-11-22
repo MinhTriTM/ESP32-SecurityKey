@@ -1,0 +1,20 @@
+# Tiếng Việt: workspace chỉ chứa crate chạy trên máy host (PC).
+# Hai firmware mẫu nằm ở firmware/* và KHÔNG đưa vào members
+# vì chúng cần toolchain nhúng (espup / target Xtensa-RISC-V).
+
+[workspace]
+resolver = "2"
+members = [
+  "crates/inventory",
+  "crates/gen-template",
+  "crates/provision",
+]
+exclude = [
+  "firmware/esp32s3-hello",
+  "firmware/esp32c6-hello",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "MIT OR Apache-2.0"
