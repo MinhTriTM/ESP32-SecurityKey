@@ -118,6 +118,9 @@
   details.guide ol b, details.guide ol code { color: var(--text); }
   footer { text-align: center; color: var(--faint); font-size: 12.5px; padding: 10px 16px 26px; }
   a { color: var(--accent2); }
+  .langswitch { display: inline-flex; gap: 6px; }
+  .langswitch .lbtn { font-size: 12px; padding: 5px 12px; border-radius: 999px; background: transparent; }
+  .langswitch .lbtn.on { border-color: var(--accent); color: var(--accent); font-weight: 700; }
   @media (max-width: 640px) {
     .stepper { grid-template-columns: repeat(2, 1fr); }
     .brand p { display: none; }
@@ -135,6 +138,7 @@
         <p>Nạp firmware từ trình duyệt, không cần cài esptool. Cần Chrome hoặc Edge.</p>
       </div>
     </div>
+    <span class="langswitch"><button type="button" class="lbtn" data-lang="vi">VI</button><button type="button" class="lbtn" data-lang="en">EN</button><button type="button" class="lbtn" data-lang="zh">中文</button></span>
     <span id="statuspill" class="pill"><span class="dot"></span><span id="statustxt">Chưa kết nối</span></span>
     <span id="chipline">chưa có thông tin chip</span>
   </div>
@@ -298,8 +302,8 @@ function setBusy(v) {
   }
   const pill = $("statuspill");
   pill.classList.toggle("busy", v);
-  if (v) $("statustxt").textContent = "Đang xử lý...";
-  else if (!connected) $("statustxt").textContent = "Chưa kết nối";
+  if (v) $("statustxt").textContent = t("stBusy");
+  else if (!connected) $("statustxt").textContent = t("stDisconnected");
   if (!v) refreshButtons();
 }
 function refreshButtons() {
@@ -359,6 +363,158 @@ async function ensureEsp() {
   throw new Error("Không tải được esptool-js an toàn (" + lastErr + "). Kiểm tra mạng rồi thử lại.");
 }
 
+// ---------- Đa ngôn ngữ VI/EN/CN (chỉ chữ giao diện; nhật ký kỹ thuật giữ tiếng Việt) ----------
+const I18N = {
+  vi: {
+    docTitle: "Web Nạp ESP32-S3 — Security Key", brandH1: "Web Nạp ESP32-S3 — Security Key",
+    brandSub: "Nạp firmware từ trình duyệt, không cần cài esptool. Cần Chrome hoặc Edge.",
+    nserial: "Trình duyệt này không hỗ trợ WebSerial. Hãy mở trang bằng Chrome hoặc Edge bản mới trên máy tính.",
+    s1t: "Kết nối", s1s: "Cắm board, chọn cổng", s2t: "Firmware", s2s: "Chọn gói hoặc file .bin",
+    s3t: "Nạp", s3s: "Ghi vào flash", s4t: "Monitor", s4s: "Xem log kiểm tra",
+    c1tag: "BƯỚC 1", c1h: "Kết nối board",
+    c1sub: "Cắm board bằng cổng USB-UART, rồi bấm kết nối và chọn đúng cổng trong hộp thoại.",
+    btnConnect: "Kết nối cổng serial", btnDisconnect: "Ngắt kết nối", btnInfo: "Đọc chip + MAC", baud: "Tốc độ nạp:",
+    hint1: "Không kết nối được thì: giữ nút BOOT, nhấn nhả nút RESET, thả BOOT ra, rồi bấm Kết nối lại. Nếu vẫn lỗi, đổi cáp USB hoặc hạ tốc độ nạp xuống 115200.",
+    c2tag: "BƯỚC 2", c2h: "Chọn firmware",
+    c2sub: "Gói có sẵn được kiểm tra SHA-256 trước khi nạp. Pico-fido tự build thì thêm file gộp ở mục bên dưới.",
+    fileproto: "Bạn đang mở file trực tiếp nên trình duyệt chặn tải firmware có sẵn. Hãy chạy <code class=\"inline\">scripts/web_flasher.ps1</code> để mở qua localhost, hoặc dùng file tự chọn.",
+    customH: "FILE TỰ CHỌN (địa chỉ dạng hex, ví dụ 0x0 hoặc 0x10000)",
+    btnAddFile: "+ Thêm file .bin", chkErase: "Xóa toàn bộ flash trước khi nạp", flashSize: "Flash size:",
+    badge: "KHUYÊN DÙNG", customOnlyT: "Chỉ dùng file tự chọn",
+    customOnlyD: "Bỏ qua gói có sẵn, nạp đúng các file đã thêm ở dưới.",
+    noFile: "chưa chọn file", delFile: "Xóa",
+    manifestLoading: "Đang tải danh sách firmware có sẵn...",
+    manifestFail: (e) => `Không tải được firmware có sẵn (${e}). Hãy mở web qua localhost hoặc dùng file tự chọn.`,
+    c3tag: "BƯỚC 3", c3h: "Nạp vào ESP",
+    c3sub: "Nạp xong, web tự chuyển sang Monitor để xem log ngay, không phải bấm gì thêm.",
+    btnFlash: "Nạp firmware", btnErase: "Xóa flash", btnReset: "Reset board",
+    logTitle: "Nhật ký nạp", btnLogCopy: "Chép log", btnLogClear: "Xóa",
+    c4tag: "BƯỚC 4", c4h: "Serial Monitor",
+    c4sub: "Xem log hwtest: chờ dòng <code class=\"inline\">ESP32-S3 Security Key: hwtest</code>, nhấn nút BOOT để thử.",
+    btnMonOpen: "Mở Monitor", btnMonStop: "Dừng", btnMonClear: "Xóa log", monBaud: "Tốc độ:", monScroll: "Tự cuộn",
+    monTitle: "Log serial",
+    monHint: "Monitor chiếm cổng serial nên khi mở, kết nối nạp sẽ tự ngắt. Sau khi nạp hwtest: reset board, mở Monitor, chờ dòng <code class=\"inline\">ESP32-S3 Security Key: hwtest</code>, nhấn nút BOOT để thử.",
+    guideSummary: "Luồng chuẩn từ đầu tới cuối",
+    guide1: "Kết nối board, đọc chip để chắc đúng <b>ESP32-S3</b>.",
+    guide2: "Nạp <b>hwtest bản OTG</b>, web tự mở Monitor sau khi xong.",
+    guide3: "Kiểm tra log chip, nhấn BOOT, xem LED xanh lá chuyển xanh dương.",
+    guide4: "Đạt hết mới nạp <b>pico-fido</b> (file gộp <code class=\"inline\">.bin</code> ở <code class=\"inline\">0x0</code>) theo <a href=\"../docs/04-firmware.md\">hướng dẫn firmware</a>.",
+    footer: "Chạy hoàn toàn trên máy bạn bằng esptool-js và WebSerial. Không gửi dữ liệu đi đâu.",
+    stDisconnected: "Chưa kết nối", stBusy: "Đang xử lý...", stConnected: "Đã kết nối: ",
+    chipNone: "chưa có thông tin chip",
+    progReady: "sẵn sàng", progNow: "file hiện tại: —", progPrep: "chuẩn bị...",
+    progErr: "lỗi", progErasing: "đang xóa...", progErased: "đã xóa sạch",
+    progTotal: (p) => `tổng: ${p}%`, progFile: (i, n, p) => `file ${i}/${n}: ${p}%`,
+    progDone: (s) => `xong trong ${s}s`,
+    eraseConfirm: "Xóa TOÀN BỘ flash? Mọi firmware và dữ liệu trên chip sẽ mất.",
+    monNoPort: "Bạn chưa chọn cổng nào.\n",
+    monFailOpen: (e) => `[Không mở được Monitor: ${e}]\n`,
+    monOpened: (b, t) => `--- Monitor mở @${b}, ${t} ---\nNhấn nút RESET trên board nếu chưa thấy log.\n`,
+    monClosed: (t) => `\n--- Monitor đóng, ${t} ---\n`,
+    monReadErr: (e) => `\n[Lỗi đọc serial: ${e}]\n`,
+  },
+  en: {
+    docTitle: "ESP32-S3 Web Flasher — Security Key", brandH1: "ESP32-S3 Web Flasher — Security Key",
+    brandSub: "Flash firmware from the browser, no esptool install. Needs Chrome or Edge.",
+    nserial: "This browser has no WebSerial. Please use a recent Chrome or Edge on desktop.",
+    s1t: "Connect", s1s: "Plug board, pick port", s2t: "Firmware", s2s: "Pick a package or .bin",
+    s3t: "Flash", s3s: "Write to flash", s4t: "Monitor", s4s: "Watch check logs",
+    c1tag: "STEP 1", c1h: "Connect board",
+    c1sub: "Plug the board into USB-UART, click connect and pick the right port.",
+    btnConnect: "Connect serial port", btnDisconnect: "Disconnect", btnInfo: "Read chip + MAC", baud: "Flash baud:",
+    hint1: "Can't connect? Hold BOOT, tap RESET, release BOOT, then reconnect. Still failing? Try another USB cable or drop to 115200 baud.",
+    c2tag: "STEP 2", c2h: "Select firmware",
+    c2sub: "Built-in packages are SHA-256-checked before flashing. For self-built pico-fido, add the merged file below.",
+    fileproto: "You opened this file directly, so the browser blocks loading built-in firmware. Run <code class=\"inline\">scripts/web_flasher.ps1</code> to serve it over localhost, or use custom files.",
+    customH: "CUSTOM FILES (hex address, e.g. 0x0 or 0x10000)",
+    btnAddFile: "+ Add .bin file", chkErase: "Erase entire flash before writing", flashSize: "Flash size:",
+    badge: "RECOMMENDED", customOnlyT: "Custom files only",
+    customOnlyD: "Skip built-in packages, flash exactly the files added below.",
+    noFile: "no file chosen", delFile: "Remove",
+    manifestLoading: "Loading built-in firmware list...",
+    manifestFail: (e) => `Could not load built-in firmware (${e}). Open this page over localhost or use custom files.`,
+    c3tag: "STEP 3", c3h: "Flash the ESP",
+    c3sub: "After flashing, the page auto-opens the Monitor so you can watch logs right away.",
+    btnFlash: "Flash firmware", btnErase: "Erase flash", btnReset: "Reset board",
+    logTitle: "Flash log", btnLogCopy: "Copy log", btnLogClear: "Clear",
+    c4tag: "STEP 4", c4h: "Serial Monitor",
+    c4sub: "Watch hwtest logs: wait for <code class=\"inline\">ESP32-S3 Security Key: hwtest</code>, then press BOOT to test.",
+    btnMonOpen: "Open Monitor", btnMonStop: "Stop", btnMonClear: "Clear log", monBaud: "Baud:", monScroll: "Autoscroll",
+    monTitle: "Serial log",
+    monHint: "The Monitor takes the serial port, so opening it disconnects flashing. After flashing hwtest: reset the board, open the Monitor, wait for <code class=\"inline\">ESP32-S3 Security Key: hwtest</code>, press BOOT to test.",
+    guideSummary: "End-to-end standard flow",
+    guide1: "Connect the board, read the chip to confirm <b>ESP32-S3</b>.",
+    guide2: "Flash the <b>hwtest OTG build</b>; the page auto-opens the Monitor.",
+    guide3: "Check chip logs, press BOOT, watch the LED turn from green to blue.",
+    guide4: "Only then flash <b>pico-fido</b> (merged <code class=\"inline\">.bin</code> at <code class=\"inline\">0x0</code>) per the <a href=\"../docs/04-firmware.md\">firmware guide</a>.",
+    footer: "Runs 100% on your machine via esptool-js and WebSerial. No data leaves your computer.",
+    stDisconnected: "Not connected", stBusy: "Working...", stConnected: "Connected: ",
+    chipNone: "no chip info yet",
+    progReady: "ready", progNow: "current file: —", progPrep: "preparing...",
+    progErr: "error", progErasing: "erasing...", progErased: "fully erased",
+    progTotal: (p) => `total: ${p}%`, progFile: (i, n, p) => `file ${i}/${n}: ${p}%`,
+    progDone: (s) => `done in ${s}s`,
+    eraseConfirm: "Erase the ENTIRE flash? All firmware and data on the chip will be lost.",
+    monNoPort: "No port selected.\n",
+    monFailOpen: (e) => `[Could not open Monitor: ${e}]\n`,
+    monOpened: (b, t) => `--- Monitor open @${b}, ${t} ---\nPress RESET on the board if no logs appear.\n`,
+    monClosed: (t) => `\n--- Monitor closed, ${t} ---\n`,
+    monReadErr: (e) => `\n[Serial read error: ${e}]\n`,
+  },
+  zh: {
+    docTitle: "ESP32-S3 网页烧录 — Security Key", brandH1: "ESP32-S3 网页烧录 — Security Key",
+    brandSub: "在浏览器中烧录固件，无需安装 esptool。需要 Chrome 或 Edge。",
+    nserial: "此浏览器不支持 WebSerial，请在电脑上使用新版 Chrome 或 Edge。",
+    s1t: "连接", s1s: "插入开发板，选择串口", s2t: "固件", s2s: "选择固件包或 .bin 文件",
+    s3t: "烧录", s3s: "写入 flash", s4t: "监视器", s4s: "查看检测日志",
+    c1tag: "第 1 步", c1h: "连接开发板",
+    c1sub: "用 USB-UART 口连接开发板，点击连接并选择正确的串口。",
+    btnConnect: "连接串口", btnDisconnect: "断开连接", btnInfo: "读取芯片 + MAC", baud: "烧录波特率：",
+    hint1: "连不上？按住 BOOT，点按 RESET，松开 BOOT 后重新连接。还不行？换 USB 线或降到 115200 波特率。",
+    c2tag: "第 2 步", c2h: "选择固件",
+    c2sub: "内置固件包烧录前会校验 SHA-256。自编译的 pico-fido 请在下方添加合并文件。",
+    fileproto: "您直接打开了文件，浏览器会阻止加载内置固件。请运行 <code class=\"inline\">scripts/web_flasher.ps1</code> 通过 localhost 打开，或使用自定义文件。",
+    customH: "自定义文件（十六进制地址，如 0x0 或 0x10000）",
+    btnAddFile: "+ 添加 .bin 文件", chkErase: "烧录前擦除整个 flash", flashSize: "Flash size:",
+    badge: "推荐", customOnlyT: "仅用自定义文件",
+    customOnlyD: "跳过内置包，只烧录下方添加的文件。",
+    noFile: "未选择文件", delFile: "删除",
+    manifestLoading: "正在加载内置固件列表…",
+    manifestFail: (e) => `无法加载内置固件（${e}）。请通过 localhost 打开本页或使用自定义文件。`,
+    c3tag: "第 3 步", c3h: "烧录到 ESP",
+    c3sub: "烧录完成后会自动打开监视器查看日志，无需额外操作。",
+    btnFlash: "烧录固件", btnErase: "擦除 flash", btnReset: "复位开发板",
+    logTitle: "烧录日志", btnLogCopy: "复制日志", btnLogClear: "清空",
+    c4tag: "第 4 步", c4h: "串口监视器",
+    c4sub: "查看 hwtest 日志：等待 <code class=\"inline\">ESP32-S3 Security Key: hwtest</code>，然后按 BOOT 测试。",
+    btnMonOpen: "打开监视器", btnMonStop: "停止", btnMonClear: "清空日志", monBaud: "波特率：", monScroll: "自动滚动",
+    monTitle: "串口日志",
+    monHint: "监视器会占用串口，打开后烧录连接会自动断开。烧录 hwtest 后：复位开发板，打开监视器，等待 <code class=\"inline\">ESP32-S3 Security Key: hwtest</code>，按 BOOT 测试。",
+    guideSummary: "标准全流程",
+    guide1: "连接开发板，读取芯片确认是 <b>ESP32-S3</b>。",
+    guide2: "烧录 <b>hwtest OTG 版</b>，完成后自动打开监视器。",
+    guide3: "检查芯片日志，按 BOOT，看 LED 从绿变蓝。",
+    guide4: "全部通过后再烧录 <b>pico-fido</b>（<code class=\"inline\">0x0</code> 处的合并 <code class=\"inline\">.bin</code>），见<a href=\"../docs/04-firmware.md\">固件指南</a>。",
+    footer: "完全在本地通过 esptool-js 和 WebSerial 运行，数据不会外传。",
+    stDisconnected: "未连接", stBusy: "处理中…", stConnected: "已连接：",
+    chipNone: "暂无芯片信息",
+    progReady: "就绪", progNow: "当前文件：—", progPrep: "准备中…",
+    progErr: "出错", progErasing: "擦除中…", progErased: "已完全擦除",
+    progTotal: (p) => `总计：${p}%`, progFile: (i, n, p) => `文件 ${i}/${n}：${p}%`,
+    progDone: (s) => `用时 ${s} 秒完成`,
+    eraseConfirm: "擦除整个 flash？芯片上的所有固件和数据都会丢失。",
+    monNoPort: "未选择串口。\n",
+    monFailOpen: (e) => `[无法打开监视器：${e}]\n`,
+    monOpened: (b, t) => `--- 监视器已打开 @${b}，${t} ---\n若无日志请按开发板上的 RESET。\n`,
+    monClosed: (t) => `\n--- 监视器已关闭，${t} ---\n`,
+    monReadErr: (e) => `\n[串口读取错误：${e}]\n`,
+  },
+};
+let LANG = "vi";
+try { LANG = localStorage.getItem("esp-lang") || "vi"; } catch (_) { /* bỏ qua */ }
+if (!I18N[LANG]) LANG = "vi";
+const t = (k) => (I18N[LANG] && I18N[LANG][k] !== undefined) ? I18N[LANG][k] : I18N.vi[k];
+
 // ---------- Danh sách firmware có sẵn ----------
 async function loadManifest() {
   const box = $("pkglist");
@@ -371,7 +527,8 @@ async function loadManifest() {
     box.innerHTML = "";
     const p = document.createElement("div");
     p.className = "hint warn";
-    p.textContent = `Không tải được firmware có sẵn (${e.message}). Hãy mở web qua localhost hoặc dùng file tự chọn.`;
+    manifestErr = e.message;
+    p.textContent = t("manifestFail")(e.message);
     box.appendChild(p);
     refreshSteps();
     return;
@@ -395,7 +552,7 @@ async function loadManifest() {
     if (i === 0) {
       const badge = document.createElement("span");
       badge.className = "badge";
-      badge.textContent = "KHUYÊN DÙNG";
+      badge.textContent = t("badge");
       b.appendChild(badge);
     }
     const small = document.createElement("small");
@@ -418,9 +575,9 @@ async function loadManifest() {
   });
   const body = document.createElement("span");
   const b = document.createElement("b");
-  b.textContent = "Chỉ dùng file tự chọn";
+  b.textContent = t("customOnlyT");
   const small = document.createElement("small");
-  small.textContent = "Bỏ qua gói có sẵn, nạp đúng các file đã thêm ở dưới.";
+  small.textContent = t("customOnlyD");
   body.append(b, document.createElement("br"), small);
   div.append(radio, body);
   box.appendChild(div);
@@ -443,14 +600,14 @@ function addFileRow(addr = "0x0") {
   const fileInput = document.createElement("input");
   fileInput.type = "file"; fileInput.accept = ".bin";
   const name = document.createElement("span");
-  name.className = "fname"; name.textContent = "chưa chọn file";
+  name.className = "fname"; name.textContent = t("noFile");
   fileInput.addEventListener("change", () => {
     name.textContent = fileInput.files.length
-      ? `${fileInput.files[0].name} (${(fileInput.files[0].size / 1024).toFixed(1)} KB)` : "chưa chọn file";
+      ? `${fileInput.files[0].name} (${(fileInput.files[0].size / 1024).toFixed(1)} KB)` : t("noFile");
     refreshSteps();
   });
   const del = document.createElement("button");
-  del.className = "ghost small"; del.textContent = "Xóa";
+  del.className = "ghost small"; del.textContent = t("delFile");
   del.addEventListener("click", () => { row.remove(); refreshSteps(); });
   row.append(addrInput, fileInput, name, del);
   $("customfiles").appendChild(row);
@@ -476,7 +633,7 @@ async function connect() {
     log(`Đang kết nối ở ${baud} baud, đưa chip vào download mode...`);
     chipName = await loader.main();
     connected = true;
-    setStatus(true, `Đã kết nối: ${chipName}`);
+    setStatus(true, t("stConnected") + chipName);
     $("chipline").textContent = `chip ${chipName} @ ${baud} baud`;
     log(`Đã kết nối: ${chipName}.`, "log-ok");
     if (!/ESP32-S3/i.test(chipName)) {
@@ -497,8 +654,8 @@ async function silentDisconnect() {
   try { if (transport) await transport.disconnect(); } catch (_) { /* bỏ qua */ }
   try { if (port) await port.close(); } catch (_) { /* transport đã đóng */ }
   port = transport = loader = null;
-  setStatus(false, "Chưa kết nối");
-  $("chipline").textContent = "chưa có thông tin chip";
+  setStatus(false, t("stDisconnected"));
+  $("chipline").textContent = t("chipNone");
 }
 async function disconnect() {
   setBusy(true);
@@ -573,7 +730,7 @@ async function collectFiles() {
 // ---------- Nạp / Xóa / Reset ----------
 async function flash() {
   setBusy(true);
-  setProgress(0, "chuẩn bị...", 0, "file hiện tại: —");
+  setProgress(0, t("progPrep"), 0, t("progNow"));
   try {
     const fileArray = await collectFiles();
     const totalBytes = fileArray.reduce((a, f) => a + f.data.length, 0);
@@ -590,11 +747,11 @@ async function flash() {
         const doneBefore = fileArray.slice(0, idx).reduce((a, f) => a + f.data.length, 0);
         const pct = ((doneBefore + written) / totalBytes) * 100;
         const pctFile = (written / total) * 100;
-        setProgress(pct, `tổng: ${pct.toFixed(1)}%`, pctFile, `file ${idx + 1}/${fileArray.length}: ${pctFile.toFixed(1)}%`);
+        setProgress(pct, t("progTotal")(pct.toFixed(1)), pctFile, t("progFile")(idx + 1, fileArray.length, pctFile.toFixed(1)));
       },
     });
     const secs = ((Date.now() - started) / 1000).toFixed(1);
-    setProgress(100, `xong trong ${secs}s`, 100, "xong");
+    setProgress(100, t("progDone")(secs), 100, t("progDone")(secs));
     flashedOnce = true;
     log(`Nạp xong trong ${secs}s. Đang reset board...`, "log-ok");
     await doReset(true);
@@ -603,18 +760,18 @@ async function flash() {
     refreshButtons();
     await openMonitor();
   } catch (e) {
-    setProgress(0, "lỗi", 0, "file hiện tại: —");
+    setProgress(0, t("progErr"), 0, t("progNow"));
     log("Nạp thất bại: " + (e && e.message ? e.message : e), "log-err");
   } finally { setBusy(false); }
 }
 async function eraseAll() {
-  if (!confirm("Xóa TOÀN BỘ flash? Mọi firmware và dữ liệu trên chip sẽ mất.")) return;
+  if (!confirm(t("eraseConfirm"))) return;
   setBusy(true);
-  setProgress(0, "đang xóa...", 0, "file hiện tại: —");
+  setProgress(0, t("progErasing"), 0, t("progNow"));
   try {
     log("Đang xóa toàn bộ flash, chờ 10–60 giây, không rút cáp...");
     await loader.eraseFlash();
-    setProgress(100, "đã xóa sạch");
+    setProgress(100, t("progErased"));
     log("Đã xóa toàn bộ flash. Giờ hãy nạp firmware ở nút Nạp firmware.", "log-ok");
   } catch (e) {
     log("Xóa thất bại: " + (e && e.message ? e.message : e), "log-err");
@@ -646,10 +803,10 @@ async function openMonitor() {
   } catch (e) {
     savedPort = null; // mở lỗi thì lần sau chọn lại cổng
     if (e && e.name === "NotFoundError") {
-      monLog("Bạn chưa chọn cổng nào.\n");
+      monLog(t("monNoPort"));
     } else {
       log("Mở Monitor thất bại: " + e.message, "log-err");
-      monLog(`[Không mở được Monitor: ${e.message}]\n`);
+      monLog(t("monFailOpen")(e.message));
     }
     port = null;
     return;
@@ -657,7 +814,7 @@ async function openMonitor() {
   monOpen = true;
   monAbort = new AbortController();
   refreshButtons();
-  monLog(`--- Monitor mở @${baud}, ${stamp()} ---\nNhấn nút RESET trên board nếu chưa thấy log.\n`);
+  monLog(t("monOpened")(baud, stamp()));
   document.querySelector("#monitor").scrollIntoView({ behavior: "smooth", block: "nearest" });
   monitorLoop(); // chạy nền, không await để hàm gọi khỏi kẹt
 }
@@ -672,7 +829,7 @@ async function monitorLoop() {
       if (value) monLog(value);
     }
   } catch (e) {
-    if (!monAbort.signal.aborted) monLog(`\n[Lỗi đọc serial: ${e.message}]\n`);
+    if (!monAbort.signal.aborted) monLog(t("monReadErr")(e.message));
   } finally {
     try { monReader.releaseLock(); } catch (_) { /* bỏ qua */ }
     await closed.catch(() => {});
@@ -685,7 +842,106 @@ async function stopMonitor(silent = false) {
   try { if (port) await port.close(); } catch (_) { /* bỏ qua */ }
   port = null; monReader = null; monOpen = false;
   refreshButtons();
-  if (!silent) monLog(`\n--- Monitor đóng, ${stamp()} ---\n`);
+  if (!silent) monLog(t("monClosed")(stamp()));
+}
+
+function setTextQ(sel, key) {
+  const el = document.querySelector(sel);
+  if (el) el.textContent = t(key);
+}
+function setHTMLQ(sel, key) {
+  const el = document.querySelector(sel);
+  if (el) el.innerHTML = t(key); // chỉ chuỗi dịch tĩnh, không có dữ liệu người dùng
+}
+function setLabelText(labelEl, key) {
+  if (!labelEl) return;
+  for (const n of labelEl.childNodes) {
+    if (n.nodeType === 3 && n.textContent.trim()) { n.textContent = " " + t(key) + " "; return; }
+  }
+}
+function markLang() {
+  document.querySelectorAll(".langswitch .lbtn").forEach((b) => {
+    b.classList.toggle("on", b.dataset.lang === LANG);
+  });
+}
+let manifestErr = "";
+function setLang(lang, save = true) {
+  LANG = I18N[lang] ? lang : "vi";
+  if (save) { try { localStorage.setItem("esp-lang", LANG); } catch (_) { /* bỏ qua */ } }
+  markLang();
+  document.documentElement.lang = LANG === "zh" ? "zh-CN" : LANG;
+  document.title = t("docTitle");
+  setTextQ(".brand h1", "brandH1");
+  setTextQ(".brand p", "brandSub");
+  setTextQ("#nserial", "nserial");
+  const steps = [["st1", "s1t", "s1s"], ["st2", "s2t", "s2s"], ["st3", "s3t", "s3s"], ["st4", "s4t", "s4s"]];
+  for (const [id, tk, sk] of steps) {
+    const box = $(id);
+    if (!box) continue;
+    const b = box.querySelector("b");
+    if (b && b.childNodes[1]) b.childNodes[1].textContent = t(tk);
+    const sm = box.querySelector("small");
+    if (sm) sm.textContent = t(sk);
+  }
+  const heads = [["c1tag", "c1h"], ["c2tag", "c2h"], ["c3tag", "c3h"], ["c4tag", "c4h"]];
+  document.querySelectorAll(".card > h2").forEach((h2, i) => {
+    if (i >= heads.length) return;
+    const tag = h2.querySelector(".tag");
+    if (tag) tag.textContent = t(heads[i][0]);
+    if (h2.childNodes[1]) h2.childNodes[1].textContent = t(heads[i][1]);
+  });
+  const subs = ["c1sub", "c2sub", "c3sub"];
+  document.querySelectorAll(".card > p.sub").forEach((p, i) => {
+    if (i < subs.length) p.textContent = t(subs[i]);
+    else if (i === 3) p.innerHTML = t("c4sub");
+  });
+  for (const id of ["btnConnect", "btnDisconnect", "btnInfo", "btnAddFile", "btnFlash", "btnErase", "btnReset", "btnMonOpen", "btnMonStop", "btnMonClear", "btnLogCopy", "btnLogClear"]) {
+    const el = $(id);
+    if (el) el.textContent = t(id);
+  }
+  setLabelText($("baud").closest("label"), "baud");
+  setLabelText($("flashSize").closest("label"), "flashSize");
+  setLabelText($("monBaud").closest("label"), "monBaud");
+  setLabelText($("chkErase").closest("label"), "chkErase");
+  setLabelText($("monScroll").closest("label"), "monScroll");
+  const hints = document.querySelectorAll(".card .hint");
+  if (hints[0]) hints[0].textContent = t("hint1");
+  setHTMLQ("#fileproto", "fileproto");
+  if (hints[2]) hints[2].innerHTML = t("monHint");
+  setTextQ(".card h3", "customH");
+  document.querySelectorAll("#customfiles .filerow").forEach((row) => {
+    const input = row.querySelector('input[type="file"]');
+    const name = row.querySelector(".fname");
+    if (name && input && !input.files.length) name.textContent = t("noFile");
+    const del = row.querySelector("button");
+    if (del) del.textContent = t("delFile");
+  });
+  const ph = document.querySelector("#pkglist .hint:not(.warn)");
+  if (ph) ph.textContent = t("manifestLoading");
+  const warn = document.querySelector("#pkglist .hint.warn");
+  if (warn) warn.textContent = t("manifestFail")(manifestErr);
+  const bars = document.querySelectorAll(".termwrap .termbar > span:first-child");
+  if (bars[0]) bars[0].textContent = t("logTitle");
+  if (bars[1]) bars[1].textContent = t("monTitle");
+  setTextQ("details.guide summary", "guideSummary");
+  document.querySelectorAll("details.guide ol li").forEach((li, i) => {
+    if (i < 4) li.innerHTML = t("guide" + (i + 1));
+  });
+  setTextQ("footer", "footer");
+  if (connected) setStatus(true, t("stConnected") + chipName);
+  else if (busy) $("statustxt").textContent = t("stBusy");
+  else { setStatus(false, t("stDisconnected")); $("chipline").textContent = t("chipNone"); }
+  if (!busy) { $("progtxt").textContent = t("progReady"); $("progtxt2").textContent = t("progNow"); }
+}
+async function rerenderPkgs() {
+  const cur = document.querySelector('input[name="pkg"]:checked');
+  const curVal = cur ? cur.value : null;
+  await loadManifest();
+  if (curVal) {
+    const r = document.querySelector(`input[name="pkg"][value="${curVal}"]`);
+    if (r) { r.checked = true; r.dispatchEvent(new Event("change")); }
+  }
+  refreshSteps();
 }
 
 // ---------- Khởi động ----------
@@ -713,6 +969,10 @@ $("btnLogCopy").addEventListener("click", async () => {
   }
 });
 window.addEventListener("beforeunload", () => { try { monAbort && monAbort.abort(); } catch (_) { /* bỏ qua */ } });
+setLang(LANG, false);
+document.querySelectorAll(".langswitch .lbtn").forEach((b) => {
+  b.addEventListener("click", async () => { setLang(b.dataset.lang); await rerenderPkgs(); });
+});
 addFileRow("0x0");
 loadManifest();
 refreshButtons();

@@ -28,7 +28,7 @@
    `git status` trước mỗi commit.
 6. Chữ trên web dùng thật phải đủ 3 ngôn ngữ (VI/EN/CN) — xem từ điển `I18N`
    trong `web/index.html`. Tool CLI giữ tiếng Việt (đã chốt); tài liệu ngoài
-   README暫 giữ tiếng Việt.
+   README giữ tiếng Việt.
 
 ## 简体中文
 

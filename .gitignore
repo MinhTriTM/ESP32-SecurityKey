@@ -38,3 +38,6 @@ process_log.txt
 vien-nghien-cuu/
 QGAC/
 .agents/skills/vien-nghien-cuu/
+
+# Ảnh nháp do AI sinh ra (bản dùng thật nằm ở docs/assets/)
+generated_images/
