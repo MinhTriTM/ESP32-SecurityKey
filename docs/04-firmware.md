@@ -22,11 +22,13 @@ Build từ commit đã ghim bằng ESP-IDF v5.5.1 trong `.tooling` (xem
 
 - Bản thử `pico_fido_esp32-s3-plain.bin` (799200 byte, gộp ở `0x0`): app
   668128 byte, phân vùng pico (nvs@0x11000, factory@0x20000, part0@0x200000).
-- Bản chốt `pico_fido_esp32-s3-hardened.bin` (856064 byte): Secure Boot V2
-  (RSA-3072, khóa ký ngoại tuyến trong `keys/`, vân tay SHA-256
-  `5060aeae…aa4d6`), Flash Encryption chế độ release, phân vùng pico giữ
-  nguyên. `espsecure.py verify_signature --version 2` báo chữ ký RSA hợp lệ
-  cho cả app và bootloader.
+- Bản chốt `pico_fido_esp32-s3-hardened.bin`: Secure Boot V2 (RSA-3072,
+  khóa ký ngoại tuyến trong `keys/`, vân tay SHA-256 `5060aeae…aa4d6`) và
+  KHÔNG bật Flash Encryption — object store của pico-fido v8.2 hỏng vĩnh
+  viễn khi bật FE (đã xác minh trên board thật 2026-11-23, xem
+  [mục bảo mật](#bật-bảo-mật-phần-cứng)). Phân vùng pico giữ nguyên.
+  `espsecure.py verify_signature --version 2` báo chữ ký RSA hợp lệ cho cả
+  app và bootloader.
 - Cả hai có mặt trong siêu web nạp (mục pico-fido v8.2), đã kiểm SHA-256 qua
   `tools/web_firmware.py --check`.
 
@@ -35,8 +37,10 @@ Lưu ý đã xác minh khi build:
 - USB VID/PID mặc định của pico-fido là `0x2E8A:0x10FE` (của Raspberry Pi,
   dùng nội bộ theo giấy phép của dự án gốc). Tool và udev rules của repo
   khớp theo usage page nên không ảnh hưởng.
-- Cấu hình flash của pico-fido là 4 MB (QIO 80 MHz) dù board N16R8 có 16 MB:
-  nạp và boot bình thường, chỉ không dùng phần flash trên 4 MB.
+- Cấu hình flash là DIO 80 MHz, 4 MB (dù board N16R8 có 16 MB): flash Boya
+  trên board này chết với QIO và treo với OPI (đã xác minh trên board thật
+  2026-11-23), chỉ DIO boot được. Nạp và boot bình thường, chỉ không dùng
+  phần trên 4 MB.
 - Bootloader bản ký (~45 KB) vượt giới hạn 32 KB mặc định nên bảng phân vùng
   dời lên `0x10000` (xem `config/sdkconfig.hardened`); phân vùng pico dùng
   địa chỉ tuyệt đối nên vẫn khớp.
@@ -111,7 +115,7 @@ Script mẫu nằm ở [scripts](../scripts). Đọc kỹ từng lệnh trước
 
 ## Bật bảo mật phần cứng
 
-Bản dùng thật phải bật flash encryption (chế độ release) và secure boot V2 theo tài liệu ESP-IDF. Hai tính năng này khóa việc đọc trộm firmware từ flash và chặn firmware không ký. Khi bật, cổng nạp tự chuyển sang Secure Download Mode và JTAG tự tắt.
+Bản dùng thật bật Secure Boot V2 theo tài liệu ESP-IDF, và KHÔNG bật Flash Encryption. Lý do đã xác minh trên board thật (2026-11-23): với FE bật, object store của pico-fido v8.2 đọc không nhất quán với lúc ghi — kho credential hỏng vĩnh viễn, mọi lệnh CTAP GetInfo trả `0x21`, reset FIDO cũng không cứu được, trong khi UART đã bị Secure Download Mode chặn nên không flash lại được. Board key-01 đã thành vật chứng cho kết luận này. Dữ liệu nghỉ vẫn được bảo vệ bởi mã hóa tầng app của pico (khóa chính trong OTP), còn Secure Boot một mình đã chặn được evil-maid thay firmware — và vẫn cho nạp lại ảnh CÓ KÝ qua UART nên giữ được đường cứu hộ.
 
 Pico-fido còn hỗ trợ Secure Lock và lưu khóa mã hóa chính trong vùng OTP của ESP32-S3. Bật theo tài liệu của dự án gốc sau khi flash xong.
 

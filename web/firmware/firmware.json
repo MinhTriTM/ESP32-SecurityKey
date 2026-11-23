@@ -9,7 +9,7 @@
           "path": "hwtest-otg/hwtest.ino.merged.bin",
           "address": "0x0",
           "size": 4194304,
-          "sha256": "74d648ba86ea0da20e491f385d162aad27034f3466b4b6830e4e306cb835dcb5"
+          "sha256": "fadb2210d81d64f7336b0898aebb4b09fe062f523b559b2c8ecf880bd0738daa"
         }
       ]
     },
@@ -22,7 +22,7 @@
           "path": "hwtest-hwcdc/hwtest.ino.merged.bin",
           "address": "0x0",
           "size": 4194304,
-          "sha256": "67d8afbb84a4ac2c3d8bed3f8b57e56368476c3eee9c2366095f05026e9764fe"
+          "sha256": "2d7f7721e7c889f85cac6cd278091c71dbbdd80ae4feafc6544f2a093c40259d"
         }
       ]
     },
@@ -35,7 +35,7 @@
           "path": "pico-fido-v8.2/pico_fido_esp32-s3-plain.bin",
           "address": "0x0",
           "size": 799200,
-          "sha256": "0c75c9988f2d48a3339ca8b09d77aa311740460b2bcaf6ff37a487191f6294b2"
+          "sha256": "d151e573827c8bdfa9dd185344a4cdee030c6c8f2d27c59d35ce3b7147aceaa5"
         }
       ]
     },
@@ -48,7 +48,7 @@
           "path": "pico-fido-v8.2/pico_fido_esp32-s3-hardened.bin",
           "address": "0x0",
           "size": 856064,
-          "sha256": "5027575b6bc372c86080f561e45d35102dd079176a23e6c836886cb000e8ff94"
+          "sha256": "76fe6bb5f925854fea7e5ebd8362ec89b7fa216fd2b6a10cc5ec2f93b140c704"
         }
       ]
     }

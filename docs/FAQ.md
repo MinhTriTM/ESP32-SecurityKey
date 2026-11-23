@@ -317,12 +317,14 @@ tên key đã mất ngay. Quy trình đầy đủ nằm ở tài liệu sao lưu
 kiểm tra SHA; giữ bản cũ tới khi bản mới vượt qua đăng nhập thử; thử trên tài
 khoản phụ trước. Nguồn: [04-firmware](04-firmware.md), [06-bao-mat](06-bao-mat.md).
 
-### Flash Encryption và Secure Boot để làm gì?
+### Secure Boot để làm gì? Sao không bật Flash Encryption?
 
-Khóa việc đọc trộm firmware từ flash và chặn firmware không ký. Khi bật ở chế
-độ release, cổng nạp tự chuyển sang Secure Download Mode (kẻ xấu không chạy
-được code lạ) và JTAG tự tắt. Pico-fido còn hỗ trợ Secure Lock và lưu khóa mã
-hóa chính trong vùng OTP. Nguồn: [04-firmware](04-firmware.md),
+Secure Boot chặn firmware không đúng chữ ký và đưa cổng nạp về Secure Download
+Mode (kẻ xấu không chạy được code lạ), JTAG tự tắt. Flash Encryption KHÔNG bật
+cho pico-fido v8.2: đã xác minh trên board thật (2026-11-23) là object store
+của pico đọc/ghi không nhất quán khi bật FE — kho hỏng vĩnh viễn, CTAP trả
+`0x21`, reset FIDO không cứu được. Dữ liệu nghỉ vẫn có mã hóa tầng app của
+pico (khóa chính trong OTP). Nguồn: [04-firmware](04-firmware.md),
 [06-bao-mat](06-bao-mat.md).
 
 ### Bật bảo mật phần cứng có nguy cơ khóa luôn board không?

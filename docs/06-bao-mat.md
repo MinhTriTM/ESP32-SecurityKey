@@ -8,7 +8,7 @@ Key không chống được máy tính đã nhiễm mã độc toàn quyền ho�
 
 ## Quy tắc dùng thật
 
-- Bật flash encryption và secure boot cho bản firmware cuối.
+- Bật Secure Boot V2 cho bản firmware cuối, KHÔNG bật Flash Encryption (pico-fido v8.2 hỏng kho khi bật FE — xem [04-firmware](04-firmware.md)).
 - Đặt PIN FIDO và nhớ kỹ. Quên PIN nhiều lần là phải reset trắng key.
 - Giữ ít nhất hai key cho mỗi tài khoản quan trọng.
 - In mã khôi phục ra giấy, cất nơi khác với key.
@@ -27,10 +27,10 @@ Board DevKit có hai cổng C với vai trò khác nhau: cổng UART để nạp
 
 1. Chia vai trò dứt khoát. Chỉ flash qua cổng UART, chỉ dùng FIDO qua cổng OTG. Không bao giờ cắm cổng UART vào máy lạ vì đó là đường nạp code.
 2. Flash bản cuối trên máy riêng, không phải máy dùng hàng ngày. Kiểm tra hash commit pico-fido trước khi build.
-3. Bật Secure Boot V2 và Flash Encryption ở chế độ release cho bản cuối. Mỗi chip dùng khóa mã hóa riêng. Khi hai tính năng này bật, ESP-IDF tự chuyển cổng nạp sang Secure Download Mode: kẻ xấu không chạy được code lạ, chỉ còn vài lệnh nạp hạn chế. JTAG cũng tự tắt.
+3. Bật Secure Boot V2 cho bản cuối, KHÔNG bật Flash Encryption. Khi Secure Boot bật, ESP-IDF tự chuyển cổng nạp sang Secure Download Mode: kẻ xấu không chạy được code lạ, chỉ còn vài lệnh nạp hạn chế. JTAG cũng tự tắt. Dữ liệu nghỉ đã có mã hóa tầng app của pico (khóa chính trong OTP).
 4. Cân nhắc khóa hẳn ROM Download Mode sau khi flash bản cuối (tùy chọn `CONFIG_SECURE_UART_ROM_DL_MODE` hoặc hàm `esp_efuse_disable_rom_download_mode`). Đây là cầu dao một chiều: khóa rồi thì không flash lại qua UART nữa. Chỉ làm khi chắc chắn không cần cập nhật firmware qua cổng này.
 5. Bịt cổng UART về mặt vật lý. Vỏ key chỉ chừa cổng OTG và lỗ nút BOOT, che kín cổng UART lại. Người mượn key không thể cắm vào cổng nạp để flash lén trong vài phút.
-6. Bật NVS encryption để phân vùng lưu credential cũng được mã hóa theo cùng khóa flash.
+6. Không bật NVS encryption: pico-fido không dùng NVS mà lưu credential bằng object store mã hóa riêng.
 
 Nguồn: tài liệu [Security của ESP-IDF cho ESP32-S3](https://docs.espressif.com/projects/esp-idf/en/v5.1.2/esp32s3/security/security.html).
 

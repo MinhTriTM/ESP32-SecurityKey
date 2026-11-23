@@ -3,6 +3,20 @@
 Mọi thay đổi đáng chú ý của dự án ESP32-S3 Security Key.
 Quy ước mã thoát: 0 xong · 1 lỗi chạy · 2 sai cách dùng (bảng NCKH-052).
 
+## 2026-11-23 — Kết luận từ board thật: bỏ Flash Encryption, key-01 thành vật chứng
+
+- Xác minh trên board: pico-fido v8.2 + Flash Encryption = kho credential
+  hỏng vĩnh viễn (GetInfo trả `0x21` mọi lệnh dù HID/PING sống, reset FIDO
+  trả `0x00` nhưng không cứu được, UART bị Secure Download Mode chặn nên
+  không flash lại được). Cấu hình sản xuất chốt: Secure Boot V2 RSA,
+  KHÔNG Flash Encryption (`config/sdkconfig.hardened` đã sửa + build lại,
+  chữ ký V2 hợp lệ).
+- key-01 (MAC 28:84:85:86:92:74) ghi sổ ở `hardware/keys.md` với trạng thái
+  vật chứng test lỗi, KHÔNG dùng cho tài khoản thật. webauthn.io register +
+  login đã PASS trên bản plain trước khi khóa chip.
+- Docs đồng bộ quyết định SB-only: `docs/02`, `04`, `06`, `07`, `08`,
+  `tom-tat-du-an`, `FAQ`.
+
 ## 2026-11-22 — Build pico-fido v8.2 kiểm chứng (U001, U002, U053)
 
 - Build thành công từ commit đã ghim bằng ESP-IDF v5.5.1 trong `.tooling`:

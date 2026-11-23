@@ -1,0 +1,6 @@
+# Ghi đè bắt buộc cho module ESP32-S3 N16R8 (flash 16 MB).
+# FlashMode OPI treo watchdog (TG0WDT/RTCWDT) đã xác minh trên board thật 2026-11-23;
+# dùng DIO đã chứng minh boot được. Mọi bản build (plain + hardened)
+# đều phải kèm file này trong SDKCONFIG_DEFAULTS (xem scripts/build_pico_fido.*).
+# Không bật PSRAM: pico-fido không dùng PSRAM (chạy RAM nội đủ).
+CONFIG_ESPTOOLPY_FLASHMODE_DIO=y

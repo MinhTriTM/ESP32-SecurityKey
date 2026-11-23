@@ -22,8 +22,8 @@ key dự phòng đã đăng ký sẵn cộng mã khôi phục của dịch vụ.
 ## Cái gì bảo vệ khi ESP bị lấy mất
 
 - PIN FIDO: tài khoản đăng ký dạng passkey đòi PIN thì kẻ trộm không qua được.
-- Secure Boot, Flash Encryption và khóa cổng nạp như [tài liệu bảo mật](06-bao-mat.md):
-  chống đọc trộm và flash firmware giả.
+- Secure Boot và khóa cổng nạp như [tài liệu bảo mật](06-bao-mat.md):
+  chống flash firmware giả; mã hóa tầng app của pico bảo vệ dữ liệu nghỉ.
 - Đăng ký hai key cho mỗi tài khoản quan trọng: mất key nào thì gỡ đúng tên key đó
   ngay bằng key còn lại.
 
