@@ -123,6 +123,8 @@ Sau khi flash bản cuối, làm tiếp danh sách khóa cổng nạp và bịt 
 
 ## Cập nhật firmware
 
+Pico-fido v8.2 trên ESP32-S3 KHÔNG có OTA (bảng phân vùng không có khe ota, code không gọi API OTA nào — đã đối chiếu source 2026-11-23). Đường cập nhật duy nhất là cắm cáp flash qua UART/USB.
+
 Chỉ flash bản build từ commit đã ghim và đã kiểm tra SHA. Giữ lại bản cũ đang chạy ổn cho tới khi bản mới vượt qua kiểm tra đăng nhập thử. Không cập nhật cả hai key dự phòng cùng lúc.
 
 Nguồn: [pico-fido v8.2](https://github.com/polhenarejos/pico-fido/releases/tag/v8.2),
