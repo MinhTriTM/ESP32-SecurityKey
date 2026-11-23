@@ -115,7 +115,9 @@ Script mẫu nằm ở [scripts](../scripts). Đọc kỹ từng lệnh trước
 
 ## Bật bảo mật phần cứng
 
-Bản dùng thật bật Secure Boot V2 theo tài liệu ESP-IDF, và KHÔNG bật Flash Encryption. Lý do đã xác minh trên board thật (2026-11-23): với FE bật, object store của pico-fido v8.2 đọc không nhất quán với lúc ghi — kho credential hỏng vĩnh viễn, mọi lệnh CTAP GetInfo trả `0x21`, reset FIDO cũng không cứu được, trong khi UART đã bị Secure Download Mode chặn nên không flash lại được. Board key-01 đã thành vật chứng cho kết luận này. Dữ liệu nghỉ vẫn được bảo vệ bởi mã hóa tầng app của pico (khóa chính trong OTP), còn Secure Boot một mình đã chặn được evil-maid thay firmware — và vẫn cho nạp lại ảnh CÓ KÝ qua UART nên giữ được đường cứu hộ.
+Bản dùng thật bật Secure Boot V2 + Flash Encryption release theo tài liệu ESP-IDF, kèm điều kiện bắt buộc: phân vùng part0 phải có cờ `encrypted` (xem `config/partitions-pico-encrypted.csv`). Nguyên nhân đã xác minh từ source (2026-11-23): `esp_partition_write` chỉ mã hóa phân vùng có cờ, trong khi mọi lệnh đọc qua mmap đều giải mã cứng khi FE bật — thiếu cờ là ghi thô + đọc rác, kho hỏng, CTAP trả `0x21`. Đây chính là bệnh của key-01 lúc đầu.
+
+Bài học thứ hai từ key-01 (xác minh bằng log ROM `invalid header` lặp vô tận): ở Secure Download Mode, ROM **không** mã hóa khi ghi — nạp bản thô + `--force` lên chip FE đã khóa là tự gạch khả năng boot. Muốn nạp lại phải mã hóa trước ảnh bằng đúng khóa FE của chip. Vì vậy khi provision key mới **bắt buộc tự sinh khóa FE trên máy, đốt vào eFuse và cất offline + backup cùng khóa ký RSA** (mặc định chip tự sinh rồi giấu luôn là mất đường cứu hộ). Lần nạp đầu trên chip mới vẫn nạp bản thô bình thường, lần boot đầu chip tự mã hóa toàn bộ gồm cả part0 có cờ. Cấu hình này mạch lạc về lý thuyết và chờ chứng minh trên chip mới — xem [nghiên cứu cứu hộ](../docs/research/11-cuu-key-01.md).
 
 Pico-fido còn hỗ trợ Secure Lock và lưu khóa mã hóa chính trong vùng OTP của ESP32-S3. Bật theo tài liệu của dự án gốc sau khi flash xong.
 

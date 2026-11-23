@@ -61,7 +61,7 @@ Trên Android cần cáp OTG đúng chuẩn hoặc cổng C hỗ trợ host. H�
 
 ## Lưu trữ key
 
-Credential và vật liệu khóa nằm trong flash nội của ESP32-S3. Bật Secure Boot V2 khi build bản dùng thật (KHÔNG bật Flash Encryption — pico-fido v8.2 hỏng kho khi bật FE, xem [04-firmware](04-firmware.md)). Mỗi key vật lý là một bản sao duy nhất nên phải đăng ký ít nhất hai key cho mỗi tài khoản quan trọng.
+Credential và vật liệu khóa nằm trong flash nội của ESP32-S3. Bật Secure Boot V2 + Flash Encryption khi build bản dùng thật, kèm cờ `encrypted` cho part0 (xem [04-firmware](04-firmware.md)). Mỗi key vật lý là một bản sao duy nhất nên phải đăng ký ít nhất hai key cho mỗi tài khoản quan trọng.
 
 ## Ranh giới an toàn
 

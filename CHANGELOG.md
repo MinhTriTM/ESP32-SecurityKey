@@ -3,6 +3,20 @@
 Mọi thay đổi đáng chú ý của dự án ESP32-S3 Security Key.
 Quy ước mã thoát: 0 xong · 1 lỗi chạy · 2 sai cách dùng (bảng NCKH-052).
 
+## 2026-11-23 — key-01 chết hẳn, tìm ra 2 nguyên nhân gốc (research/11)
+
+- Nguyên nhân kho hỏng (`0x21`): part0 thiếu cờ `encrypted` — source IDF
+  chứng minh ghi thô + đọc giải mã lệch pha. Bản hardened mới thêm cờ qua
+  `config/partitions-pico-encrypted.csv` (không đụng submodule), verify
+  PT binary + chữ ký RSA đạt.
+- Nguyên nhân chết boot: ở Secure Download Mode ROM **không** mã hóa khi
+  ghi — nạp `--force` bản thô lên chip FE đã khóa cho vòng lặp ROM
+  `invalid header: 0xbb83c7af`. Cứu lại đòi khóa FE trong eFuse (không đọc
+  ra được) → key-01 chết vĩnh viễn.
+- Bài học cho key-02: tự sinh khóa FE, đốt vào eFuse, cất offline + backup
+  cùng khóa ký RSA; không bao giờ `--force` bản thô lên chip đã khóa.
+- Docs đảo lại đúng: sản xuất = SB V2 + FE release + cờ part0 + giữ khóa FE.
+
 ## 2026-11-23 — Kết luận từ board thật: bỏ Flash Encryption, key-01 thành vật chứng
 
 - Xác minh trên board: pico-fido v8.2 + Flash Encryption = kho credential

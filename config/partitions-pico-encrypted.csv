@@ -1,0 +1,14 @@
+# Bảng phân vùng pico-fido cho bản hardened (U002-fix).
+# Sao y pico-keys-sdk/config/esp32/partitions.csv của commit đã ghim, chỉ thêm
+# DUY NHẤT cờ `encrypted` cho part0. Lý do (xác minh từ source ESP-IDF 5.5):
+# esp_partition_write chỉ mã hóa khi phân vùng có cờ này (partition.c,
+# is_partition_encrypted), trong khi mọi lệnh đọc qua mmap đều giải mã cứng
+# khi eFuse flash-encryption bật. Thiếu cờ = ghi thô + đọc rác = kho hỏng
+# vĩnh viễn, CTAP trả 0x21 (đúng bệnh key-01). Không đụng submodule gốc;
+# file này được trỏ tới bằng CONFIG_PARTITION_TABLE_CUSTOM_FILENAME trong
+# config/sdkconfig.hardened.
+# Name,   Type, SubType, Offset,  Size, Flags
+nvs,      data, nvs,      0x11000, 0x6000
+phy_init, data, phy,      0x17000, 0x1000
+factory,  app,  factory,  0x20000, 1M
+part0,    0x40, 0x1,     0x200000,  1M, encrypted

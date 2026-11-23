@@ -9,9 +9,10 @@
 
 - **U001 — Build pico-fido v8.2 kiểm chứng.** Chốt tag đã 2 tuần mà chưa ai build; phải xác nhận
   biên dịch sạch ESP-IDF v5.5.1 trước mọi hứa hẹn khác. Ở ĐÂU: repo pico-fido ngoài + `docs/04-firmware.md` ghi kết quả. Cỡ M, P0.
-- **U002 — Bật Secure Boot V2 đúng `docs/04` (KHÔNG Flash Encryption).** Không có Secure Boot
-  thì key chỉ là board dev gắn mác bảo mật; FE bị loại sau khi xác minh trên board thật
-  (pico-fido v8.2 hỏng kho khi bật FE). Ở ĐÂU: `config/sdkconfig.hardened` + runbook ký. Cỡ M, P0.
+- **U002 — Bật Secure Boot V2 + Flash Encryption + cờ `encrypted` part0 đúng `docs/04`.**
+  Không có các lớp này thì key chỉ là board dev gắn mác bảo mật; thiếu cờ part0 là
+  hỏng kho (bài học key-01). Ở ĐÂU: `config/sdkconfig.hardened` +
+  `config/partitions-pico-encrypted.csv` + runbook ký. Cỡ M, P0.
 - **U003 — Đọc trạng thái eFuse/bảo mật bằng `espefuse.py` (chỉ đọc).** Xác minh Secure Boot/Flash Encryption
   đã bật thật trước khi nạp credential. Ở ĐÂU: mục mới trong runbook bring-up. Cỡ S, P0.
 - **U004 — Chính sách PIN/UV + giới hạn lần thử PIN.** CTAP2 cho phép brute-force PIN nếu triển khai ẩu;

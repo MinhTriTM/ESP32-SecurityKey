@@ -1,20 +1,25 @@
 # Fragment cấu hình bản phát hành pico-fido (U002).
-# Secure Boot V2 (RSA) và KHÔNG Flash Encryption — quyết định sau khi xác
-# minh trên board thật 2026-11-23: object store của pico-fido v8.2 đọc/ghi
-# không nhất quán khi bật flash encryption (kho hỏng vĩnh viễn, CTAP trả
-# 0x21, không cứu được vì UART cũng bị chặn). Dữ liệu nghỉ vẫn an toàn nhờ
-# mã hóa tầng app của pico (khóa chính trong OTP) — đúng mô hình gốc của họ.
-# Secure Boot một mình đã chặn được evil-maid thay firmware, và vẫn cho
-# nạp lại ảnh CÓ KÝ qua UART (đường cứu hộ được giữ).
+# Secure Boot V2 (RSA) + Flash Encryption release + cờ `encrypted` cho part0.
+# Lịch sử: bản FE đầu (thiếu cờ part0) làm hỏng kho trên key-01 (CTAP 0x21);
+# đã xác minh từ source nguyên nhân là ghi thô + đọc giải mã lệch pha, và
+# bản này thêm cờ qua bảng phân vùng riêng (config/partitions-pico-encrypted.csv).
+# Dữ liệu nghỉ được mã hóa 2 lớp: flash encryption (phần cứng) + mã hóa tầng
+# app của pico (khóa chính trong OTP).
 #
 # Dùng: SDKCONFIG_DEFAULTS=config/sdkconfig.hardened (xem scripts/build_pico_fido.*).
 # Tên symbol đối chiếu từ .tooling/esp-idf/components/bootloader/Kconfig.projbuild.
-# Đường dẫn khóa tính từ thư mục project (.tooling/pico-fido).
+# Đường dẫn tính từ thư mục project (.tooling/pico-fido).
 CONFIG_SECURE_BOOT=y
 CONFIG_SECURE_BOOT_V2_ENABLED=y
 CONFIG_SECURE_SIGNED_APPS_RSA_SCHEME=y
 CONFIG_SECURE_BOOT_SIGNING_KEY="../../keys/secure-boot-signing.key"
+CONFIG_SECURE_FLASH_ENC_ENABLED=y
+CONFIG_SECURE_FLASH_ENCRYPTION_MODE_RELEASE=y
 # Bootloader đã ký (~45 KB) vượt quá 32 KB mặc định nên phải dời bảng phân
-# vùng từ 0x8000 lên 0x10000. Phân vùng pico (nvs@0x11000...) dùng địa chỉ
-# tuyệt đối nên vẫn khớp, không lệch.
+# vùng từ 0x8000 lên 0x10000. Phân vùng pico dùng địa chỉ tuyệt đối nên vẫn khớp.
 CONFIG_PARTITION_TABLE_OFFSET=0x10000
+# Bảng phân vùng riêng: giống pico gốc + cờ encrypted cho part0 (bắt buộc
+# khi bật FE, nếu không kho FIDO hỏng — xem đầu file CSV).
+CONFIG_PARTITION_TABLE_CUSTOM=y
+CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="../../config/partitions-pico-encrypted.csv"
+CONFIG_PARTITION_TABLE_FILENAME="../../config/partitions-pico-encrypted.csv"

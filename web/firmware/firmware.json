@@ -48,7 +48,7 @@
           "path": "pico-fido-v8.2/pico_fido_esp32-s3-hardened.bin",
           "address": "0x0",
           "size": 856064,
-          "sha256": "76fe6bb5f925854fea7e5ebd8362ec89b7fa216fd2b6a10cc5ec2f93b140c704"
+          "sha256": "c4638a1d675628c8a0ac0a28d4730e146e8beda1e098acc460a4f5b6dfe60c94"
         }
       ]
     }

@@ -4,7 +4,7 @@ Mỗi board là một key vật lý duy nhất. Ghi một dòng cho mỗi board 
 
 | Tên key | MAC | Ngày flash hwtest | Commit pico-fido | Dịch vụ đã đăng ký | Ghi chú |
 |---------|-----|-------------------|------------------|--------------------|---------|
-| key-01 | 28:84:85:86:92:74 | 2026-11-23 | 15b848d821b4995eb1b29a5c2a4c24c25d1a768e | (không dùng thật) | VẬT CHỨNG test lỗi: bản hardened FE làm hỏng kho (CTAP 0x21), UART bị chặn, không flash lại được; rút nguồn 10s + GetInfo vẫn 0x21 (2026-11-23) — KHÔNG đăng ký tài khoản thật |
+| key-01 | 28:84:85:86:92:74 | 2026-11-23 | 15b848d821b4995eb1b29a5c2a4c24c25d1a768e | (không dùng thật) | CHẾT HẲN 2026-11-23: nạp `--force` bản thô lên chip FE đã khóa, ROM không mã hóa khi ghi → `invalid header` loop, không boot. Muốn cứu phải có khóa FE trong eFuse (không đọc ra được). Xem `docs/research/11-cuu-key-01.md` |
 | key-02 | | | | | Key dự phòng, cất ở nhà |
 
 ## Quy tắc ghi sổ

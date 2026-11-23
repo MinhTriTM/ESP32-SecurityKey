@@ -32,6 +32,6 @@ Dựng một lần: `mnemonic.py new --words 24` → ghi giấy NGAY → `split_
 
 1. Đọc [01-phan-tich-y-tuong](01-phan-tich-y-tuong.md) + [BOM](../hardware/BOM.md), tra cứu [FAQ](FAQ.md) khi kẹt.
 2. Nạp sketch `firmware/hwtest/hwtest.ino` theo runbook (`docs/runbook-nap-hwtest-windows.md` hoặc `-ubuntu.md`) để kiểm tra USB, nút BOOT, LED, HID echo. Lưu ý: chọn đúng board `ESP32S3 Dev Module`, bật `USB CDC On Boot`, muốn HID echo thì dùng chế độ USB-OTG. Nguồn: [FAQ](FAQ.md).
-3. Build + flash pico-fido theo [04-firmware](04-firmware.md), đối chiếu SHA commit sau checkout; bản dùng thật bật Secure Boot V2 (KHÔNG Flash Encryption) và bịt cổng UART vật lý. Nguồn: [04-firmware](04-firmware.md), [06-bao-mat](06-bao-mat.md).
+3. Build + flash pico-fido theo [04-firmware](04-firmware.md), đối chiếu SHA commit sau checkout; bản dùng thật bật Secure Boot V2 + Flash Encryption (kèm cờ `encrypted` part0, tự giữ khóa FE) và bịt cổng UART vật lý. Nguồn: [04-firmware](04-firmware.md), [06-bao-mat](06-bao-mat.md).
 4. Kiểm tra toàn bộ bằng một lệnh `scripts/run_tests.ps1` (Windows) hoặc `scripts/run_tests.sh` (Linux) — chạy self-test cả 7 tool, không cần phần cứng. Nguồn: [README](../README.md).
 5. Trạng thái dự án: đang phát triển — hwtest biên dịch sạch (arduino-cli 1.6.0, core ESP32 4.0.0), các tool đã qua self-test và thử CLI thật; phần cần board thật (nạp hwtest, flash pico-fido, INIT/PING với key) chưa thực hiện. Chi tiết: [README](../README.md).
