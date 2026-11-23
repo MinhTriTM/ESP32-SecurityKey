@@ -69,7 +69,7 @@ E2 không cần build lại: ảnh gốc còn nguyên trong lịch sử git, ch�
   trước bằng đúng khóa FE của chip — khóa nằm trong eFuse, không đọc ra
   được. Board còn dùng được làm chặn giấy / mẫu trưng bày.
 
-## 7. Bài học cho key-02 (quan trọng hơn cả cuộc cứu hộ)
+## 6. Bài học cho key-02 (quan trọng hơn cả cuộc cứu hộ)
 
 - **Tự sinh khóa FE và GIỮ LẠI.** Mặc định chip tự sinh khóa rồi giấu luôn;
   thay vào đó ta sinh khóa trên máy (`espsecure.py generate_flash_encryption_key`),
@@ -81,7 +81,32 @@ E2 không cần build lại: ảnh gốc còn nguyên trong lịch sử git, ch�
   nạp bản thô, lần boot đầu chip tự mã hóa toàn bộ gồm cả part0 có cờ.
 - Không bao giờ `--force` bản thô lên chip FE đã khóa khi chưa giữ khóa FE.
 
-## 6. Bài học chuỗi cung ứng (dù kết quả ra sao)
+## 7. Đào sâu lần cuối: còn khe nào không? (2026-11-23, kết luận: không)
+
+- **Mặt lệnh còn mở:** tài liệu ESP-IDF v5.5.1 (`flash-encryption.rst`)
+  ghi rõ Secure Download Mode chỉ cho đúng 4 việc: đổi cấu hình SPI,
+  đổi baud, **ghi flash thô**, và `get_security_info`. Không đọc, không
+  xóa, không stub, không đốt eFuse. Quan sát thực tế khớp 100%: `chip_id`
+  lỗi, `erase_*` bị chặn, `read_flash`/đọc eFuse bị chặn, chỉ `write_flash`
+  và `get_security_info` chạy được.
+- **Lỗ hổng công khai:** mọi tấn công fault-injection lấy khóa
+  (CVE-2019-15894, CVE-2019-17391, CVE-2023-35818/AR2023-005) đều nhắm
+  ESP32 đời đầu; Espressif đã cứng hóa từ S2 trở đi. Khuyến cáo duy nhất
+  cho S3 (AR2026-005) chỉ lấy được khóa của **AES ngoại vi thường**, không
+  phải khóa XTS của flash encryption. Tổng hợp công khai (10/2026): chưa
+  có bypass Secure Boot/FE nào cho ESP32-S3.
+- **eFuse:** block khóa FE đã khóa đọc + khóa ghi, `KEY_PURPOSE` khóa ghi,
+  `SPI_BOOT_CRYPT_CNT = 0x7` (3 bit đốt hết, không còn gì để đốt). Mẹo
+  parity-counter trên mạng chỉ cứu được chip development-mode còn bit trống.
+- **Malleability XTS / cấy flash ngoài:** bản mã gốc đã bị ghi đè 3 lần,
+  trên tay không còn ciphertext nào; chữ ký RSA-3072 không dung thứ cho
+  sửa đổi mù. Gỡ flash ra đọc cũng chỉ lấy lại byte ảnh mà git đã có.
+- **Kết luận cuối:** key-01 không cứu được bằng bất kỳ con đường nào đã
+  biết — phần mềm, phần cứng phòng lab bình dân, hay khai thác công khai.
+  Đây là chip bảo mật làm đúng việc của nó; thiệt hại là 1 board vài đô
+  và toàn bộ bài học đã đưa vào runbook key-02.
+
+## 8. Bài học chuỗi cung ứng (dù kết quả ra sao)
 
 - Ảnh đã từng boot trên chip khóa là tài sản: giữ nguyên byte trong git
   (đã làm) và không bao giờ ghi đè flash chip khóa khi chưa trích được log.
