@@ -3,6 +3,16 @@
 Mọi thay đổi đáng chú ý của dự án ESP32-S3 Security Key.
 Quy ước mã thoát: 0 xong · 1 lỗi chạy · 2 sai cách dùng (bảng NCKH-052).
 
+## 2026-11-23 — Cổng quản trị WiFi G1 (PA1, research/08)
+
+- `firmware/admin_portal/`: hotspot WPA2 + captive portal + trang trạng
+  thái chỉ đọc (MAC, SB/FE từ eFuse, uptime...), trang kiểm toán, JSON
+  `/health`, tự tắt WiFi sau 10 phút không dùng. Biên dịch sạch, vào web
+  nạp thành gói thứ 5 (manifest 5/5 khớp).
+- `scripts/build_admin.*`: build + kiểm byte đầu `0xE9` + sinh manifest.
+- Chưa test board thật (ghi rõ trong README + tên gói). Không xem credential
+  theo thiết kế — bí mật pico firmware khác không đọc được (xem README).
+
 ## 2026-11-23 — Bộ công cụ provision key mới (khóa FE + runbook + cứu hộ)
 
 - `tools/gen_fe_key.py`: sinh khóa FE riêng mỗi board (32 byte, AES-128-XTS),

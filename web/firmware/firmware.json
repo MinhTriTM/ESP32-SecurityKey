@@ -51,6 +51,19 @@
           "sha256": "c4638a1d675628c8a0ac0a28d4730e146e8beda1e098acc460a4f5b6dfe60c94"
         }
       ]
+    },
+    {
+      "id": "admin-portal",
+      "name": "Cổng quản trị WiFi (thử nghiệm, chưa test board thật)",
+      "desc": "Firmware riêng: phát hotspot + trang trạng thái chỉ đọc (MAC, Secure Boot, mã hóa flash). Nạp thay pico khi cần xem, nạp lại pico để dùng FIDO.",
+      "files": [
+        {
+          "path": "admin-portal/admin_portal.ino.merged.bin",
+          "address": "0x0",
+          "size": 4194304,
+          "sha256": "234bbdacdb7ebeb4e756ef5f1bcaefa73139707b53e9f826b5692933f6efeee1"
+        }
+      ]
     }
   ]
 }

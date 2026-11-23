@@ -34,6 +34,11 @@ PACKAGES = {
         "desc": "Bản phát hành: Secure Boot V2, Flash Encryption release, NVS mã hóa. Tự khóa ở lần boot đầu. Chỉ nạp khi đã chắc chắn.",
         "files": [{"path": "pico-fido-v8.2/pico_fido_esp32-s3-hardened.bin", "address": "0x0"}],
     },
+    "admin-portal": {
+        "name": "Cổng quản trị WiFi (thử nghiệm, chưa test board thật)",
+        "desc": "Firmware riêng: phát hotspot + trang trạng thái chỉ đọc (MAC, Secure Boot, mã hóa flash). Nạp thay pico khi cần xem, nạp lại pico để dùng FIDO.",
+        "files": [{"path": "admin-portal/admin_portal.ino.merged.bin", "address": "0x0"}],
+    },
 }
 
 
