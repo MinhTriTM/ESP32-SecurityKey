@@ -28,6 +28,7 @@ CTAPHID_PING = 0x01
 CTAPHID_MSG = 0x03
 CTAPHID_INIT = 0x06
 CTAPHID_CBOR = 0x10
+CTAPHID_KEEPALIVE = 0x3B
 CTAPHID_ERROR = 0x3F
 
 CTAP2_GET_INFO = 0x04
@@ -186,16 +187,40 @@ def parse_init_response(data: bytes) -> dict:
 # Giải/mã CBOR dùng chung từ cborx (có fuzz 3000 ca trong self-test của nó).
 
 
-def ctap2_get_info(dev, cid: int) -> dict:
-    """Gửi authenticatorGetInfo, trả về map đã đặt tên trường."""
-    send_msg(dev, cid, CTAPHID_CBOR, bytes([CTAP2_GET_INFO]))
-    _, cmd, data = recv_msg(dev, cid)
-    if cmd != CTAPHID_CBOR:
-        raise ValueError(f"muốn CBOR mà nhận lệnh 0x{cmd:02x}")
-    if not data:
-        raise ValueError("CBOR trả về rỗng")
-    if data[0] != 0:
-        raise Ctap2Error(data[0])
+def recv_msg_skip_keepalive(dev, cid: int, timeout_ms: int = 2000,
+                            max_keepalive: int = 20) -> tuple[int, int, bytes]:
+    """Đọc message, bỏ qua gói KEEPALIVE (thiết bị bận) cho tới đáp án thật."""
+    for _ in range(max_keepalive + 1):
+        rcid, cmd, data = recv_msg(dev, cid, timeout_ms)
+        if cmd != CTAPHID_KEEPALIVE:
+            return rcid, cmd, data
+    raise ValueError("thiết bị bận quá lâu (toàn gói keepalive)")
+
+
+CTAP2_ERR_CHANNEL_BUSY = 0x21
+
+
+def ctap2_get_info(dev, cid: int, retries: int = 5) -> dict:
+    """Gửi authenticatorGetInfo, trả về map đã đặt tên trường.
+
+    Thiết bị bận (0x21, ví dụ đang khởi tạo sau boot) thì chờ thử lại
+    theo đúng cách client chuẩn làm, thay vì bỏ cuộc ngay.
+    """
+    import time
+
+    data = b""
+    for attempt in range(retries):
+        send_msg(dev, cid, CTAPHID_CBOR, bytes([CTAP2_GET_INFO]))
+        _, cmd, data = recv_msg_skip_keepalive(dev, cid)
+        if cmd != CTAPHID_CBOR:
+            raise ValueError(f"muốn CBOR mà nhận lệnh 0x{cmd:02x}")
+        if not data:
+            raise ValueError("CBOR trả về rỗng")
+        if data[0] == 0:
+            break
+        if data[0] != CTAP2_ERR_CHANNEL_BUSY or attempt == retries - 1:
+            raise Ctap2Error(data[0])
+        time.sleep(2)
     info, rest = cbor_decode(data[1:])
     if rest:
         raise ValueError(f"GetInfo thừa {len(rest)} byte rác đuôi")
@@ -399,6 +424,34 @@ def self_test() -> int:
         assert "rác đuôi" in str(exc)
     else:
         raise AssertionError("đáng lẽ phải từ chối rác đuôi CBOR")
+    class KeepaliveFake(FakeDevice):
+        def _answer(self, data: bytes) -> None:
+            if self.pending_cmd == CTAPHID_CBOR:
+                self._emit(self.pending_cid, CTAPHID_KEEPALIVE, bytes([1]))
+                self._emit(self.pending_cid, CTAPHID_CBOR, b"\x00" + CANNED_GETINFO)
+            else:
+                super()._answer(data)
+
+    dev3 = KeepaliveFake()
+    send_msg(dev3, CID_BROADCAST, CTAPHID_INIT, nonce)
+    recv_msg(dev3, CID_BROADCAST)
+    assert ctap2_get_info(dev3, NEW_CID)["versions"] == ["U2F_V2", "FIDO_2_0"]
+    class BusyFake(FakeDevice):
+        def __init__(self):
+            super().__init__()
+            self.busies_left = 2
+
+        def _answer(self, data: bytes) -> None:
+            if self.pending_cmd == CTAPHID_CBOR and self.busies_left:
+                self.busies_left -= 1
+                self._emit(self.pending_cid, CTAPHID_CBOR, bytes([CTAP2_ERR_CHANNEL_BUSY]))
+            else:
+                super()._answer(data)
+
+    dev4 = BusyFake()
+    send_msg(dev4, CID_BROADCAST, CTAPHID_INIT, nonce)
+    recv_msg(dev4, CID_BROADCAST)
+    assert ctap2_get_info(dev4, NEW_CID, retries=3)["versions"] == ["U2F_V2", "FIDO_2_0"]
     assert main(["--index", "-1"]) == 2, "--index âm phải báo sai dùng"
 
     print("self-test ok: framing, gói nối, CBOR, GetInfo và hội thoại đầu-cuối đều đúng.")

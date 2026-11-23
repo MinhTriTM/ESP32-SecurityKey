@@ -7,4 +7,4 @@ if ! command -v arduino-cli >/dev/null; then
 fi
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
-arduino-cli compile --fqbn 'esp32:esp32:esp32s3:CDCOnBoot=cdc,USBMode=default' firmware/hwtest
+arduino-cli compile --fqbn 'esp32:esp32:esp32s3:CDCOnBoot=cdc,USBMode=default,FlashMode=dio,PSRAM=opi' firmware/hwtest

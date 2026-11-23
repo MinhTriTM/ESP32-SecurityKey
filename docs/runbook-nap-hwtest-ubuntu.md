@@ -117,8 +117,10 @@ udev gán quyền + tên ổn định cho board mỗi lần cắm, và cho phép
 1. Mở Arduino IDE, vào **Tools > Board**, chọn **ESP32S3 Dev Module** đúng board đang cầm.
 2. **Tools > USB CDC On Boot**: chọn **Enabled** (không bật thì `Serial` không lên log).
 3. **Tools > USB Mode**: chọn **USB-OTG (TinyUSB)** để bật HID echo
-   (bản `USBMode=default`/HWCDC vẫn nạp và xem log được, nhưng sketch sẽ in
+   (bản HWCDC `USBMode=hwcdc` vẫn nạp và xem log được, nhưng sketch sẽ in
    `HID echo: TAT (can USB Mode = USB-OTG)` và tool echo không thấy thiết bị).
+   BẮT BUỘC với module N16R8: **Tools > Flash Mode → DIO 80MHz** và
+   **Tools > PSRAM → OPI PSRAM** (flash QIO/OPI là boot-loop watchdog).
 4. **Tools > Port**: chọn cổng đã ghi ở mục 1 (dạng `/dev/ttyUSB0` hoặc `/dev/ttyACM0`).
    Nếu menu Port mờ: quay lại mục 2–3 (thiếu nhóm `dialout` hoặc udev chưa ăn).
 5. Mở file `firmware/hwtest/hwtest.ino`, nhấn **Upload** khi board đang cắm **cổng UART**.
@@ -135,12 +137,12 @@ udev gán quyền + tên ổn định cho board mỗi lần cắm, và cho phép
    ./scripts/build_hwtest.sh
    ```
    Lệnh này chạy `arduino-cli compile --fqbn
-   'esp32:esp32:esp32s3:CDCOnBoot=cdc,USBMode=default' firmware/hwtest`.
-   Lưu ý: `USBMode=default` là HWCDC nên HID echo TẮT; muốn echo thì đổi thành
-   FQBN có `USBMode=otg` (tương đương menu USB-OTG ở mục 4).
+   'esp32:esp32:esp32s3:CDCOnBoot=cdc,USBMode=default,FlashMode=dio,PSRAM=opi' firmware/hwtest`.
+   Lưu ý: `USBMode=default` chính là USB-OTG (có echo); HWCDC là `USBMode=hwcdc`.
+   `FlashMode=dio,PSRAM=opi` là bắt buộc với module N16R8 (flash QIO/OPI là boot-loop).
 3. Nạp qua cổng UART (thay bằng cổng đã ghi ở mục 1):
    ```
-   arduino-cli upload -p /dev/ttyUSB0 --fqbn 'esp32:esp32:esp32s3:CDCOnBoot=cdc,USBMode=default' firmware/hwtest
+   arduino-cli upload -p /dev/ttyUSB0 --fqbn 'esp32:esp32:esp32s3:CDCOnBoot=cdc,USBMode=default,FlashMode=dio,PSRAM=opi' firmware/hwtest
    ```
 4. Người dùng PlatformIO: tạo project board `esp32-s3-devkitc-1`, chép
    `hwtest.ino` thành `src/main.cpp`, thêm cờ build `-DARDUINO_USB_CDC_ON_BOOT=1`;
@@ -167,7 +169,7 @@ udev gán quyền + tên ổn định cho board mỗi lần cắm, và cho phép
    USB mode: 0 (0 la OTG co HID echo, 1 la HWCDC)
    Nhan nut BOOT de test. LED RGB se doi mau.
    ======================================
-   HID echo: san sang (vendor page 0xFF00, report ID 1).
+   HID echo: san sang (vendor page 0xFF00, 64 byte, khong report ID).
    ```
    (Bản HWCDC thì dòng cuối là `HID echo: TAT (can USB Mode = USB-OTG)` — bình thường
    nếu cố ý nạp bản đó, nhưng không kiểm HID được.)
@@ -219,6 +221,7 @@ Chỉ làm sau khi mục 6 đạt và board đang ở bản USB-OTG + cắm cổ
 | Menu Port trong IDE mờ | Quyền serial / udev | Quay lại mục 2–3, không chạy IDE bằng `sudo` |
 | Không có log serial sau nạp | Xem nhầm cổng, hoặc CDC chưa bật | Cắm sang cổng native, kiểm tra `USB CDC On Boot: Enabled` (mục 4.2, 6.2) |
 | `HID echo: TAT` | Nạp bản HWCDC / sai USB Mode | Nạp lại bản USB-OTG (mục 4.3); PIO thêm `ARDUINO_USB_MODE=0` (mục 5.4) |
+| Boot-loop `TG0WDT`/`RTCWDT`, USB chập chờn | Flash Mode QIO/OPI trên flash Boya | Build/nạp lại với Flash Mode DIO 80MHz + PSRAM OPI (mục 4.3, 5.2) |
 | `Không thấy HID echo (usage page 0xFF00)` | Chưa nạp OTG, cắm nhầm cổng UART, hoặc thiếu quyền hidraw | Nạp OTG + cắm cổng native + kiểm tra udev `hidraw` nhóm `plugdev` (mục 3, 7) |
 | `Không mở được thiết bị` (HID) | Quyền `hidraw` | Kiểm tra `ls -l /dev/hidraw*`, udev mục 3.2–3.3 |
 | `Thiết bị không trả lời` | Race echo / OUT dồn dập | Chạy lại test đơn; nếu vẫn lỗi, xem phân tích race của NCKH-003 |

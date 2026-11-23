@@ -10,6 +10,10 @@ Xác nhận board ESP32-S3 sống, USB CDC lên log, nút BOOT đọc được, 
 2. Chọn board ESP32S3 Dev Module đúng với board đang cầm.
 3. Trong menu Tools bật USB CDC On Boot là Enabled.
 4. Trong menu Tools đặt USB Mode là USB-OTG (TinyUSB) để bật HID echo.
+5. BẮT BUỘC với module N16R8 (flash Quad Boya + PSRAM Octal): Tools →
+   Flash Mode là DIO 80MHz, Tools → PSRAM là OPI PSRAM. Flash QIO/OPI làm
+   board reset liên tục (watchdog) và cổng USB chập chờn (đã xác minh trên
+   board thật 2026-11-23).
 5. Chọn đúng cổng COM của cổng UART rồi nạp.
 6. Mở Serial Monitor 115200 baud để xem log chip và nhấn nút BOOT thử.
 

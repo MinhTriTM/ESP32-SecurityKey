@@ -84,6 +84,10 @@ thanh tiêu đề hiện đúng đường dẫn file trong repo.*
 
 1. Vào **Tools → Board → esp32 → ESP32S3 Dev Module**.
 2. Kiểm tra thanh trạng thái góc dưới IDE hiện `ESP32S3 Dev Module`.
+3. BẮT BUỘC với module N16R8: vào **Tools → Flash Mode → DIO 80MHz** và
+   **Tools → PSRAM → OPI PSRAM**. Flash QIO/OPI làm board reset liên tục
+   (`TG0WDT`/`RTCWDT` trên log UART) và cổng USB chập chờn (đã xác minh
+   trên board thật 2026-11-23).
 
 *Ảnh chụp mong đợi: menu Tools → Board đang mở, mục `ESP32S3 Dev Module` được
 đánh dấu tick; góc dưới IDE hiện tên board này.*
@@ -157,7 +161,7 @@ SDK: v5.x.x
 USB mode: 0 (0 la OTG co HID echo, 1 la HWCDC)
 Nhan nut BOOT de test. LED RGB se doi mau.
 ======================================
-HID echo: san sang (vendor page 0xFF00, report ID 1).
+HID echo: san sang (vendor page 0xFF00, 64 byte, khong report ID).
 ```
 
 5. Khoảng mỗi 5 giây có thêm một dòng heartbeat:

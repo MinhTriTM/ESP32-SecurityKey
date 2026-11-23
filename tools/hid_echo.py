@@ -16,13 +16,13 @@ import os
 import sys
 
 ECHO_USAGE_PAGE = 0xFF00
-REPORT_ID = 1
+REPORT_ID = 0  # Descriptor không đánh số report (giống CTAP HID)
 REPORT_LEN = 64
 PAYLOAD_LEN = 60
 
 
 def build_report(payload: bytes) -> bytes:
-    """Report gửi đi: 1 byte report ID + 64 byte dữ liệu."""
+    """Report gửi đi: byte đầu là report ID (0 = không đánh số) + 64 byte dữ liệu."""
     if len(payload) > REPORT_LEN:
         raise ValueError(f"payload tối đa {REPORT_LEN} byte, nhận {len(payload)}")
     return bytes([REPORT_ID]) + payload.ljust(REPORT_LEN, b"\x00")
@@ -70,7 +70,8 @@ def select_device(devices: list, vid: int | None, pid: int | None, index: int) -
 
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description="Kiểm tra echo HID của sketch hwtest.")
-    ap.add_argument("--index", type=int, default=0, help="chọn thiết bị echo số mấy")
+    ap.add_argument("--index", type=int, default=None,
+                        help="chọn thiết bị echo số mấy (mặc định: tự chọn khi chỉ có đúng 1)")
     ap.add_argument("--vid", default=None, help="lọc vendor ID, ví dụ 0x303A")
     ap.add_argument("--pid", default=None, help="lọc product ID")
     ap.add_argument("-t", "--self-test", action="store_true", help="chỉ kiểm tra đóng gói")
@@ -89,17 +90,31 @@ def main(argv: list[str] | None = None) -> int:
         print("Thiếu thư viện hid. Chạy: pip install -r requirements.txt")
         return 2
     found = [d for d in hid.enumerate() if d.get("usage_page") == ECHO_USAGE_PAGE]
-    for i, dev in enumerate(found):
-        mark = ">>" if i == args.index else "  "
-        print(f"{mark} [{i}] vid=0x{dev.get('vendor_id', 0):04x} "
-              f"pid=0x{dev.get('product_id', 0):04x} "
-              f"{dev.get('manufacturer_string')} {dev.get('product_string')}")
+    explicit = args.index is not None or args.vid or args.pid
+    if not explicit and len(found) != 1:
+        for i, dev in enumerate(found):
+            print(f"   [{i}] vid=0x{dev.get('vendor_id', 0):04x} "
+                  f"pid=0x{dev.get('product_id', 0):04x} "
+                  f"{dev.get('manufacturer_string')} {dev.get('product_string')}")
+        if found:
+            print(f"Thấy {len(found)} thiết bị echo, không dám đoán mò.")
+            print("Chọn đúng board bằng --index (ESP32 là vid 0x303a).")
+        else:
+            print("Không thấy HID echo (usage page 0xFF00).")
+        print("Kiểm tra: đã nạp hwtest ở USB Mode = USB-OTG, cắm cổng USB native.")
+        return 1
+    index = args.index if args.index is not None else 0
     try:
-        target = select_device(found, vid, pid, args.index)
+        target = select_device(found, vid, pid, index)
     except LookupError as exc:
         print(f"{exc}.")
         print("Kiểm tra: đã nạp hwtest ở USB Mode = USB-OTG, cắm cổng USB native.")
         return 1
+    for i, dev in enumerate(found):
+        mark = ">>" if dev == target else "  "
+        print(f"{mark} [{i}] vid=0x{dev.get('vendor_id', 0):04x} "
+              f"pid=0x{dev.get('product_id', 0):04x} "
+              f"{dev.get('manufacturer_string')} {dev.get('product_string')}")
     device = hid.device()
     try:
         device.open_path(target["path"])

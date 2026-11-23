@@ -15,13 +15,14 @@
 #include "USBHID.h"
 USBHID HID;
 
-// HID echo kiểm tra đường USB mà FIDO sẽ dùng: vendor page 0xFF00, report ID 1,
-// 64 byte IN/OUT. Tool tools/hid_echo.py gửi rồi đối chiếu từng byte.
+// HID echo kiểm tra đường USB mà FIDO sẽ dùng: vendor page 0xFF00,
+// 64 byte IN/OUT, KHÔNG report ID (giống CTAP HID). Lý do: bộ đệm endpoint
+// IN của TinyUSB chỉ 64 byte, thêm ID thành 65 là SendReport thất bại ngay.
+// Tool tools/hid_echo.py gửi rồi đối chiếu từng byte.
 static const uint8_t echo_report_descriptor[] = {
   0x06, 0x00, 0xFF,  // Usage Page (Vendor 0xFF00)
   0x09, 0x01,        // Usage (0x01)
   0xA1, 0x01,        // Collection (Application)
-  0x85, 0x01,        //   Report ID (1)
   0x09, 0x02,        //   Usage (IN)
   0x15, 0x00,        //   Logical Minimum (0)
   0x26, 0xFF, 0x00,  //   Logical Maximum (255)
@@ -77,15 +78,33 @@ static EchoHIDDevice echoDev;
 #define BOOT_PIN 0  // Nút BOOT trên DevKit nối GPIO0, nhấn là mức thấp.
 #endif
 
+// In mọi log ra cả USB Serial và UART0 (CH343/COM10) cùng lúc: nếu USB
+// chập chờn vẫn đọc được log qua UART. Mọi Serial.* dưới đây đi qua both
+// (Serial0 là token khác nên không bị macro chạm tới).
+class TeePrint : public Print {
+public:
+  void begin(unsigned long baud) { Serial.begin(baud); Serial0.begin(baud); }
+  operator bool() { return (bool)Serial; }
+  size_t write(uint8_t b) override {
+    Serial.write(b);
+    Serial0.write(b);
+    return 1;
+  }
+};
+static TeePrint both;
+#define Serial both
+
 static bool lastPressed = false;  // Bản chất là trạng thái "đang nhấn", khởi đầu là thả.
 static unsigned long lastPrint = 0;
 
 void printMac() {
   // MAC gốc trong efuse, duy nhất mỗi chip. Chỉ để định danh, KHÔNG phải bí mật.
   uint64_t mac = ESP.getEfuseMac();
+  // getEfuseMac gói little-endian: in từ byte thấp lên cao mới khớp thứ tự
+  // của esptool và nhãn module (đã đối chiếu: 28:84:85:86:92:74).
   Serial.printf("MAC: %02X:%02X:%02X:%02X:%02X:%02X\n",
-                (uint8_t)(mac >> 40), (uint8_t)(mac >> 32), (uint8_t)(mac >> 24),
-                (uint8_t)(mac >> 16), (uint8_t)(mac >> 8), (uint8_t)mac);
+                (uint8_t)mac, (uint8_t)(mac >> 8), (uint8_t)(mac >> 16),
+                (uint8_t)(mac >> 24), (uint8_t)(mac >> 32), (uint8_t)(mac >> 40));
 }
 
 void printChipInfo() {
@@ -128,7 +147,7 @@ void setup() {
 #if defined(ARDUINO_USB_MODE) && ARDUINO_USB_MODE == 0
   echoDev.begin();
   USB.begin();
-  Serial.println("HID echo: san sang (vendor page 0xFF00, report ID 1).");
+  Serial.println("HID echo: san sang (vendor page 0xFF00, 64 byte, khong report ID).");
 #else
   Serial.println("HID echo: TAT (can USB Mode = USB-OTG).");
 #endif
@@ -158,7 +177,7 @@ void loop() {
     memcpy(guiDi, echoBuf, sizeof(guiDi));
     echoPending = false;
     portEXIT_CRITICAL(&echoMux);
-    if (HID.SendReport(1, guiDi, sizeof(guiDi))) {
+    if (HID.SendReport(0, guiDi, sizeof(guiDi))) {
       Serial.println("HID echo: da gui lai 64 byte.");
     } else {
       Serial.println("HID echo: gui that bai, goi tin nay bi bo (ban test se bao mismatch).");

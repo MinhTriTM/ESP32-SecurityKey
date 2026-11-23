@@ -105,7 +105,7 @@
   `CPU: ... MHz, cores: 2`, `Flash: ... bytes`, `PSRAM: ... bytes`, `SDK: ...`,
   `USB mode: 0 (0 la OTG co HID echo, 1 la HWCDC)`,
   `Nhan nut BOOT de test. LED RGB se doi mau.`,
-  `HID echo: san sang (vendor page 0xFF00, report ID 1).`
+  `HID echo: san sang (vendor page 0xFF00, 64 byte, khong report ID).`
 - [ ] Mỗi ~5 giây có 1 dòng `Heartbeat: uptime ... s, heap ...` — board sống ổn định.
 - [ ] Monitor trắng → kiểm tra CDC Enabled (giai đoạn 5), đúng cổng, đúng 115200,
   nhấn RESET xem lại. Chữ rác → sai baud, chỉnh 115200. Thấy `HID echo: TAT` hoặc
