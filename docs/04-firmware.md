@@ -23,12 +23,11 @@ Build từ commit đã ghim bằng ESP-IDF v5.5.1 trong `.tooling` (xem
 - Bản thử `pico_fido_esp32-s3-plain.bin` (799200 byte, gộp ở `0x0`): app
   668128 byte, phân vùng pico (nvs@0x11000, factory@0x20000, part0@0x200000).
 - Bản chốt `pico_fido_esp32-s3-hardened.bin`: Secure Boot V2 (RSA-3072,
-  khóa ký ngoại tuyến trong `keys/`, vân tay SHA-256 `5060aeae…aa4d6`) và
-  KHÔNG bật Flash Encryption — object store của pico-fido v8.2 hỏng vĩnh
-  viễn khi bật FE (đã xác minh trên board thật 2026-11-23, xem
-  [mục bảo mật](#bật-bảo-mật-phần-cứng)). Phân vùng pico giữ nguyên.
-  `espsecure.py verify_signature --version 2` báo chữ ký RSA hợp lệ cho cả
-  app và bootloader.
+  khóa ký ngoại tuyến trong `keys/`, vân tay SHA-256 `5060aeae…aa4d6`) +
+  Flash Encryption release + cờ `encrypted` cho part0 (bắt buộc — thiếu cờ
+  là kho hỏng, CTAP `0x21`; xem [mục bảo mật](#bật-bảo-mật-phần-cứng)).
+  Phân vùng pico giữ nguyên địa chỉ. `espsecure.py verify_signature
+  --version 2` báo chữ ký RSA hợp lệ cho cả app và bootloader.
 - Cả hai có mặt trong siêu web nạp (mục pico-fido v8.2), đã kiểm SHA-256 qua
   `tools/web_firmware.py --check`.
 

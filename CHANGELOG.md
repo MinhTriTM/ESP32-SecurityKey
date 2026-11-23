@@ -3,6 +3,18 @@
 Mọi thay đổi đáng chú ý của dự án ESP32-S3 Security Key.
 Quy ước mã thoát: 0 xong · 1 lỗi chạy · 2 sai cách dùng (bảng NCKH-052).
 
+## 2026-11-23 — Bộ công cụ provision key mới (khóa FE + runbook + cứu hộ)
+
+- `tools/gen_fe_key.py`: sinh khóa FE riêng mỗi board (32 byte, AES-128-XTS),
+  chặn ghi đè + tên bẩn, kèm self-test (đã vào `run_tests.*`).
+- `hardware/provision-runbook.md`: quy trình 8 bước từ chip virgin tới key
+  dùng thật — sinh/backup khóa, kiểm virgin, hwtest, đốt khóa FE
+  (`BLOCK_KEY1`, trước boot mã hóa đầu tiên), nạp ảnh, kiểm chứng, khóa vật
+  lý. Lệnh đối chiếu tài liệu ESP-IDF v5.5.1 trong `.tooling`.
+- `scripts/preencrypt_rescue.*` (ps1/sh): mã hóa trước ảnh cứu hộ bằng khóa
+  FE rồi in lệnh nạp để chạy tay; đã kiểm roundtrip mã/giải byte-identical.
+- Quét hết mâu thuẫn SB-only cũ trong docs; sản xuất chốt SB+FE+cờ part0.
+
 ## 2026-11-23 — key-01 chết hẳn, tìm ra 2 nguyên nhân gốc (research/11)
 
 - Nguyên nhân kho hỏng (`0x21`): part0 thiếu cờ `encrypted` — source IDF
